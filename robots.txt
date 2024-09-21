@@ -1,0 +1,4 @@
+Sitemap: https://alexpacio.github.io/sitemapindex.xml
+
+User-Agent: *
+Host: alexpacio.github.io
