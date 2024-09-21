@@ -7,34 +7,42 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://alexpacio.github.io/</loc>
-  <lastmod>2024-09-21T14:48:00Z</lastmod>
+  <lastmod>2024-09-21T17:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/2024/</loc>
-  <lastmod>2024-09-21T14:48:00Z</lastmod>
+  <lastmod>2024-09-21T17:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/archive.html</loc>
-  <lastmod>2024-09-21T14:52:00Z</lastmod>
+  <lastmod>2024-09-21T17:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/</loc>
-  <lastmod>2024-09-21T14:48:00Z</lastmod>
+  <lastmod>2024-09-21T17:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/galleries/</loc>
-  <lastmod>2024-09-21T14:48:00Z</lastmod>
+  <lastmod>2024-09-21T17:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/listings/</loc>
-  <lastmod>2024-09-21T14:48:00Z</lastmod>
+  <lastmod>2024-09-21T17:16:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/pages/</loc>
-  <lastmod>2024-09-21T14:48:00Z</lastmod>
+  <lastmod>2024-09-21T17:14:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/pages/about/</loc>
+  <lastmod>2024-09-21T17:16:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/pages/main.rst/</loc>
+  <lastmod>2024-09-21T16:45:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/posts/hello-world/</loc>
-  <lastmod>2024-09-21T14:48:00Z</lastmod>
+  <lastmod>2024-09-21T17:16:00Z</lastmod>
  </url>
 </urlset>
