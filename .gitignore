@@ -1,0 +1,35 @@
+# Compiled files
+*.pyc
+*.pyo
+__pycache__/
+
+# Environment settings
+.venv/
+env/
+env.bak/
+venv/
+*.egg-info/
+*.egg
+
+# Output files
+output/
+cache/
+
+# Nikola specific files
+*.log
+*.tmp
+*.mako.tmp
+*.rst~
+
+# IDE/Editor specific files
+*.swp
+*.swo
+*.DS_Store
+*.idea/
+.vscode/
+*.code-workspace
+
+# Operating system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
