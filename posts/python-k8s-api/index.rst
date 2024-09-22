@@ -7,7 +7,7 @@
 .. description: Cloud native application boilerplate
 .. type: text
 
-Last week, I was contacted by a weird "Sr. Talent Scout Specialist" who asked me to create a project for a hiring challenge. The project seemed interesting, so I decided to take it on. At the very least, I would learn something new, which I was eager to explore: Pulumi, k6, FastAPI and some fancy modern things that make you a cool dev!
+Last week, I was contacted by a recruiter who asked me to create a project for a hiring challenge. The project seemed interesting, so I decided to take it on. At the very least, I would learn something new, which I was eager to explore: Pulumi, k6, FastAPI and some fancy modern things that make you a cool dev!
 
 The project involved creating a simple REST API in Python, which needed to be packaged with Helm, ready for deployment in a Kubernetes (K8s) cluster, and including all the essential tools required.
 
