@@ -1,4 +1,4 @@
-.. title: Fullfledged API + e2e tests + benchmark + IaC + Helm charts + more as an (interesting) exercise!
+.. title: Full-fledged API + e2e tests + benchmark + IaC + Helm charts + more as an (interesting) exercise!
 .. slug: python-k8s-api
 .. date: 2024-09-22 14:19:03 UTC+02:00
 .. tags: 
