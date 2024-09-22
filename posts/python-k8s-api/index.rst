@@ -3,11 +3,10 @@
 .. date: 2024-09-22 14:19:03 UTC+02:00
 .. tags: k8s kubernetes fastapi pulumi k6 cloud-native
 .. category: boilerplate
-.. link: https://alexpacio.github.io/posts/python-k8s-api/
 .. description: A cloud-native application packaged in an all-in-one Helm redistributable package. Boilerplating has never been so funny :)
 .. type: text
 
-Last week, I was contacted by a recruiter who asked me to create a project for a hiring challenge. The project seemed interesting, so I decided to take it on. At the very least, I would learn something new, which I was eager to explore: Pulumi, k6, FastAPI and some fancy modern things that make you a cool dev!
+Last week, I was contacted for a coding challenge. The project seemed interesting, so I decided to take it on. At the very least, I would learn something new, which I was eager to explore: Pulumi, k6, FastAPI and some fancy modern things that make you look like a cool dev!
 
 The project involved creating a simple REST API in Python, which needed to be packaged with Helm, ready for deployment in a Kubernetes (K8s) cluster, and including all the essential tools required.
 
