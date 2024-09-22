@@ -37,9 +37,13 @@ I believe it's a solid boilerplate to start with, and it allowed me to explore n
 
 Even though I feel like the entire AWS ecosystem is increasingly filling gaps (perhaps revenue gaps?) with bloat everywhere, I’ve been impressed with how concise, easy to use, develop, and reproduce a project like this can be. From this foundation, you can build a very sophisticated system while keeping everything in one place.
 Additionally, you can test your AWS services locally and connect them later by simply using the Helm values file for the infrastructure or the .env file in the root folder for the application properties.
+
 As mentioned, there’s definitely room for several small adjustments to make it work seamlessly, but I think this is a very solid and complete starting point! I may have missed something important, as I dedicated only a small portion of my time to this challenge.
+
 Imagine having a temporary Kubernetes (K8s) namespace just to run your end-to-end (e2e) tests, reproducing the entire AWS PaaS stack and your application in a replicated and horizontally scalable way: you run the tests, collect the report, and then dispose of the environment.
+
 The same approach can be used for your benchmarking needs.
+
 With every change you make to your code, you can potentially test each step in your local cluster, which is automatically initialized in every aspect.
 Just focus on your infrastructure and application code, set your environment variable files, and your portable cluster is up and running!
 
