@@ -7,6 +7,3 @@ Feel free to explore my blog where I share insights on the latest tech trends an
 
 In case you may have any exciting thing you wish to discuss with me, let's talk: alexpacio91 at gmail dot com
 
-.. class:: cv-button
-
-`Download my CV <files/cv.pdf>`_
