@@ -56,12 +56,16 @@
 <p>The project involved creating a simple REST API in Python, which needed to be packaged with Helm, ready for deployment in a Kubernetes (K8s) cluster, and including all the essential tools required.</p>
 <p><strong>Requirements</strong></p>
 <ul class="simple">
-<li><p>A Python REST API backend program. The choice of framework was up to me, and it had to include Swagger API documentation and end-to-end (e2e) tests.</p></li>
-<li><p>A CDK-like deployment script to automate the API’s dependencies: Terraform or Pulumi (for an AWS CDK-like experience). Since I was curious, I chose Pulumi.</p></li>
-<li><p>Either an AWS account or an automated way to use Localstack, a tool that simulates AWS’s APIs in your local environment.</p></li>
-<li><p>A Helm package to deploy the Kubernetes cluster.</p></li>
-<li><p>Kubernetes manifests that addressed the automated scalability of the REST API backend and included the necessary health checks.</p></li>
+<li><p>A Python REST API backend program. The choice of framework was up to me</p></li>
+<li><p>Unit and e2e tests</p></li>
+<li><p>Swagger/OpenAPI documentation</p></li>
+<li><p>A CDK-like deployment script to automate the API’s dependencies: Terraform or Pulumi (for an AWS CDK-like experience). Since I was curious, I chose Pulumi</p></li>
+<li><p>Backend API should store its state via AWS PaaS services. Either a real AWS account or an automated way to use Localstack, a tool that simulates AWS’s APIs in your local environment, would have worked</p></li>
+<li><p>A Helm package to deploy the Kubernetes cluster</p></li>
+<li><p>Health checking mechanisms</p></li>
 <li><p>Scripts to tie everything together, making the cluster reproducible by following a series of steps outlined in a README file.</p></li>
+<li><p>Horizontal autoscaling</p></li>
+<li><p>Built-in application benchmarking</p></li>
 </ul>
 <p>The ultimate goal is now clear: creating a self-contained package that could easily reproduce a complete, production-ready REST API backend in a cloud native and scalable setup.</p>
 <p><strong>Result</strong></p>

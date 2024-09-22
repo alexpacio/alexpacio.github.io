@@ -13,12 +13,16 @@ The project involved creating a simple REST API in Python, which needed to be pa
 
 **Requirements**
 
-- A Python REST API backend program. The choice of framework was up to me, and it had to include Swagger API documentation and end-to-end (e2e) tests.
-- A CDK-like deployment script to automate the API’s dependencies: Terraform or Pulumi (for an AWS CDK-like experience). Since I was curious, I chose Pulumi.
-- Either an AWS account or an automated way to use Localstack, a tool that simulates AWS’s APIs in your local environment.
-- A Helm package to deploy the Kubernetes cluster.
-- Kubernetes manifests that addressed the automated scalability of the REST API backend and included the necessary health checks.
+- A Python REST API backend program. The choice of framework was up to me
+- Unit and e2e tests
+- Swagger/OpenAPI documentation
+- A CDK-like deployment script to automate the API’s dependencies: Terraform or Pulumi (for an AWS CDK-like experience). Since I was curious, I chose Pulumi
+- Backend API should store its state via AWS PaaS services. Either a real AWS account or an automated way to use Localstack, a tool that simulates AWS’s APIs in your local environment, would have worked
+- A Helm package to deploy the Kubernetes cluster
+- Health checking mechanisms
 - Scripts to tie everything together, making the cluster reproducible by following a series of steps outlined in a README file.
+- Horizontal autoscaling
+- Built-in application benchmarking
 
 The ultimate goal is now clear: creating a self-contained package that could easily reproduce a complete, production-ready REST API backend in a cloud native and scalable setup.
 
