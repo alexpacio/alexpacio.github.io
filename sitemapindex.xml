@@ -22,10 +22,6 @@
   <lastmod>2024-09-22T14:17:00Z</lastmod>
  </sitemap>
  <sitemap>
-  <loc>https://alexpacio.github.io/categories/k8s-kubernetes-fastapi-pulumi-k6-cloud-native.xml</loc>
-  <lastmod>2024-09-22T14:14:00Z</lastmod>
- </sitemap>
- <sitemap>
   <loc>https://alexpacio.github.io/categories/k8s.xml</loc>
   <lastmod>2024-09-22T14:17:00Z</lastmod>
  </sitemap>
@@ -47,6 +43,6 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/sitemap.xml</loc>
-  <lastmod>2024-09-22T14:17:00Z</lastmod>
+  <lastmod>2024-09-22T14:33:00Z</lastmod>
  </sitemap>
 </sitemapindex>
