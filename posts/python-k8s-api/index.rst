@@ -1,7 +1,7 @@
 .. title: Full-fledged API + e2e tests + benchmark + IaC + Helm charts + more as an (interesting) exercise!
 .. slug: python-k8s-api
 .. date: 2024-09-22 14:19:03 UTC+02:00
-.. tags: k8s kubernetes fastapi pulumi k6 cloud-native
+.. tags: k8s,kubernetes,fastapi,pulumi,k6,cloud-native
 .. category: boilerplate
 .. description: A cloud-native application packaged in an all-in-one Helm redistributable package. Boilerplating has never been so funny :)
 .. type: text

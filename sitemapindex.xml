@@ -7,11 +7,35 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_boilerplate.xml</loc>
-  <lastmod>2024-09-22T14:14:00Z</lastmod>
+  <lastmod>2024-09-22T14:17:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/cloud-native.xml</loc>
+  <lastmod>2024-09-22T14:17:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/fastapi.xml</loc>
+  <lastmod>2024-09-22T14:17:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/k6.xml</loc>
+  <lastmod>2024-09-22T14:17:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/k8s-kubernetes-fastapi-pulumi-k6-cloud-native.xml</loc>
   <lastmod>2024-09-22T14:14:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/k8s.xml</loc>
+  <lastmod>2024-09-22T14:17:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/kubernetes.xml</loc>
+  <lastmod>2024-09-22T14:17:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/pulumi.xml</loc>
+  <lastmod>2024-09-22T14:17:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/galleries/rss.xml</loc>
@@ -19,10 +43,10 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/rss.xml</loc>
-  <lastmod>2024-09-22T14:14:00Z</lastmod>
+  <lastmod>2024-09-22T14:17:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/sitemap.xml</loc>
-  <lastmod>2024-09-22T14:14:00Z</lastmod>
+  <lastmod>2024-09-22T14:17:00Z</lastmod>
  </sitemap>
 </sitemapindex>
