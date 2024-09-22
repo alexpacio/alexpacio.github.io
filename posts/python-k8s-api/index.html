@@ -2,7 +2,7 @@
 <html prefix="" lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="Cloud native application boilerplate">
+<meta name="description" content="A cloud-native application packaged in an all-in-one Helm redistributable package. Boilerplating has never been so funny :)">
 <meta name="viewport" content="width=device-width">
 <title>Full-fledged API + e2e tests + benchmark + IaC + Helm charts + more as an (interesting) exercise! | Alessandro Bolletta</title>
 <link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -19,9 +19,10 @@
 <meta property="og:site_name" content="Alessandro Bolletta">
 <meta property="og:title" content="Full-fledged API + e2e tests + benchmark + IaC + Helm charts + more as">
 <meta property="og:url" content="https://alexpacio.github.io/posts/python-k8s-api/">
-<meta property="og:description" content="Cloud native application boilerplate">
+<meta property="og:description" content="A cloud-native application packaged in an all-in-one Helm redistributable package. Boilerplating has never been so funny :)">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2024-09-22T14:19:03+02:00">
+<meta property="article:tag" content="k8s kubernetes fastapi pulumi k6 cloud-native">
 </head>
 <body class="hack dark">
 
@@ -60,6 +61,7 @@
             
         <p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
 
+                    <p class="linkline"><a href="https://alexpacio.github.io/posts/python-k8s-api/">Original site</a></p>
         </div>
         
 
@@ -90,8 +92,8 @@ Additionally, you can test your AWS services locally and connect them later by s
 <p>As mentioned, there’s definitely room for several small adjustments to make it work seamlessly, but I think this is a very solid and complete starting point! I may have missed something important, as I dedicated only a small portion of my time to this challenge.</p>
 <p>Imagine having a temporary Kubernetes (K8s) namespace just to run your end-to-end (e2e) tests, reproducing the entire AWS PaaS stack and your application in a replicated and horizontally scalable way: you run the tests, collect the report, and then dispose of the environment.</p>
 <p>The same approach can be used for your benchmarking needs.</p>
-<p>With every change you make to your code, you can potentially test each step in your local cluster, which is automatically initialized in every aspect.
-Just focus on your infrastructure and application code, set your environment variable files, and your portable cluster is up and running!</p>
+<p>With every change you make to your code, you can potentially test each step in your local cluster, which is automatically initialized in every aspect.</p>
+<p>Just focus on your infrastructure and application code, set your environment variable files, and your portable cluster is up and running!</p>
 <p><strong>Outcome</strong></p>
 <p>I think I’ll continue to work on this. Cloud-native applications that avoid being locked into a specific cloud provider while still being distributed, scalable, and easy to use are possible.
 I look forward to building an opinionated version of this soon. Stay tuned!</p>
@@ -99,7 +101,10 @@ I look forward to building an opinionated version of this soon. Stay tuned!</p>
 <p>Feel free to use it as you wish, and let me know if you have any comments.</p>
 <p>Cheers!</p>
     </div>
-    <aside class="postpromonav"><nav><ul class="pager hidden-print">
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/k8s-kubernetes-fastapi-pulumi-k6-cloud-native/" rel="tag">k8s kubernetes fastapi pulumi k6 cloud-native</a></li>
+        </ul>
+<ul class="pager hidden-print">
 <li class="previous">
                 <a href="../hello-world/" rel="prev" title="Hello world!">Previous post</a>
             </li>

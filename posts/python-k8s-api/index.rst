@@ -1,10 +1,10 @@
 .. title: Full-fledged API + e2e tests + benchmark + IaC + Helm charts + more as an (interesting) exercise!
 .. slug: python-k8s-api
 .. date: 2024-09-22 14:19:03 UTC+02:00
-.. tags: 
-.. category: k8s kubernetes fastapi pulumi k6 
-.. link: 
-.. description: Cloud native application boilerplate
+.. tags: k8s kubernetes fastapi pulumi k6 cloud-native
+.. category: boilerplate
+.. link: https://alexpacio.github.io/posts/python-k8s-api/
+.. description: A cloud-native application packaged in an all-in-one Helm redistributable package. Boilerplating has never been so funny :)
 .. type: text
 
 Last week, I was contacted by a recruiter who asked me to create a project for a hiring challenge. The project seemed interesting, so I decided to take it on. At the very least, I would learn something new, which I was eager to explore: Pulumi, k6, FastAPI and some fancy modern things that make you a cool dev!
@@ -45,6 +45,7 @@ Imagine having a temporary Kubernetes (K8s) namespace just to run your end-to-en
 The same approach can be used for your benchmarking needs.
 
 With every change you make to your code, you can potentially test each step in your local cluster, which is automatically initialized in every aspect.
+
 Just focus on your infrastructure and application code, set your environment variable files, and your portable cluster is up and running!
 
 **Outcome**
