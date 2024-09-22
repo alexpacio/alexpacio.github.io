@@ -1,7 +1,7 @@
 .. title: About me
 .. slug: about
 
-Hello, I'm Alessandro Bolletta, a software developer specializing in backend development using Python, Node.js, and cloud technologies like AWS.
+Hello, I'm Alessandro Bolletta, a software developer specializing in backend development using Rust, networking and cloud technologies like AWS.
 
 Feel free to explore my blog where I share insights on the latest tech trends and tutorials on web development.
 
