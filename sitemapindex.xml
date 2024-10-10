@@ -6,12 +6,24 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/background-jobs.xml</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_boilerplate.xml</loc>
   <lastmod>2024-09-22T14:17:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/cat_development.xml</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/categories/cloud-native.xml</loc>
   <lastmod>2024-09-22T14:17:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/docker.xml</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/fastapi.xml</loc>
@@ -30,8 +42,20 @@
   <lastmod>2024-09-22T14:17:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/nodejs.xml</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/categories/pulumi.xml</loc>
   <lastmod>2024-09-22T14:17:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/telegram.xml</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/typescript.xml</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/galleries/rss.xml</loc>
@@ -39,10 +63,10 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/rss.xml</loc>
-  <lastmod>2024-09-22T14:17:00Z</lastmod>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/sitemap.xml</loc>
-  <lastmod>2024-09-22T14:39:00Z</lastmod>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
  </sitemap>
 </sitemapindex>

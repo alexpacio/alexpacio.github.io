@@ -15,19 +15,31 @@
  </url>
  <url>
   <loc>https://alexpacio.github.io/archive.html</loc>
-  <lastmod>2024-09-22T14:39:00Z</lastmod>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/</loc>
-  <lastmod>2024-09-22T14:17:00Z</lastmod>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/background-jobs/</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/cat_boilerplate/</loc>
   <lastmod>2024-09-22T13:40:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/cat_development/</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/categories/cloud-native/</loc>
   <lastmod>2024-09-22T14:17:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/docker/</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/fastapi/</loc>
@@ -46,8 +58,20 @@
   <lastmod>2024-09-22T14:17:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/nodejs/</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/categories/pulumi/</loc>
   <lastmod>2024-09-22T14:17:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/telegram/</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/typescript/</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/galleries/</loc>
@@ -64,6 +88,10 @@
  <url>
   <loc>https://alexpacio.github.io/posts/hello-world/</loc>
   <lastmod>2024-09-22T10:45:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/posts/lightweight-nodejs-background-job-scheduler/</loc>
+  <lastmod>2024-10-10T18:08:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/posts/python-k8s-api/</loc>
