@@ -238,7 +238,6 @@ The library handles many complex aspects automatically:
 - Fair message distribution
 - Transport abstraction
 
-
 ZeroMQ Messaging Patterns
 -------------------------
 
@@ -260,9 +259,10 @@ The Push/Pull pattern creates a one-way data distribution pipeline. Messages sen
     zmq_connect(puller, "tcp://localhost:5557");
 
 Use cases:
-- Parallel task distribution
-- Workload distribution in producer/consumer scenarios
-- Data pipeline processing
+
+* Parallel task distribution
+* Workload distribution in producer/consumer scenarios
+* Data pipeline processing
 
 Pub/Sub (Publisher/Subscriber)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -284,10 +284,11 @@ Publishers send messages while subscribers receive them based on topics. Each su
     subscriber.SetSubscribe("weather.london")
 
 Use cases:
-- Event broadcasting
-- Real-time data feeds
-- System monitoring
-- Live updates
+
+* Event broadcasting
+* Real-time data feeds
+* System monitoring
+* Live updates
 
 Request/Reply (REQ/REP)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -305,9 +306,10 @@ A synchronous pattern where each request must be followed by a reply.
     zmq_connect(requester, "tcp://localhost:5555");
 
 Use cases:
-- Remote procedure calls (RPC)
-- Service APIs
-- Task delegation with acknowledgment
+
+* Remote procedure calls (RPC)
+* Service APIs
+* Task delegation with acknowledgment
 
 Dealer/Router
 ~~~~~~~~~~~~~
@@ -325,33 +327,39 @@ An advanced asynchronous pattern that allows for complex routing scenarios.
     dealer.Connect("tcp://localhost:5555")
 
 Use cases:
-- Load balancing
-- Asynchronous request/reply
-- Complex routing topologies
-- Service meshes
+
+* Load balancing
+* Asynchronous request/reply
+* Complex routing topologies
+* Service meshes
 
 Pattern Selection Guidelines
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When choosing a pattern, consider:
 
-1. Message Flow Direction
-   - One-way: Push/Pull or Pub/Sub
-   - Two-way: Request/Reply or Dealer/Router
+Message Flow Direction:
 
-2. Synchronization Requirements
-   - Synchronous: Request/Reply
-   - Asynchronous: Push/Pull, Pub/Sub, Dealer/Router
+* One-way: Push/Pull or Pub/Sub
+* Two-way: Request/Reply or Dealer/Router
 
-3. Scalability Needs
-   - Fan-out: Pub/Sub
-   - Load balancing: Push/Pull or Dealer/Router
-   - Both: Combination of patterns
+Synchronization Requirements:
 
-4. Message Delivery Guarantees
-   - At-most-once: Pub/Sub
-   - At-least-once: Request/Reply
-   - Custom guarantees: Dealer/Router
+* Synchronous: Request/Reply
+* Asynchronous: Push/Pull, Pub/Sub, Dealer/Router
+
+Scalability Needs:
+
+* Fan-out: Pub/Sub
+* Load balancing: Push/Pull or Dealer/Router
+* Both: Combination of patterns
+
+Message Delivery Guarantees:
+
+* At-most-once: Pub/Sub
+* At-least-once: Request/Reply
+* Custom guarantees: Dealer/Router
+
 
 Example: Combining Patterns
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
