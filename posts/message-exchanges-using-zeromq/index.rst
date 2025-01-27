@@ -137,27 +137,78 @@ Using it in Go:
 .. code-block:: go
 
     package main
-    
+
     import (
         "log"
-        pb "path/to/generated/proto"
+
         "github.com/pebbe/zmq4"
         "google.golang.org/protobuf/proto"
+        examplepb "path/to/generated/proto"
     )
-    
+
     func main() {
-        socket, _ := zmq4.NewSocket(zmq4.PULL)
-        defer socket.Close()
-        
-        socket.Bind("tcp://*:5555")
-        
+        // Create a ZeroMQ context
+        context, err := zmq4.NewContext()
+        if err != nil {
+            log.Fatalf("Failed to create ZeroMQ context: %v", err)
+        }
+        defer context.Term() // Ensure the context is terminated when the program exits
+
+        // Create a ZeroMQ Subscriber socket
+        subscriber, err := context.NewSocket(zmq4.SUB)
+        if err != nil {
+            log.Fatalf("Failed to create subscriber socket: %v", err)
+        }
+        defer subscriber.Close()
+
+        // Connect to the publisher
+        err = subscriber.Connect("tcp://127.0.0.1:5555")
+        if err != nil {
+            log.Fatalf("Failed to connect subscriber: %v", err)
+        }
+
+        // Subscribe to all messages
+        err = subscriber.SetSubscribe("")
+        if err != nil {
+            log.Fatalf("Failed to set subscription: %v", err)
+        }
+
+        log.Println("Subscriber started, waiting for messages...")
+
         for {
-            data, _ := socket.RecvBytes(0)
-            msg := &pb.DataMessage{}
-            proto.Unmarshal(data, msg)
-            log.Printf("Received: %s at %d", msg.Content, msg.Timestamp)
+            // Receive the serialized message
+            data, err := subscriber.RecvBytes(0)
+            if err != nil {
+                log.Printf("Failed to receive message: %v", err)
+                continue
+            }
+
+            // Deserialize the message
+            var message examplepb.ExampleMessage
+            err = proto.Unmarshal(data, &message)
+            if err != nil {
+                log.Printf("Failed to deserialize message: %v", err)
+                continue
+            }
+
+            // Print the received message
+            log.Printf("Received message: ID=%s, Content=%s", message.Id, message.Content)
         }
     }
+
+
+Explanation
+-----------
+
+Context: The zmq.NewContext() function creates a new ZeroMQ context, which is required to create sockets.
+
+Socket: The context.NewSocket(zmq.SUB) function creates a new SUB socket for subscribing to messages.
+
+Connect: The subscriber.Connect("tcp://localhost:5555") function connects the subscriber to the publisher’s address.
+
+Subscribe: The socket.SetSubscribe("") function subscribes to all messages (an empty string means subscribe to everything). This acts as a way to subscribe to a string prefix (so called "topic" in other MQ systems)
+
+Recv: The socket.RecvBytes(0) function blocks until a message is received.
 
 Asynchronous Message Emission
 -----------------------------
@@ -167,7 +218,7 @@ ZeroMQ supports non-blocking sends using the ``ZMQ_DONTWAIT`` flag:
 .. code-block:: c
 
     zmq_send(socket, message, size, ZMQ_DONTWAIT);
-    // Code continues immediately without waiting
+    // Code continues immediately without waiting for the send operation outcome
 
 Performance Considerations
 --------------------------
@@ -186,6 +237,165 @@ The library handles many complex aspects automatically:
 - Message queuing
 - Fair message distribution
 - Transport abstraction
+
+
+ZeroMQ Messaging Patterns
+-------------------------
+
+ZeroMQ supports several fundamental messaging patterns, each designed for specific use cases:
+
+Push/Pull (Pipeline)
+~~~~~~~~~~~~~~~~~~~~
+
+The Push/Pull pattern creates a one-way data distribution pipeline. Messages sent by pushers are load-balanced among all connected pullers.
+
+.. code-block:: c
+
+    // Pusher (sender)
+    void *pusher = zmq_socket(context, ZMQ_PUSH);
+    zmq_bind(pusher, "tcp://*:5557");
+    
+    // Puller (receiver)
+    void *puller = zmq_socket(context, ZMQ_PULL);
+    zmq_connect(puller, "tcp://localhost:5557");
+
+Use cases:
+- Parallel task distribution
+- Workload distribution in producer/consumer scenarios
+- Data pipeline processing
+
+Pub/Sub (Publisher/Subscriber)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Publishers send messages while subscribers receive them based on topics. Each subscriber can subscribe to multiple topics.
+
+.. code-block:: go
+
+    // Publisher
+    publisher, _ := zmq4.NewSocket(zmq4.PUB)
+    publisher.Bind("tcp://*:5563")
+    
+    // Send message with topic
+    publisher.Send("weather.london temperature:22", 0)
+    
+    // Subscriber
+    subscriber, _ := zmq4.NewSocket(zmq4.SUB)
+    subscriber.Connect("tcp://localhost:5563")
+    subscriber.SetSubscribe("weather.london")
+
+Use cases:
+- Event broadcasting
+- Real-time data feeds
+- System monitoring
+- Live updates
+
+Request/Reply (REQ/REP)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+A synchronous pattern where each request must be followed by a reply.
+
+.. code-block:: c
+
+    // Server (Reply)
+    void *responder = zmq_socket(context, ZMQ_REP);
+    zmq_bind(responder, "tcp://*:5555");
+    
+    // Client (Request)
+    void *requester = zmq_socket(context, ZMQ_REQ);
+    zmq_connect(requester, "tcp://localhost:5555");
+
+Use cases:
+- Remote procedure calls (RPC)
+- Service APIs
+- Task delegation with acknowledgment
+
+Dealer/Router
+~~~~~~~~~~~~~
+
+An advanced asynchronous pattern that allows for complex routing scenarios.
+
+.. code-block:: go
+
+    // Router
+    router, _ := zmq4.NewSocket(zmq4.ROUTER)
+    router.Bind("tcp://*:5555")
+    
+    // Dealer
+    dealer, _ := zmq4.NewSocket(zmq4.DEALER)
+    dealer.Connect("tcp://localhost:5555")
+
+Use cases:
+- Load balancing
+- Asynchronous request/reply
+- Complex routing topologies
+- Service meshes
+
+Pattern Selection Guidelines
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When choosing a pattern, consider:
+
+1. Message Flow Direction
+   - One-way: Push/Pull or Pub/Sub
+   - Two-way: Request/Reply or Dealer/Router
+
+2. Synchronization Requirements
+   - Synchronous: Request/Reply
+   - Asynchronous: Push/Pull, Pub/Sub, Dealer/Router
+
+3. Scalability Needs
+   - Fan-out: Pub/Sub
+   - Load balancing: Push/Pull or Dealer/Router
+   - Both: Combination of patterns
+
+4. Message Delivery Guarantees
+   - At-most-once: Pub/Sub
+   - At-least-once: Request/Reply
+   - Custom guarantees: Dealer/Router
+
+Example: Combining Patterns
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here's an example combining Pub/Sub with Push/Pull for a logging system:
+
+.. code-block:: go
+
+    package main
+    
+    import (
+        "github.com/pebbe/zmq4"
+        "log"
+    )
+    
+    func main() {
+        // Event publisher
+        publisher, _ := zmq4.NewSocket(zmq4.PUB)
+        publisher.Bind("tcp://*:5563")
+        
+        // Log collector
+        collector, _ := zmq4.NewSocket(zmq4.PULL)
+        collector.Bind("tcp://*:5564")
+        
+        // Worker that processes logs and publishes events
+        go func() {
+            worker, _ := zmq4.NewSocket(zmq4.PUSH)
+            worker.Connect("tcp://localhost:5564")
+            
+            subscriber, _ := zmq4.NewSocket(zmq4.SUB)
+            subscriber.Connect("tcp://localhost:5563")
+            subscriber.SetSubscribe("error")
+            
+            // Process messages...
+        }()
+    }
+
+This setup allows for:
+- Real-time error broadcasting (Pub/Sub)
+- Reliable log collection (Push/Pull)
+- Scalable processing workers
+- Decoupled components
+
+The choice of pattern significantly impacts your system's behavior, performance, and scalability. It's often beneficial to combine patterns to achieve more complex messaging requirements while maintaining simplicity in individual components.
 
 Conclusion
 ----------
