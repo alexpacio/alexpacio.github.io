@@ -14,7 +14,7 @@ Introduction
 
 Some may certainly say that, when you are writing so called "daemons" under Linux/Unix OSes or "services" under Windows, you might want to use OS primitives/reuse existing libraries to make your programs communicate each other. And I strongly agree with the point: it is always a good idea to use a well-tested and solid library to implement such fundamental features such as message queues.
 
-For example, under Linux you can use D-Bus, which allows IPC at scale within the OS scope. Or, in the microservices space, you can leverage on message brokers like RabbitMQ or Kafka to stream your messages through sophisticated routing logic. However, at times you are just looking for something trivial and simple to send and queue messages where at the same time you look for brokerless setup but still you are willing to leverage on some of the features that they offer for free and with ease. That's where ZeroMQ comes in.
+For example, under Linux you can use D-Bus, which allows IPC at scale within the OS scope. Or, in the microservices space, you can leverage on message brokers like RabbitMQ or Kafka to stream your messages through sophisticated routing logic. However, at times you are just looking for something trivial and simple to send and queue messages where at the same time you look for brokerless setup but still you are willing to leverage on some of the features that message queuing systems offer for free with ease. That's where ZeroMQ comes in.
 
 What is ZeroMQ?
 ---------------
