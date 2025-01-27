@@ -25,7 +25,7 @@ SITE_URL = "https://alexpacio.github.io/"
 # If not set, defaults to SITE_URL
 # BASE_URL = "https://alexpacio.github.io/"
 BLOG_EMAIL = "alexpacio91 at gmail dot com"
-BLOG_DESCRIPTION = "This is the personal website for Alessandro."  # (translatable)
+BLOG_DESCRIPTION = "Tells the story of a guy's mishaps and shenanigans with computers."  # (translatable)
 
 # Nikola is multilingual!
 #
