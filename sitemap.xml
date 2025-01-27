@@ -7,23 +7,31 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://alexpacio.github.io/</loc>
-  <lastmod>2025-01-18T16:22:00Z</lastmod>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/2024/</loc>
   <lastmod>2025-01-18T16:22:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/2025/</loc>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/archive.html</loc>
-  <lastmod>2025-01-18T16:53:00Z</lastmod>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/</loc>
-  <lastmod>2025-01-18T16:22:00Z</lastmod>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/background-jobs/</loc>
   <lastmod>2025-01-18T16:22:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/c/</loc>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/cat_boilerplate/</loc>
@@ -44,6 +52,10 @@
  <url>
   <loc>https://alexpacio.github.io/categories/fastapi/</loc>
   <lastmod>2025-01-18T16:22:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/golang/</loc>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/k6/</loc>
@@ -74,6 +86,10 @@
   <lastmod>2025-01-18T16:22:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/zeromq/</loc>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/pages/about/</loc>
   <lastmod>2025-01-18T16:22:00Z</lastmod>
  </url>
@@ -84,6 +100,10 @@
  <url>
   <loc>https://alexpacio.github.io/posts/lightweight-nodejs-background-job-scheduler/</loc>
   <lastmod>2025-01-18T16:22:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/posts/message-exchanges-using-zeromq/</loc>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/posts/python-k8s-api/</loc>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html prefix="
+" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alessandro Bolletta · Exchanging messages between processes (or even threads within the same program) using ZeroMQ </title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="https://alexpacio.github.io/posts/message-exchanges-using-zeromq/">
+<link rel="icon" href="../../files/favicon.ico" sizes="16x16">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Alessandro Bolletta">
+<link rel="prev" href="../lightweight-nodejs-background-job-scheduler/" title="Building a Lightweight Node.js Background Job Scheduler: A Practical Solution for Simple Web Applications" type="text/html">
+</head>
+<body class="">
+    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+    <div class="hsidebar">
+        <div class="container sidebar-sticky">
+            <div class="sidebar-about">
+              <h1>
+                <a href="https://alexpacio.github.io/">
+                      <h1 id="brand"><a href="https://alexpacio.github.io/" title="Alessandro Bolletta" rel="home">
+
+        <span id="blog-title">Alessandro Bolletta</span>
+    </a></h1>
+
+                </a>
+              </h1>
+                <p class="lead">This is the personal website for Alessandro.</p>
+
+            </div>
+                <nav id="menu" role="navigation" class="sidebar-nav"><a class="sidebar-nav-item" href="../../">Home</a>
+        <a class="sidebar-nav-item" href="../../archive.html">Archive</a>
+        <a class="sidebar-nav-item" href="../../files/cv.pdf">CV</a>
+        <a class="sidebar-nav-item" href="../../pages/about/">About me</a>
+        <a class="sidebar-nav-item" href="https://github.com/alexpacio">My Github</a>
+    
+    
+    </nav><footer id="footer"><span class="copyright">
+              Contents © 2025         <a href="mailto:alexpacio91%20at%20gmail%20dot%20com">Alessandro Bolletta</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            </span>
+            
+            
+        </footer>
+</div>
+    </div>
+
+    <div class="content container" id="content">
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><h1 class="post-title p-name"><a href="." class="u-url">Exchanging messages between processes (or even threads within the same program) using ZeroMQ</a></h1>
+
+    <span class="post-date">
+      <time class="published dt-published" datetime="2025-01-27T18:00:00Z" itemprop="datePublished" title="2025-01-27 18:00">2025-01-27 18:00</time></span>
+
+    
+    
+
+    <div class="e-content entry-content" itemprop="articleBody text">
+    <section id="inter-process-communication-with-zeromq-and-protocol-buffers"><h2>Inter-Process Communication with ZeroMQ (and Protocol Buffers)</h2>
+<section id="introduction"><h3>Introduction</h3>
+<p>Some may certainly say that, when you are writing so called "daemons" under Linux/Unix OSes or "services" under Windows, you might want to use OS primitives/reuse existing libraries to make your programs communicate each other. And I strongly agree with the point: it is always a good idea to use a well-tested and solid library to implement such fundamental features such as message queues.</p>
+<p>For example, under Linux you can use D-Bus, which allows IPC at scale within the OS scope. Or, in the microservices space, you can leverage on message brokers like RabbitMQ or Kafka to stream your messages through sophisticated routing logic. However, at times you are just looking for something trivial and simple to send and queue messages where at the same time you look for brokerless setup but still you are willing to leverage on some of the features that they offer for free and with ease. That's where ZeroMQ comes in.</p>
+</section><section id="what-is-zeromq"><h3>What is ZeroMQ?</h3>
+<p>ZeroMQ (ØMQ) is a high-performance asynchronous messaging library aimed at use in distributed or concurrent applications. It provides a message queue, but unlike message-oriented middleware, a ZeroMQ system can run without a dedicated message broker. The API layer provides a message-oriented abstraction of asynchronous network communication, multiple messaging patterns, message filtering, and more.</p>
+</section><section id="supported-transport-protocols"><h3>Supported Transport Protocols</h3>
+<p>ZeroMQ supports various transport protocols through different URI schemes where the main ones are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal"><span class="pre">tcp://</span></code> - TCP transport</p></li>
+<li><p><code class="docutils literal"><span class="pre">ipc://</span></code> - Inter-process communication (Unix domain sockets)</p></li>
+<li><p><code class="docutils literal"><span class="pre">inproc://</span></code> - In-process communication between threads</p></li>
+</ul></section><section id="thread-safety-and-context-management"><h3>Thread Safety and Context Management</h3>
+<p>In both C and Go, ZeroMQ contexts are thread-safe, but sockets are not. Here's how to handle them properly:</p>
+<p>In Go:</p>
+<div class="code"><pre class="code go"><a id="rest_code_e1ab2a64141546aaba124794934ed69a-1" name="rest_code_e1ab2a64141546aaba124794934ed69a-1" href="#rest_code_e1ab2a64141546aaba124794934ed69a-1"></a><span class="c1">// Thread-safe context creation</span>
+<a id="rest_code_e1ab2a64141546aaba124794934ed69a-2" name="rest_code_e1ab2a64141546aaba124794934ed69a-2" href="#rest_code_e1ab2a64141546aaba124794934ed69a-2"></a><span class="nx">context</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">zmq4</span><span class="p">.</span><span class="nx">NewContext</span><span class="p">()</span>
+<a id="rest_code_e1ab2a64141546aaba124794934ed69a-3" name="rest_code_e1ab2a64141546aaba124794934ed69a-3" href="#rest_code_e1ab2a64141546aaba124794934ed69a-3"></a>
+<a id="rest_code_e1ab2a64141546aaba124794934ed69a-4" name="rest_code_e1ab2a64141546aaba124794934ed69a-4" href="#rest_code_e1ab2a64141546aaba124794934ed69a-4"></a><span class="c1">// Socket creation should be done in the thread that uses it</span>
+<a id="rest_code_e1ab2a64141546aaba124794934ed69a-5" name="rest_code_e1ab2a64141546aaba124794934ed69a-5" href="#rest_code_e1ab2a64141546aaba124794934ed69a-5"></a><span class="nx">socket</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">context</span><span class="p">.</span><span class="nx">NewSocket</span><span class="p">(</span><span class="nx">zmq4</span><span class="p">.</span><span class="nx">PUSH</span><span class="p">)</span>
+<a id="rest_code_e1ab2a64141546aaba124794934ed69a-6" name="rest_code_e1ab2a64141546aaba124794934ed69a-6" href="#rest_code_e1ab2a64141546aaba124794934ed69a-6"></a><span class="k">defer</span><span class="w"> </span><span class="nx">socket</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+</pre></div>
+<p>In C:</p>
+<div class="code"><pre class="code c"><a id="rest_code_5dba980e0754469ca6d4c35265edb050-1" name="rest_code_5dba980e0754469ca6d4c35265edb050-1" href="#rest_code_5dba980e0754469ca6d4c35265edb050-1"></a><span class="c1">// Thread-safe context creation</span>
+<a id="rest_code_5dba980e0754469ca6d4c35265edb050-2" name="rest_code_5dba980e0754469ca6d4c35265edb050-2" href="#rest_code_5dba980e0754469ca6d4c35265edb050-2"></a><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zmq_ctx_new</span><span class="p">();</span>
+<a id="rest_code_5dba980e0754469ca6d4c35265edb050-3" name="rest_code_5dba980e0754469ca6d4c35265edb050-3" href="#rest_code_5dba980e0754469ca6d4c35265edb050-3"></a>
+<a id="rest_code_5dba980e0754469ca6d4c35265edb050-4" name="rest_code_5dba980e0754469ca6d4c35265edb050-4" href="#rest_code_5dba980e0754469ca6d4c35265edb050-4"></a><span class="c1">// Socket creation - not thread-safe</span>
+<a id="rest_code_5dba980e0754469ca6d4c35265edb050-5" name="rest_code_5dba980e0754469ca6d4c35265edb050-5" href="#rest_code_5dba980e0754469ca6d4c35265edb050-5"></a><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">socket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zmq_socket</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">ZMQ_PUSH</span><span class="p">);</span>
+</pre></div>
+</section><section id="intra-thread-communication-example"><h3>Intra-Thread Communication Example</h3>
+<p>Here's an example of thread communication using ZeroMQ in C:</p>
+<div class="code"><pre class="code c"><a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-1" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-1" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;zmq.h&gt;</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-2" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-2" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;pthread.h&gt;</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-3" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-3" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-4" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-4" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-4"></a>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-5" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-5" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-5"></a><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="nf">worker_routine</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-6" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-6" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-6"></a><span class="w">    </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">receiver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zmq_socket</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">ZMQ_PULL</span><span class="p">);</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-7" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-7" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-7"></a><span class="w">    </span><span class="n">zmq_connect</span><span class="p">(</span><span class="n">receiver</span><span class="p">,</span><span class="w"> </span><span class="s">"inproc://workers"</span><span class="p">);</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-8" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-8" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-8"></a>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-9" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-9" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-9"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-10" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-10" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-10"></a><span class="w">        </span><span class="kt">char</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-11" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-11" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-11"></a><span class="w">        </span><span class="n">zmq_recv</span><span class="p">(</span><span class="n">receiver</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-12" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-12" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-12"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">"Received: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">);</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-13" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-13" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-14" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-14" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-14"></a>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-15" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-15" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-15"></a><span class="w">    </span><span class="n">zmq_close</span><span class="p">(</span><span class="n">receiver</span><span class="p">);</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-16" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-16" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-16"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-17" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-17" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-17"></a><span class="p">}</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-18" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-18" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-18"></a>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-19" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-19" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-19"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-20" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-20" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-20"></a><span class="w">    </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zmq_ctx_new</span><span class="p">();</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-21" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-21" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-21"></a><span class="w">    </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">sender</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zmq_socket</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">ZMQ_PUSH</span><span class="p">);</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-22" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-22" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-22"></a>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-23" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-23" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-23"></a><span class="w">    </span><span class="n">zmq_bind</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="s">"inproc://workers"</span><span class="p">);</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-24" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-24" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-24"></a>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-25" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-25" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-25"></a><span class="w">    </span><span class="n">pthread_t</span><span class="w"> </span><span class="n">worker</span><span class="p">;</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-26" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-26" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-26"></a><span class="w">    </span><span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">worker</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">worker_routine</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">);</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-27" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-27" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-27"></a>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-28" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-28" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-28"></a><span class="w">    </span><span class="c1">// Send messages</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-29" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-29" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-29"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Hello Worker!"</span><span class="p">;</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-30" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-30" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-30"></a><span class="w">    </span><span class="n">zmq_send</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">message</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-31" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-31" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-31"></a>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-32" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-32" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-32"></a><span class="w">    </span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">  </span><span class="c1">// Allow time for message processing</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-33" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-33" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-33"></a>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-34" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-34" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-34"></a><span class="w">    </span><span class="n">zmq_close</span><span class="p">(</span><span class="n">sender</span><span class="p">);</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-35" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-35" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-35"></a><span class="w">    </span><span class="n">zmq_ctx_destroy</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-36" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-36" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-36"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="rest_code_161e7ac2c18c419aa8cb0790b36511e6-37" name="rest_code_161e7ac2c18c419aa8cb0790b36511e6-37" href="#rest_code_161e7ac2c18c419aa8cb0790b36511e6-37"></a><span class="p">}</span>
+</pre></div>
+</section><section id="high-water-mark-and-flow-control"><h3>High Water Mark and Flow Control</h3>
+<p>ZeroMQ provides flow control through the High Water Mark (HWM) feature. When the HWM is reached, ZeroMQ will either block or drop messages depending on the socket type and configuration:</p>
+<div class="code"><pre class="code c"><a id="rest_code_65641e36b0704015bdb4f6b3be5bf5a7-1" name="rest_code_65641e36b0704015bdb4f6b3be5bf5a7-1" href="#rest_code_65641e36b0704015bdb4f6b3be5bf5a7-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">hwm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
+<a id="rest_code_65641e36b0704015bdb4f6b3be5bf5a7-2" name="rest_code_65641e36b0704015bdb4f6b3be5bf5a7-2" href="#rest_code_65641e36b0704015bdb4f6b3be5bf5a7-2"></a><span class="n">zmq_setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span><span class="w"> </span><span class="n">ZMQ_SNDHWM</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">hwm</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">hwm</span><span class="p">));</span>
+<a id="rest_code_65641e36b0704015bdb4f6b3be5bf5a7-3" name="rest_code_65641e36b0704015bdb4f6b3be5bf5a7-3" href="#rest_code_65641e36b0704015bdb4f6b3be5bf5a7-3"></a>
+<a id="rest_code_65641e36b0704015bdb4f6b3be5bf5a7-4" name="rest_code_65641e36b0704015bdb4f6b3be5bf5a7-4" href="#rest_code_65641e36b0704015bdb4f6b3be5bf5a7-4"></a><span class="c1">// To prevent dropping messages when HWM is reached</span>
+<a id="rest_code_65641e36b0704015bdb4f6b3be5bf5a7-5" name="rest_code_65641e36b0704015bdb4f6b3be5bf5a7-5" href="#rest_code_65641e36b0704015bdb4f6b3be5bf5a7-5"></a><span class="kt">int</span><span class="w"> </span><span class="n">nodrop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="rest_code_65641e36b0704015bdb4f6b3be5bf5a7-6" name="rest_code_65641e36b0704015bdb4f6b3be5bf5a7-6" href="#rest_code_65641e36b0704015bdb4f6b3be5bf5a7-6"></a><span class="n">zmq_setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span><span class="w"> </span><span class="n">ZMQ_XPUB_NODROP</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">nodrop</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">nodrop</span><span class="p">));</span>
+</pre></div>
+</section><section id="protocol-buffers-integration"><h3>Protocol Buffers Integration</h3>
+<p>Since ZeroMQ only transfers raw bytes, it pairs well with Protocol Buffers for structured data serialization. Here's an example using both C++ and Go:</p>
+<p>First, define your protocol buffer:</p>
+<div class="code"><pre class="code protobuf"><a id="rest_code_889c32d7573a41fcb9ee605483e7827e-1" name="rest_code_889c32d7573a41fcb9ee605483e7827e-1" href="#rest_code_889c32d7573a41fcb9ee605483e7827e-1"></a><span class="c1">// message.proto</span>
+<a id="rest_code_889c32d7573a41fcb9ee605483e7827e-2" name="rest_code_889c32d7573a41fcb9ee605483e7827e-2" href="#rest_code_889c32d7573a41fcb9ee605483e7827e-2"></a><span class="k">syntax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"proto3"</span><span class="p">;</span>
+<a id="rest_code_889c32d7573a41fcb9ee605483e7827e-3" name="rest_code_889c32d7573a41fcb9ee605483e7827e-3" href="#rest_code_889c32d7573a41fcb9ee605483e7827e-3"></a>
+<a id="rest_code_889c32d7573a41fcb9ee605483e7827e-4" name="rest_code_889c32d7573a41fcb9ee605483e7827e-4" href="#rest_code_889c32d7573a41fcb9ee605483e7827e-4"></a><span class="kd">message</span><span class="w"> </span><span class="nc">DataMessage</span><span class="w"> </span><span class="p">{</span>
+<a id="rest_code_889c32d7573a41fcb9ee605483e7827e-5" name="rest_code_889c32d7573a41fcb9ee605483e7827e-5" href="#rest_code_889c32d7573a41fcb9ee605483e7827e-5"></a><span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="na">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="rest_code_889c32d7573a41fcb9ee605483e7827e-6" name="rest_code_889c32d7573a41fcb9ee605483e7827e-6" href="#rest_code_889c32d7573a41fcb9ee605483e7827e-6"></a><span class="w">    </span><span class="kt">int64</span><span class="w"> </span><span class="na">timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<a id="rest_code_889c32d7573a41fcb9ee605483e7827e-7" name="rest_code_889c32d7573a41fcb9ee605483e7827e-7" href="#rest_code_889c32d7573a41fcb9ee605483e7827e-7"></a><span class="p">}</span>
+</pre></div>
+<p>Using it in Go:</p>
+<div class="code"><pre class="code go"><a id="rest_code_1c6de8b5d43149848033065349555fad-1" name="rest_code_1c6de8b5d43149848033065349555fad-1" href="#rest_code_1c6de8b5d43149848033065349555fad-1"></a><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-2" name="rest_code_1c6de8b5d43149848033065349555fad-2" href="#rest_code_1c6de8b5d43149848033065349555fad-2"></a>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-3" name="rest_code_1c6de8b5d43149848033065349555fad-3" href="#rest_code_1c6de8b5d43149848033065349555fad-3"></a><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-4" name="rest_code_1c6de8b5d43149848033065349555fad-4" href="#rest_code_1c6de8b5d43149848033065349555fad-4"></a><span class="w">    </span><span class="s">"log"</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-5" name="rest_code_1c6de8b5d43149848033065349555fad-5" href="#rest_code_1c6de8b5d43149848033065349555fad-5"></a><span class="w">    </span><span class="nx">pb</span><span class="w"> </span><span class="s">"path/to/generated/proto"</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-6" name="rest_code_1c6de8b5d43149848033065349555fad-6" href="#rest_code_1c6de8b5d43149848033065349555fad-6"></a><span class="w">    </span><span class="s">"github.com/pebbe/zmq4"</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-7" name="rest_code_1c6de8b5d43149848033065349555fad-7" href="#rest_code_1c6de8b5d43149848033065349555fad-7"></a><span class="w">    </span><span class="s">"google.golang.org/protobuf/proto"</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-8" name="rest_code_1c6de8b5d43149848033065349555fad-8" href="#rest_code_1c6de8b5d43149848033065349555fad-8"></a><span class="p">)</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-9" name="rest_code_1c6de8b5d43149848033065349555fad-9" href="#rest_code_1c6de8b5d43149848033065349555fad-9"></a>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-10" name="rest_code_1c6de8b5d43149848033065349555fad-10" href="#rest_code_1c6de8b5d43149848033065349555fad-10"></a><span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-11" name="rest_code_1c6de8b5d43149848033065349555fad-11" href="#rest_code_1c6de8b5d43149848033065349555fad-11"></a><span class="w">    </span><span class="nx">socket</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">zmq4</span><span class="p">.</span><span class="nx">NewSocket</span><span class="p">(</span><span class="nx">zmq4</span><span class="p">.</span><span class="nx">PULL</span><span class="p">)</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-12" name="rest_code_1c6de8b5d43149848033065349555fad-12" href="#rest_code_1c6de8b5d43149848033065349555fad-12"></a><span class="w">    </span><span class="k">defer</span><span class="w"> </span><span class="nx">socket</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-13" name="rest_code_1c6de8b5d43149848033065349555fad-13" href="#rest_code_1c6de8b5d43149848033065349555fad-13"></a>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-14" name="rest_code_1c6de8b5d43149848033065349555fad-14" href="#rest_code_1c6de8b5d43149848033065349555fad-14"></a><span class="w">    </span><span class="nx">socket</span><span class="p">.</span><span class="nx">Bind</span><span class="p">(</span><span class="s">"tcp://*:5555"</span><span class="p">)</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-15" name="rest_code_1c6de8b5d43149848033065349555fad-15" href="#rest_code_1c6de8b5d43149848033065349555fad-15"></a>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-16" name="rest_code_1c6de8b5d43149848033065349555fad-16" href="#rest_code_1c6de8b5d43149848033065349555fad-16"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-17" name="rest_code_1c6de8b5d43149848033065349555fad-17" href="#rest_code_1c6de8b5d43149848033065349555fad-17"></a><span class="w">        </span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">socket</span><span class="p">.</span><span class="nx">RecvBytes</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-18" name="rest_code_1c6de8b5d43149848033065349555fad-18" href="#rest_code_1c6de8b5d43149848033065349555fad-18"></a><span class="w">        </span><span class="nx">msg</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">pb</span><span class="p">.</span><span class="nx">DataMessage</span><span class="p">{}</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-19" name="rest_code_1c6de8b5d43149848033065349555fad-19" href="#rest_code_1c6de8b5d43149848033065349555fad-19"></a><span class="w">        </span><span class="nx">proto</span><span class="p">.</span><span class="nx">Unmarshal</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">msg</span><span class="p">)</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-20" name="rest_code_1c6de8b5d43149848033065349555fad-20" href="#rest_code_1c6de8b5d43149848033065349555fad-20"></a><span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">"Received: %s at %d"</span><span class="p">,</span><span class="w"> </span><span class="nx">msg</span><span class="p">.</span><span class="nx">Content</span><span class="p">,</span><span class="w"> </span><span class="nx">msg</span><span class="p">.</span><span class="nx">Timestamp</span><span class="p">)</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-21" name="rest_code_1c6de8b5d43149848033065349555fad-21" href="#rest_code_1c6de8b5d43149848033065349555fad-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="rest_code_1c6de8b5d43149848033065349555fad-22" name="rest_code_1c6de8b5d43149848033065349555fad-22" href="#rest_code_1c6de8b5d43149848033065349555fad-22"></a><span class="p">}</span>
+</pre></div>
+</section><section id="asynchronous-message-emission"><h3>Asynchronous Message Emission</h3>
+<p>ZeroMQ supports non-blocking sends using the <code class="docutils literal">ZMQ_DONTWAIT</code> flag:</p>
+<div class="code"><pre class="code c"><a id="rest_code_75942c5f8ed94bc2b5bb330fcea667fc-1" name="rest_code_75942c5f8ed94bc2b5bb330fcea667fc-1" href="#rest_code_75942c5f8ed94bc2b5bb330fcea667fc-1"></a><span class="n">zmq_send</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="n">ZMQ_DONTWAIT</span><span class="p">);</span>
+<a id="rest_code_75942c5f8ed94bc2b5bb330fcea667fc-2" name="rest_code_75942c5f8ed94bc2b5bb330fcea667fc-2" href="#rest_code_75942c5f8ed94bc2b5bb330fcea667fc-2"></a><span class="c1">// Code continues immediately without waiting</span>
+</pre></div>
+</section><section id="performance-considerations"><h3>Performance Considerations</h3>
+<p>ZeroMQ is particularly well-suited for high-performance scenarios where:</p>
+<ol class="arabic simple">
+<li><p>You need to decouple the message producer from the consumer</p></li>
+<li><p>The critical section needs to emit messages without blocking</p></li>
+<li><p>You want to avoid the overhead of a message broker</p></li>
+<li><p>You need reliable message delivery without managing it yourself</p></li>
+</ol>
+<p>The library handles many complex aspects automatically:</p>
+<ul class="simple">
+<li><p>Message framing</p></li>
+<li><p>Connection handling and reconnection</p></li>
+<li><p>Message queuing</p></li>
+<li><p>Fair message distribution</p></li>
+<li><p>Transport abstraction</p></li>
+</ul></section><section id="conclusion"><h3>Conclusion</h3>
+<p>When you need a lightweight, broker-less messaging solution with good performance characteristics, ZeroMQ provides an excellent balance of features and simplicity. It's particularly valuable in scenarios where you need to quickly implement reliable inter-process or inter-thread communication without the overhead of a full message broker infrastructure.</p>
+<p>While it may not replace more robust solutions like Kafka for large-scale distributed systems, ZeroMQ fills an important niche for local and small-scale distributed messaging needs, especially when performance is a critical factor.</p>
+</section><section id="useful-links"><h3>Useful Links</h3>
+<ul class="simple">
+<li><p>ZeroMQ Official Website: <a class="reference external" href="https://zeromq.org/">https://zeromq.org/</a></p></li>
+<li><p>ZeroMQ Documentation: <a class="reference external" href="https://zeromq.org/get-started/">https://zeromq.org/get-started/</a></p></li>
+<li><p>Protocol Buffers Official Website: <a class="reference external" href="https://protobuf.dev/">https://protobuf.dev/</a></p></li>
+<li><p>Protocol Buffers Documentation: <a class="reference external" href="https://protobuf.dev/overview/">https://protobuf.dev/overview/</a></p></li>
+<li><p>ZeroMQ Guide: <a class="reference external" href="https://zguide.zeromq.org/">https://zguide.zeromq.org/</a></p></li>
+</ul></section></section>
+</div>
+    <aside class="postpromonav"><nav><p itemprop="keywords" class="tags">
+            <span class="tag"><a class="p-category" href="../../categories/c/" rel="tag">C</a></span>
+            <span class="tag"><a class="p-category" href="../../categories/golang/" rel="tag">golang</a></span>
+            <span class="tag"><a class="p-category" href="../../categories/zeromq/" rel="tag">ZeroMQ</a></span>
+      </p>
+
+            <div class="pager hidden-print pagination">
+
+            <span class="previous pagination-item older">
+                <a href="../lightweight-nodejs-background-job-scheduler/" rel="prev" title="Building a Lightweight Node.js Background Job Scheduler: A Practical Solution for Simple Web Applications">
+                Previous post
+                </a>
+            </span>
+
+
+            <span class="next pagination-item newer">
+Next post
+            </span>
+
+        </div>
+
+    </nav></aside></article>
+</div>
+            <script src="../../assets/js/all-nocdn.js"></script><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>

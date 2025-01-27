@@ -10,12 +10,16 @@
   <lastmod>2025-01-18T16:22:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/c.xml</loc>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_boilerplate.xml</loc>
   <lastmod>2025-01-18T16:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_development.xml</loc>
-  <lastmod>2025-01-18T16:22:00Z</lastmod>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cloud-native.xml</loc>
@@ -28,6 +32,10 @@
  <sitemap>
   <loc>https://alexpacio.github.io/categories/fastapi.xml</loc>
   <lastmod>2025-01-18T16:22:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/golang.xml</loc>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/k6.xml</loc>
@@ -58,11 +66,15 @@
   <lastmod>2025-01-18T16:22:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/zeromq.xml</loc>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/rss.xml</loc>
-  <lastmod>2025-01-18T16:22:00Z</lastmod>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/sitemap.xml</loc>
-  <lastmod>2025-01-18T16:53:00Z</lastmod>
+  <lastmod>2025-01-27T19:44:00Z</lastmod>
  </sitemap>
 </sitemapindex>
