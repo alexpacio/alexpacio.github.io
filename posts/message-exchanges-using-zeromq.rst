@@ -1,6 +1,6 @@
 .. title: Exchanging messages between processes (or even threads within the same program) using ZeroMQ
 .. slug: message-exchanges-using-zeromq
-.. date: 2025-01-27 20:00:00 UTC
+.. date: 2025-01-27 18:00:00 UTC
 .. tags: C, golang, ZeroMQ
 .. category: Development
 .. author: Alessandro Bolletta
@@ -24,13 +24,11 @@ ZeroMQ (ØMQ) is a high-performance asynchronous messaging library aimed at use 
 Supported Transport Protocols
 -----------------------------
 
-ZeroMQ supports various transport protocols through different URI schemes:
+ZeroMQ supports various transport protocols through different URI schemes where the main ones are:
 
 - ``tcp://`` - TCP transport
 - ``ipc://`` - Inter-process communication (Unix domain sockets)
 - ``inproc://`` - In-process communication between threads
-- ``pgm://`` - Pragmatic General Multicast
-- ``epgm://`` - Encapsulated PGM
 
 Thread Safety and Context Management
 ------------------------------------
