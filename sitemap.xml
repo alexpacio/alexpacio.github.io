@@ -19,11 +19,11 @@
  </url>
  <url>
   <loc>https://alexpacio.github.io/archive.html</loc>
-  <lastmod>2025-01-27T21:01:00Z</lastmod>
+  <lastmod>2025-02-02T15:01:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/</loc>
-  <lastmod>2025-01-27T19:44:00Z</lastmod>
+  <lastmod>2025-02-02T15:01:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/background-jobs/</loc>
@@ -46,6 +46,14 @@
   <lastmod>2025-01-18T16:22:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/containers/</loc>
+  <lastmod>2025-02-02T15:01:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/development/</loc>
+  <lastmod>2025-02-02T15:01:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/categories/docker/</loc>
   <lastmod>2025-01-18T16:22:00Z</lastmod>
  </url>
@@ -56,6 +64,10 @@
  <url>
   <loc>https://alexpacio.github.io/categories/golang/</loc>
   <lastmod>2025-01-27T19:44:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/infrastructure/</loc>
+  <lastmod>2025-02-02T15:01:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/k6/</loc>
@@ -78,6 +90,14 @@
   <lastmod>2025-01-18T16:22:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/security/</loc>
+  <lastmod>2025-02-02T15:01:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/static-linking/</loc>
+  <lastmod>2025-02-02T15:01:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/categories/telegram/</loc>
   <lastmod>2025-01-18T16:22:00Z</lastmod>
  </url>
@@ -96,6 +116,10 @@
  <url>
   <loc>https://alexpacio.github.io/posts/hello-world/</loc>
   <lastmod>2025-01-18T16:22:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/posts/hidden-costs-static-linking-containerization/</loc>
+  <lastmod>2025-02-02T15:01:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/posts/lightweight-nodejs-background-job-scheduler/</loc>
