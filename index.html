@@ -12,7 +12,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="https://alexpacio.github.io/">
 <link rel="icon" href="files/favicon.ico" sizes="16x16">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/hidden-costs-static-linking-containerization/" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/embracing-the-ipv6-revolution-a-homelab-story/" type="text/html">
 </head>
 <body class="">
     <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -51,7 +51,22 @@
     <div class="content container" id="content">
     
 <div class="post">
-    <article class="post h-entry post-text"><header><h1 class="post-title p-name"><a href="posts/hidden-costs-static-linking-containerization/" class="u-url">The Hidden Costs of Static Linking and Containerization: A Critical Analysis</a></h1>
+    <article class="post h-entry post-text"><header><h1 class="post-title p-name"><a href="posts/embracing-the-ipv6-revolution-a-homelab-story/" class="u-url">Embracing the IPv6 Revolution: A Homelab Story</a></h1>
+        <div class="metadata">
+            <span class="post-date dateline"><time class="published dt-published" datetime="2025-05-30T10:00:00Z" title="2025-05-30 10:00">2025-05-30 10:00</time></span>
+        </div>
+    </header><div class="e-content entry-content">
+    <p>The other day, I was contacted by a friend of mine asking for help setting up a home NAS (aka Network Attached Storage) based on OpenMediaVault. While he's an enthusiast, he wasn't able to properly configure all the technical aspects of the setup.</p>
+<p>The NAS world is increasingly resembling a homelab rather than just file storage. Using Docker, you can get enterprise-grade software and setups running with quite simple steps.</p>
+<p>After setting up the Docker containers, we faced the usual issue that most homelabs encounter these days: his internet connection was behind a CGNAT for IPv4 networking. However, I was pleasantly surprised to find an IPv6 public subnet already configured!</p>
+<p>Since his intent was to use the NAS via LAN or his mobile phone (and those of his family/relatives), we investigated and figured out that various Italian 4G/5G carriers were providing IPv6 connectivity. So, we decided to give it a try.</p>
+<p>I am surprised that IPv6 is still such an unexplored world, even though it's already here and many of us haven't even noticed. Carriers are starting to support it seriously, and the IPv4 scarcity situation is getting worse as time goes by.</p>
+<p>One of the most interesting things about using IPv6 is that it truly enables <em>peer-to-peer</em> communication, as you no longer need inbound or outbound IP address translations (NAT) to communicate with others.</p>
+<p>IPv6 is poised to be one of the biggest <em>silent</em> revolutions in the Internet/networking field. While it might not offer apparently groundbreaking innovations to the general public, it will enable us to be more interconnected.</p>
+<p>The Internet is meant to be a democratic platform. However, if users are masked or filtered by CGNAT, they can never truly use the Internet actively. They become passive actors on the scene, mere consumers, or producers reliant on someone else's services or infrastructure. IPv6 enables a more democratic approach, where we can connect all of our devices, even personal ones, directly to the web and interact with others' devices without middlemen.</p>
+<p>If you have a homelab, give IPv6 a try! Be prepared for the revolution and the major move to IPv6, which might happen sooner rather than later—even if you'd given up waiting for it!</p>
+    </div>
+    </article><article class="post h-entry post-text"><header><h1 class="post-title p-name"><a href="posts/hidden-costs-static-linking-containerization/" class="u-url">The Hidden Costs of Static Linking and Containerization: A Critical Analysis</a></h1>
         <div class="metadata">
             <span class="post-date dateline"><time class="published dt-published" datetime="2025-02-02T07:00:00Z" title="2025-02-02 07:00">2025-02-02 07:00</time></span>
         </div>

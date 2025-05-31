@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html prefix="
+" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="A personal experience setting up a home NAS and discovering the readiness of IPv6, even behind CGNAT, and its implications for a more democratic internet.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alessandro Bolletta · Embracing the IPv6 Revolution: A Homelab Story </title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="https://alexpacio.github.io/posts/embracing-the-ipv6-revolution-a-homelab-story/">
+<link rel="icon" href="../../files/favicon.ico" sizes="16x16">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Alessandro Bolletta">
+<link rel="prev" href="../hidden-costs-static-linking-containerization/" title="The Hidden Costs of Static Linking and Containerization: A Critical Analysis" type="text/html">
+</head>
+<body class="">
+    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+    <div class="hsidebar">
+        <div class="container sidebar-sticky">
+            <div class="sidebar-about">
+              <h1>
+                <a href="https://alexpacio.github.io/">
+                      <h1 id="brand"><a href="https://alexpacio.github.io/" title="Alessandro Bolletta" rel="home">
+
+        <span id="blog-title">Alessandro Bolletta</span>
+    </a></h1>
+
+                </a>
+              </h1>
+                <p class="lead">Tells the story of a guy's mishaps and shenanigans with computers.</p>
+
+            </div>
+                <nav id="menu" role="navigation" class="sidebar-nav"><a class="sidebar-nav-item" href="../../">Home</a>
+        <a class="sidebar-nav-item" href="../../archive.html">Archive</a>
+        <a class="sidebar-nav-item" href="../../files/cv.pdf">CV</a>
+        <a class="sidebar-nav-item" href="../../pages/about/">About me</a>
+        <a class="sidebar-nav-item" href="https://github.com/alexpacio">My Github</a>
+    
+    
+    </nav><footer id="footer"><span class="copyright">
+              Contents © 2025         <a href="mailto:alexpacio91%20at%20gmail%20dot%20com">Alessandro Bolletta</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            </span>
+            
+            
+        </footer>
+</div>
+    </div>
+
+    <div class="content container" id="content">
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><h1 class="post-title p-name"><a href="." class="u-url">Embracing the IPv6 Revolution: A Homelab Story</a></h1>
+
+    <span class="post-date">
+      <time class="published dt-published" datetime="2025-05-30T10:00:00Z" itemprop="datePublished" title="2025-05-30 10:00">2025-05-30 10:00</time></span>
+        <meta name="description" itemprop="description" content="A personal experience setting up a home NAS and discovering the readiness of IPv6, even behind CGNAT, and its implications for a more democratic internet.">
+<div class="e-content entry-content" itemprop="articleBody text">
+    <p>The other day, I was contacted by a friend of mine asking for help setting up a home NAS (aka Network Attached Storage) based on OpenMediaVault. While he's an enthusiast, he wasn't able to properly configure all the technical aspects of the setup.</p>
+<p>The NAS world is increasingly resembling a homelab rather than just file storage. Using Docker, you can get enterprise-grade software and setups running with quite simple steps.</p>
+<p>After setting up the Docker containers, we faced the usual issue that most homelabs encounter these days: his internet connection was behind a CGNAT for IPv4 networking. However, I was pleasantly surprised to find an IPv6 public subnet already configured!</p>
+<p>Since his intent was to use the NAS via LAN or his mobile phone (and those of his family/relatives), we investigated and figured out that various Italian 4G/5G carriers were providing IPv6 connectivity. So, we decided to give it a try.</p>
+<p>I am surprised that IPv6 is still such an unexplored world, even though it's already here and many of us haven't even noticed. Carriers are starting to support it seriously, and the IPv4 scarcity situation is getting worse as time goes by.</p>
+<p>One of the most interesting things about using IPv6 is that it truly enables <em>peer-to-peer</em> communication, as you no longer need inbound or outbound IP address translations (NAT) to communicate with others.</p>
+<p>IPv6 is poised to be one of the biggest <em>silent</em> revolutions in the Internet/networking field. While it might not offer apparently groundbreaking innovations to the general public, it will enable us to be more interconnected.</p>
+<p>The Internet is meant to be a democratic platform. However, if users are masked or filtered by CGNAT, they can never truly use the Internet actively. They become passive actors on the scene, mere consumers, or producers reliant on someone else's services or infrastructure. IPv6 enables a more democratic approach, where we can connect all of our devices, even personal ones, directly to the web and interact with others' devices without middlemen.</p>
+<p>If you have a homelab, give IPv6 a try! Be prepared for the revolution and the major move to IPv6, which might happen sooner rather than later—even if you'd given up waiting for it!</p>
+    </div>
+    <aside class="postpromonav"><nav><p itemprop="keywords" class="tags">
+            <span class="tag"><a class="p-category" href="../../categories/cgnat/" rel="tag">cgnat</a></span>
+            <span class="tag"><a class="p-category" href="../../categories/docker/" rel="tag">Docker</a></span>
+            <span class="tag"><a class="p-category" href="../../categories/homelab/" rel="tag">homelab</a></span>
+            <span class="tag"><a class="p-category" href="../../categories/internet/" rel="tag">internet</a></span>
+            <span class="tag"><a class="p-category" href="../../categories/ipv6/" rel="tag">ipv6</a></span>
+            <span class="tag"><a class="p-category" href="../../categories/nas/" rel="tag">nas</a></span>
+            <span class="tag"><a class="p-category" href="../../categories/networking/" rel="tag">networking</a></span>
+            <span class="tag"><a class="p-category" href="../../categories/openmediavault/" rel="tag">openmediavault</a></span>
+      </p>
+
+            <div class="pager hidden-print pagination">
+
+            <span class="previous pagination-item older">
+                <a href="../hidden-costs-static-linking-containerization/" rel="prev" title="The Hidden Costs of Static Linking and Containerization: A Critical Analysis">
+                Previous post
+                </a>
+            </span>
+
+
+            <span class="next pagination-item newer">
+Next post
+            </span>
+
+        </div>
+
+    </nav></aside></article>
+</div>
+            <script src="../../assets/js/all-nocdn.js"></script><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>
