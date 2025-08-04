@@ -1,0 +1,294 @@
+/* Custom enhancements for IT talks and developer content */
+
+/* Enhanced code block styling */
+.codehilite {
+    border: 1px solid #333;
+    border-radius: 4px;
+    background: #2d2d2d !important;
+    margin: 1rem 0;
+}
+
+.codehilite pre {
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto;
+    background: transparent !important;
+}
+
+/* Terminal-style command blocks */
+.terminal {
+    background: #000;
+    color: #00ff00;
+    padding: 1rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    border: 1px solid #333;
+    margin: 1rem 0;
+}
+
+.terminal::before {
+    content: "$ ";
+    color: #00ff00;
+    font-weight: bold;
+}
+
+/* Enhanced blockquotes for tech tips */
+blockquote {
+    border-left: 4px solid #00ff00;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    background: rgba(0, 255, 0, 0.1);
+    font-style: italic;
+}
+
+/* Tech badge styling for tags */
+.tag {
+    display: inline-block;
+    background: #333;
+    color: #00ff00;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    margin: 0.2rem;
+    text-decoration: none;
+    border: 1px solid #555;
+}
+
+.tag:hover {
+    background: #00ff00;
+    color: #000;
+    text-decoration: none;
+}
+
+/* Enhanced navigation for tech content */
+.navigation-links {
+    font-family: 'Courier New', monospace;
+}
+
+/* Code inline styling */
+code {
+    background: #333;
+    color: #00ff00;
+    padding: 0.1rem 0.3rem;
+    border-radius: 2px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+/* Alert boxes for important tech info */
+.alert {
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 4px;
+    border-left: 4px solid;
+}
+
+.alert-info {
+    background: rgba(0, 123, 255, 0.1);
+    border-left-color: #007bff;
+    color: #007bff;
+}
+
+.alert-warning {
+    background: rgba(255, 193, 7, 0.1);
+    border-left-color: #ffc107;
+    color: #ffc107;
+}
+
+.alert-danger {
+    background: rgba(220, 53, 69, 0.1);
+    border-left-color: #dc3545;
+    color: #dc3545;
+}
+
+/* Enhanced post metadata */
+.post-meta {
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.post-meta a {
+    color: #00ff00;
+    text-decoration: none;
+}
+
+.post-meta a:hover {
+    text-decoration: underline;
+}
+
+/* Category and tag lists */
+.category-list, .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .codehilite {
+        margin: 0.5rem -1rem;
+        border-radius: 0;
+    }
+    
+    .terminal {
+        margin: 0.5rem -1rem;
+        border-radius: 0;
+    }
+}
+
+/* Enhanced table styling for technical content */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    background: #1a1a1a;
+}
+
+table th,
+table td {
+    padding: 0.75rem;
+    text-align: left;
+    border: 1px solid #333;
+}
+
+table th {
+    background: #333;
+    color: #00ff00;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Enhanced link styling */
+a {
+    color: #00ff00;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #00cc00;
+    text-decoration: underline;
+}
+
+/* Post title enhancements */
+.post-title {
+    color: #00ff00;
+    border-bottom: 2px solid #333;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Archive page enhancements */
+.archive-year {
+    color: #00ff00;
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem 0;
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.5rem;
+}
+
+.archive-post {
+    margin: 0.5rem 0;
+    padding: 0.5rem 0;
+    border-bottom: 1px dotted #333;
+}
+
+.archive-date {
+    color: #888;
+    font-size: 0.9rem;
+    margin-right: 1rem;
+}
+
+/* Logo styling */
+#logo {
+    height: 60px;
+    width: auto;
+    margin-right: 1rem;
+    vertical-align: middle;
+    filter: drop-shadow(0 0 5px rgba(0, 255, 0, 0.3));
+}
+
+#brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+#brand:hover #logo {
+    filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.5));
+    transition: filter 0.3s ease;
+}
+
+/* Header enhancements */
+#header {
+    border-bottom: 1px solid #333;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+#blog-title {
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+#blog-slogan {
+    color: #888;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin: 0.5rem 0 0 0;
+    padding: 0;
+    opacity: 0.8;
+}
+
+/* Enhanced Read More styling */
+.more {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.more a {
+    display: inline-block;
+    background: #333;
+    color: #00ff00;
+    padding: 0.5rem 1rem;
+    border: 1px solid #00ff00;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.more a:hover {
+    background: #00ff00;
+    color: #000;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 255, 0, 0.3);
+}
+
+.more a::before {
+    content: "» ";
+    font-weight: bold;
+}
+
+/* Post title styling on index */
+.post-text h1 a {
+    color: #00ff00;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom-color 0.3s ease;
+}
+
+.post-text h1 a:hover {
+    border-bottom-color: #00ff00;
+    text-decoration: none;
+}

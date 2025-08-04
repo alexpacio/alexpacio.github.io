@@ -16,6 +16,8 @@ Some may certainly say that, when you are writing so called "daemons" under Linu
 
 For example, under Linux you can use D-Bus, which allows IPC at scale within the OS scope. Or, in the microservices space, you can leverage on message brokers like RabbitMQ or Kafka to stream your messages through sophisticated routing logic. However, at times you are just looking for something trivial and simple to send and queue messages where at the same time you look for brokerless setup but still you are willing to leverage on some of the features that message queuing systems offer for free with ease. That's where ZeroMQ comes in.
 
+.. TEASER_END
+
 What is ZeroMQ?
 ---------------
 

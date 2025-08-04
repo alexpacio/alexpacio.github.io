@@ -1,65 +1,82 @@
 <!DOCTYPE html>
-<html prefix="
-" lang="en">
+<html prefix="" lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="description" content="An analysis of why static linking and containerization may be harmful for IT ecosystem">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alessandro Bolletta · The Hidden Costs of Static Linking and Containerization: A Critical Analysis </title>
-<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
-<meta content="#5670d4" name="theme-color">
+<meta name="viewport" content="width=device-width">
+<title>The Hidden Costs of Static Linking and Containerization: A Critical Analysis | Alessandro's View</title>
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/dark.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#00ff00">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
 <link rel="canonical" href="https://alexpacio.github.io/posts/hidden-costs-static-linking-containerization/">
+<link rel="icon" href="../../files/favicon.svg" sizes="any">
 <link rel="icon" href="../../files/favicon.ico" sizes="16x16">
 <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Alessandro Bolletta">
 <link rel="prev" href="../message-exchanges-using-zeromq/" title="Exchanging messages between processes (or even threads within the same program) using ZeroMQ" type="text/html">
 <link rel="next" href="../embracing-the-ipv6-revolution-a-homelab-story/" title="Embracing the IPv6 Revolution: A Homelab Story" type="text/html">
+<meta property="og:site_name" content="Alessandro's View">
+<meta property="og:title" content="The Hidden Costs of Static Linking and Containerization: A Critical An">
+<meta property="og:url" content="https://alexpacio.github.io/posts/hidden-costs-static-linking-containerization/">
+<meta property="og:description" content="An analysis of why static linking and containerization may be harmful for IT ecosystem">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-02-02T07:00:00Z">
+<meta property="article:tag" content="containers">
+<meta property="article:tag" content="development">
+<meta property="article:tag" content="infrastructure">
+<meta property="article:tag" content="security">
+<meta property="article:tag" content="static-linking">
 </head>
-<body class="">
-    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+<body class="hack dark">
 
-    <div class="hsidebar">
-        <div class="container sidebar-sticky">
-            <div class="sidebar-about">
-              <h1>
-                <a href="https://alexpacio.github.io/">
-                      <h1 id="brand"><a href="https://alexpacio.github.io/" title="Alessandro Bolletta" rel="home">
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="container">
+         
+    <header id="header"><h1 id="brand"><a href="../../" title="Alessandro's View" rel="home">
+        <img src="../../files/logo.svg" alt="Alessandro's View" id="logo"></a></h1>
+        <p id="blog-slogan">Sharing my views about computing. Debunking hype. Promoting what's worth.</p>
 
-        <span id="blog-title">Alessandro Bolletta</span>
-    </a></h1>
+        
 
-                </a>
-              </h1>
-                <p class="lead">Tells the story of a guy's mishaps and shenanigans with computers.</p>
+        
+    <nav id="menu"><ul>
+<li><a href="../../">Home</a></li>
+                <li><a href="../../categories/">Topics</a></li>
+                <li><a href="../../archive.html">Archive</a></li>
+                <li><a href="../../pages/about/">About</a></li>
+                <li><a href="../../files/cv.pdf">CV</a></li>
+                <li><a href="https://github.com/alexpacio">GitHub</a></li>
 
-            </div>
-                <nav id="menu" role="navigation" class="sidebar-nav"><a class="sidebar-nav-item" href="../../">Home</a>
-        <a class="sidebar-nav-item" href="../../archive.html">Archive</a>
-        <a class="sidebar-nav-item" href="../../files/cv.pdf">CV</a>
-        <a class="sidebar-nav-item" href="../../pages/about/">About me</a>
-        <a class="sidebar-nav-item" href="https://github.com/alexpacio">My Github</a>
+    
+
     
     
-    </nav><footer id="footer"><span class="copyright">
-              Contents © 2025         <a href="mailto:alexpacio91%20at%20gmail%20dot%20com">Alessandro Bolletta</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
-            </span>
-            
-            
-        </footer>
-</div>
-    </div>
+    </ul></nav></header><main id="content"><article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">The Hidden Costs of Static Linking and Containerization: A Critical Analysis</a></h1>
 
-    <div class="content container" id="content">
-<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><h1 class="post-title p-name"><a href="." class="u-url">The Hidden Costs of Static Linking and Containerization: A Critical Analysis</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
+                    Alessandro Bolletta
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2025-02-02T07:00:00Z" itemprop="datePublished" title="2025-02-02 07:00">2025-02-02 07:00</time></a>
+            </p>
+            
+        <p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
 
-    <span class="post-date">
-      <time class="published dt-published" datetime="2025-02-02T07:00:00Z" itemprop="datePublished" title="2025-02-02 07:00">2025-02-02 07:00</time></span>
-        <meta name="description" itemprop="description" content="An analysis of why static linking and containerization may be harmful for IT ecosystem">
-<div class="e-content entry-content" itemprop="articleBody text">
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
     <section id="statically-linked-programs-are-the-evil"><h2>Statically-linked Programs are the evil</h2>
 <p>The trend toward static linking represents a fundamental regression in software engineering principles. By bundling every dependency directly into the executable, we're not just bloating our binaries - we're actively dismantling decades of progress in software modularization. Each statically linked program becomes an island, disconnected from the ecosystem of shared improvements and security updates.</p>
-<p>Consider what happens when a critical vulnerability is discovered in a commonly used library. In a properly designed system using shared libraries, a single system update would protect all applications simultaneously. Instead, with static linking, we must embark on a complex and error-prone process of identifying every affected program, rebuilding each one individually, and ensuring they all get redeployed. This process isn't just inefficient - it's dangerously irresponsible and prone to oversights that could leave vulnerable versions running indefinitely.</p>
+<p>Consider what happens when a critical vulnerability is discovered in a commonly used library. In a properly designed system using shared libraries, a single system update would protect all applications simultaneously. Instead, with static linking, we must embark on a complex and error-prone process of identifying every affected program, rebuilding each one individually, and ensuring they all get redeployed.</p>
+<!-- TEASER_END -->
 </section><section id="containerized-programs-are-the-evil-with-an-uppercased-e-at-the-beginning"><h2>Containerized Programs are the Evil (with an uppercased E at the beginning)</h2>
 <p>If static linking is problematic, containerization compounds these issues exponentially. Not only do we face the fundamental problems of static linking, but we now multiply them across isolated environments. Each container becomes its own separate universe with redundant copies of shared resources, creating a nightmare of inefficiency and complexity.</p>
 <p>The storage implications alone are staggering. Where a traditional system might maintain one copy of a commonly used library, a containerized environment duplicates this library across potentially hundreds of containers. This multiplication effect extends to memory usage as well - shared libraries can no longer be shared across container boundaries, leading to massive memory bloat as each container loads its own copy of identical code.</p>
@@ -94,39 +111,29 @@
 <p>snap, flatpak, AppImage, Docker should not be taken so seriously as they pretend to be.</p>
 </section>
 </div>
-    <aside class="postpromonav"><nav><p itemprop="keywords" class="tags">
-            <span class="tag"><a class="p-category" href="../../categories/containers/" rel="tag">containers</a></span>
-            <span class="tag"><a class="p-category" href="../../categories/development/" rel="tag">development</a></span>
-            <span class="tag"><a class="p-category" href="../../categories/infrastructure/" rel="tag">infrastructure</a></span>
-            <span class="tag"><a class="p-category" href="../../categories/security/" rel="tag">security</a></span>
-            <span class="tag"><a class="p-category" href="../../categories/static-linking/" rel="tag">static-linking</a></span>
-      </p>
-
-            <div class="pager hidden-print pagination">
-
-            <span class="previous pagination-item older">
-                <a href="../message-exchanges-using-zeromq/" rel="prev" title="Exchanging messages between processes (or even threads within the same program) using ZeroMQ">
-                Previous post
-                </a>
-            </span>
-
-
-            <span class="next pagination-item newer">
-                <a href="../embracing-the-ipv6-revolution-a-homelab-story/" rel="next" title="Embracing the IPv6 Revolution: A Homelab Story">
-Next post
-              </a>
-            </span>
-
-        </div>
-
-    </nav></aside></article>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/containers/" rel="tag">containers</a></li>
+            <li><a class="tag p-category" href="../../categories/development/" rel="tag">development</a></li>
+            <li><a class="tag p-category" href="../../categories/infrastructure/" rel="tag">infrastructure</a></li>
+            <li><a class="tag p-category" href="../../categories/security/" rel="tag">security</a></li>
+            <li><a class="tag p-category" href="../../categories/static-linking/" rel="tag">static-linking</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../message-exchanges-using-zeromq/" rel="prev" title="Exchanging messages between processes (or even threads within the same program) using ZeroMQ">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../embracing-the-ipv6-revolution-a-homelab-story/" rel="next" title="Embracing the IPv6 Revolution: A Homelab Story">Next post</a>
+            </li>
+        </ul></nav></aside></article></main><footer id="footer"><p>Contents © 2025         <a href="mailto:alexpacio91%20at%20gmail%20dot%20com">Alessandro Bolletta</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
 </div>
-            <script src="../../assets/js/all-nocdn.js"></script><script>
-    baguetteBox.run('div#content', {
-        ignoreClass: 'islink',
-        captions: function(element) {
-            return element.getElementsByTagName('img')[0].alt;
-    }});
-    </script>
+    
+    
+
+    
+    
+    
 </body>
 </html>
