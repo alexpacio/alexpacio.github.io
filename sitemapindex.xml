@@ -15,7 +15,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/caching.xml</loc>
-  <lastmod>2025-08-04T14:58:00Z</lastmod>
+  <lastmod>2025-08-04T15:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_boilerplate.xml</loc>
@@ -23,7 +23,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_database.xml</loc>
-  <lastmod>2025-08-04T14:58:00Z</lastmod>
+  <lastmod>2025-08-04T15:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_development.xml</loc>
@@ -47,7 +47,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/database.xml</loc>
-  <lastmod>2025-08-04T14:58:00Z</lastmod>
+  <lastmod>2025-08-04T15:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/development.xml</loc>
@@ -67,11 +67,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/gtid.xml</loc>
-  <lastmod>2025-08-04T14:58:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://alexpacio.github.io/categories/high-availability.xml</loc>
-  <lastmod>2025-08-04T14:34:00Z</lastmod>
+  <lastmod>2025-08-04T15:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/homelab.xml</loc>
@@ -103,7 +99,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/mysql.xml</loc>
-  <lastmod>2025-08-04T14:58:00Z</lastmod>
+  <lastmod>2025-08-04T15:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/nas.xml</loc>
@@ -123,11 +119,11 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/performance.xml</loc>
-  <lastmod>2025-08-04T14:58:00Z</lastmod>
+  <lastmod>2025-08-04T15:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/proxysql.xml</loc>
-  <lastmod>2025-08-04T14:58:00Z</lastmod>
+  <lastmod>2025-08-04T15:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/pulumi.xml</loc>
@@ -135,19 +131,15 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/readyset.xml</loc>
-  <lastmod>2025-08-04T14:58:00Z</lastmod>
+  <lastmod>2025-08-04T15:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/replication.xml</loc>
-  <lastmod>2025-08-04T14:58:00Z</lastmod>
+  <lastmod>2025-08-04T15:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/security.xml</loc>
   <lastmod>2025-08-04T13:44:00Z</lastmod>
- </sitemap>
- <sitemap>
-  <loc>https://alexpacio.github.io/categories/semi-sync.xml</loc>
-  <lastmod>2025-08-04T14:34:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/static-linking.xml</loc>
@@ -167,10 +159,10 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/rss.xml</loc>
-  <lastmod>2025-08-04T14:58:00Z</lastmod>
+  <lastmod>2025-08-04T15:08:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/sitemap.xml</loc>
-  <lastmod>2025-08-04T14:58:00Z</lastmod>
+  <lastmod>2025-08-04T15:08:00Z</lastmod>
  </sitemap>
 </sitemapindex>
