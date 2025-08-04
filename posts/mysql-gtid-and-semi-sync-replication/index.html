@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html prefix="" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="A deep dive into MySQL GTID-based replication, semi-synchronous replication benefits, ProxySQL integration strategies, and modern caching solutions with Readyset">
+<meta name="viewport" content="width=device-width">
+<title>MySQL GTID, Semi-Sync Replication and Partial View Caching: A good compromise to scale easy and cheap | Alessandro's View</title>
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/dark.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#00ff00">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="https://alexpacio.github.io/posts/mysql-gtid-and-semi-sync-replication/">
+<link rel="icon" href="../../files/favicon.svg" sizes="any">
+<link rel="icon" href="../../files/favicon.ico" sizes="16x16">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Alessandro Bolletta">
+<link rel="prev" href="../embracing-the-ipv6-revolution-a-homelab-story/" title="Embracing the IPv6 Revolution: A Homelab Story" type="text/html">
+<meta property="og:site_name" content="Alessandro's View">
+<meta property="og:title" content="MySQL GTID, Semi-Sync Replication and Partial View Caching: A good com">
+<meta property="og:url" content="https://alexpacio.github.io/posts/mysql-gtid-and-semi-sync-replication/">
+<meta property="og:description" content="A deep dive into MySQL GTID-based replication, semi-synchronous replication benefits, ProxySQL integration strategies, and modern caching solutions with Readyset">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-08-03T16:01:13Z">
+<meta property="article:tag" content="caching">
+<meta property="article:tag" content="database">
+<meta property="article:tag" content="gtid">
+<meta property="article:tag" content="mysql">
+<meta property="article:tag" content="performance">
+<meta property="article:tag" content="proxysql">
+<meta property="article:tag" content="readyset">
+<meta property="article:tag" content="replication">
+</head>
+<body class="hack dark">
+
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="container">
+         
+    <header id="header"><h1 id="brand"><a href="../../" title="Alessandro's View" rel="home">
+        <img src="../../files/logo.svg" alt="Alessandro's View" id="logo"></a></h1>
+        <p id="blog-slogan">Sharing my views about computing. Debunking hype. Promoting what's worth.</p>
+
+        
+
+        
+    <nav id="menu"><ul>
+<li><a href="../../">Home</a></li>
+                <li><a href="../../categories/">Topics</a></li>
+                <li><a href="../../archive.html">Archive</a></li>
+                <li><a href="../../pages/about/">About</a></li>
+                <li><a href="../../files/cv.pdf">CV</a></li>
+                <li><a href="https://github.com/alexpacio">GitHub</a></li>
+
+    
+
+    
+    
+    </ul></nav></header><main id="content"><article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">MySQL GTID, Semi-Sync Replication and Partial View Caching: A good compromise to scale easy and cheap</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
+                    Alessandro Bolletta
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2025-08-03T16:01:13Z" itemprop="datePublished" title="2025-08-03 16:01">2025-08-03 16:01</time></a>
+            </p>
+            
+        <p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p>For various reasons, I have often been involved in resolving infrastructural issues and performance gaps in MySQL deployments. I never envisioned my career focusing on database systems, yet it seems there is still a high demand for OLTP technologies in the Italian market, so here I am.</p>
+<p>When you deal with a large dataset (over 500GB) with huge tables (more than 100 million rows), it's not hard to face performance issues. While many solutions exist for running analytical queries (OLAP) on large datasets by leveraging distributed systems, they are not typically "real-time" systems and often operate on stale data. When you have numerous, complex analytical queries — or expensive operations like <em>COUNT(DISTINCT)</em> — hat must be submitted against a fresh, real-time system, you have no choice: you need to run them on your OLTP engine.</p>
+<!-- TEASER_END -->
+<p>However, the impact of "read" and "write" queries on the same database host can be severe. Concurrency can lead to locking, which in turn causes significant slowdowns and, in the worst cases, fatal crashes. The common way to address this is by relying on Read/Write Splitting, where read queries (SELECT-like, or DQL) are sent to dedicated "read replicas" in a clustered scenario. But in heavily trafficked scenarios, even this is not enough.</p>
+<p>The first, most straightforward solution is to review and optimize queries. This often means getting rid of the ORM at the code level and rewriting queries to leverage indexing and faster data lookup strategies. This is a very good exercise that in general pays the effort. However, there are still some queries that you cannot optimize.</p>
+<p>Also due to the fact that you cannot change the structure of a production database, sometimes these optimizations are not doable by optimizing queries or improving tables indexing.</p>
+<p>Often times you'll see so called "Temporary Tables" as a bendaid to speedup a single query. However, according to my own experience, a valuable tip is to avoid leveraging on temporary tables, which are connection-level tables that exist only for the duration of a MySQL connection, as they can be a performance bottleneck.</p>
+<p>This brings us to a significant missing feature in MySQL: materialized views. Most other database management systems offer mechanisms to precompute the results of sophisticated queries as the underlying data changes. When the query is executed, the system can leverage this precomputed view. MySQL, however, does not implement this mechanism, likely due to its philosophy of simplicity.</p>
+<p>Worth saying that there are also newSQL and shared storage solutions like AWS Aurora out there to address the scalability issues of a classical DMBS. Also, there are solutions like Vitess to implement transparent sharding. Or you could do partitioned tables to relief their weight. But all of these solutions may be really hard to implement and risky in a production stage, other than really expensive to implement and to maintain.</p>
+<p>This is where the below robust yet simple architecture comes into play. By combining a solid replication strategy with intelligent proxying and a next-generation caching layer, we can overcome these challenges and build a highly performant and resilient system.</p>
+<section id="the-foundation-master-slave-with-gtid-and-semi-sync-replication"><h2>The Foundation: Master-Slave with GTID and Semi-Sync Replication</h2>
+<p>The bedrock of any scalable MySQL architecture is a reliable replication setup. This setup comes from <a class="reference external" href="https://engineering.fb.com/2014/09/18/core-infra/lessons-from-deploying-mysql-gtid-at-scale/">Facebook's production experience</a>: it has been used in production at scale until they developed a closed source fork of MySQL implementing Raft as a consensus algorithm thus enabling multi-master scenarios.</p>
+<p>Forget the old, error-prone method of tracking binary log files and positions. Modern MySQL deployments should standardize on Global Transaction Identifiers (GTID).</p>
+<p>Global Transaction Identifiers (GTID): A GTID is a unique ID assigned to every transaction committed on the primary server. This identifier simplifies replication management and failover activities. With GTID-based replication, you no longer need to manually manage complex binary log positions; servers can automatically identify which transactions have been applied. This is enabled by setting MASTER_AUTO_POSITION=1 on the replica, which allows it to find the correct starting point in the primary's transaction stream automatically. This dramatically simplifies failover and makes promoting a new primary a faster and less error-prone process.</p>
+<p>Semi-Synchronous Replication: By default, MySQL replication is asynchronous, meaning the primary commits a transaction without waiting for any replicas to receive it. This creates a risk of data loss if the primary crashes before the transaction is transmitted. Semi-synchronous replication mitigates this risk by requiring the primary to wait for an acknowledgment from at least one replica before confirming the commit to the client. It's a balance: you gain significant data durability without the high latency penalty of a fully synchronous system. This setup is ideal for ensuring that any transaction reported as successful to an application has been safely stored on at least one other server.</p>
+</section><section id="the-traffic-cop-proxysql-with-its-binlog-reader"><h2>The Traffic Cop: ProxySQL with its Binlog Reader</h2>
+<p>With a solid replication foundation, the next step is to manage traffic intelligently. ProxySQL is a high-performance SQL proxy that sits between your applications and your database cluster. It provides essential features like read-write splitting, query routing, and multiplexing.</p>
+<p>The real game-changer is ProxySQL's ability to provide GTID-consistent reads. This directly solves the classic problem of "read-after-write" inconsistency, where an application writes data to the primary and a subsequent read from a replica returns stale data because the replica hasn't caught up yet.</p>
+<p>ProxySQL achieves this through a component called the <a class="reference external" href="https://proxysql.com/documentation/mysql-binlog-reader/">mysql-binlog-reader</a>. Here's how it works:</p>
+<ol class="arabic simple">
+<li><p>A lightweight proxysql-mysql-binlog process runs on each MySQL server (primary and replicas).</p></li>
+<li><p>This process connects to its local MySQL instance as if it were a replica, reading the binary log in real-time.</p></li>
+<li><p>It streams the GTID of every transaction that has been executed on that server back to all ProxySQL instances.</p></li>
+<li><p>When an application issues a write through ProxySQL, ProxySQL tracks the GTID returned by the primary upon a successful commit.</p></li>
+<li><p>When a subsequent read query arrives for that same session, ProxySQL consults its real-time GTID information and routes the query to a replica that is guaranteed to have already applied that transaction's GTID. If no replica is up-to-date, the query is safely routed to the primary.</p></li>
+</ol>
+<p>This setup provides causal read consistency out of the box, eliminating stale reads without requiring complex application logic.</p>
+</section><section id="the-accelerator-readyset-caching-with-change-data-capture-cdc"><h2>The Accelerator: ReadySet Caching with Change Data Capture (CDC)</h2>
+<p>Even with optimized queries and intelligent routing, some read queries remain expensive. This is where we can address MySQL's lack of materialized views with a next-generation caching solution like ReadySet.</p>
+<p><a class="reference external" href="https://readyset.io/">Readyset</a> is not a typical time-to-live (TTL) cache. Instead, it acts as a smart, wire-compatible caching engine that connects directly to your MySQL database. The magic lies in its use of Change Data Capture (CDC):</p>
+<ol class="arabic simple">
+<li><p>Replication-Based Caching: ReadySet connects to your MySQL primary as a replica. It listens to the binary log stream, just like another replica server.</p></li>
+<li><p>Automatic Cache Updates: When you cache a SELECT query in ReadySet, it doesn't just store the result. It understands the query's underlying data dependencies. As INSERT, UPDATE, or DELETE operations occur on the primary, ReadySet sees these changes in the replication stream and incrementally and automatically updates its cached results in real time.</p></li>
+<li><p>Transparent Integration: Since ReadySet is wire-compatible with MySQL, you can point your application to it by simply changing the connection string. Unsupported queries are transparently passed through to the underlying database.</p></li>
+</ol>
+<p>Moreover, Readyset can be easily integrated with ProxySQL to automatically create routing rules according to the view's availability. This can be done using <a class="reference external" href="https://github.com/readysettech/proxysql_scheduler">Readyset ProxySQL Scheduler</a>. It'll orchestrate automatically the routing decisions on your behalf by automatically detecting the queries to be cached and registering their capturing rules in ProxySQL.</p>
+<p>This approach effectively gives you on-the-fly materialized views for your most demanding SELECT queries. For queries that aggregate millions of rows, the response time can drop from seconds to milliseconds. This dramatically reduces the load on your primary and/or on your secondary databases and provides blazing-fast read performance without any changes to your application code.</p>
+</section><section id="a-good-compromise-to-scale-out-and-speed-up-query-exec-times"><h2>A good compromise to scale out and speed up query exec times</h2>
+<p>By combining these technologies, we create a synergistic system that is fast, resilient, and scalable:</p>
+<ul class="simple">
+<li><p>Writes are sent through ProxySQL to the primary MySQL server. The commit is confirmed only after semi-sync replication acknowledges the transaction has been received by at least one replica, ensuring durability.</p></li>
+<li><dl class="simple">
+<dt>Reads are also sent to ProxySQL.</dt>
+<dd><ul>
+<li><p>If the query is a candidate for caching, it can be directed to a ReadySet hostgroup within ProxySQL. ReadySet, kept up-to-date via CDC, serves the result from its in-memory cache at sub-millisecond latencies.</p></li>
+<li><p>For non-cached reads, ProxySQL uses its GTID awareness to route the query to a read replica that is guaranteed to have the necessary data, preventing stale reads.</p></li>
+</ul></dd>
+</dl></li>
+</ul>
+<p>This multi-layered approach addresses the initial challenges of performance, concurrency, and data freshness, transforming a standard MySQL setup into a modern, high-performance data infrastructure with horizontal scalability and fast data access.</p>
+</section>
+</div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/caching/" rel="tag">caching</a></li>
+            <li><a class="tag p-category" href="../../categories/database/" rel="tag">database</a></li>
+            <li><a class="tag p-category" href="../../categories/gtid/" rel="tag">gtid</a></li>
+            <li><a class="tag p-category" href="../../categories/mysql/" rel="tag">mysql</a></li>
+            <li><a class="tag p-category" href="../../categories/performance/" rel="tag">performance</a></li>
+            <li><a class="tag p-category" href="../../categories/proxysql/" rel="tag">proxysql</a></li>
+            <li><a class="tag p-category" href="../../categories/readyset/" rel="tag">readyset</a></li>
+            <li><a class="tag p-category" href="../../categories/replication/" rel="tag">replication</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../embracing-the-ipv6-revolution-a-homelab-story/" rel="prev" title="Embracing the IPv6 Revolution: A Homelab Story">Previous post</a>
+            </li>
+        </ul></nav></aside></article></main><footer id="footer"><p>Contents © 2025         <a href="mailto:alexpacio91%20at%20gmail%20dot%20com">Alessandro Bolletta</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+    
+    
+
+    
+    
+    
+</body>
+</html>

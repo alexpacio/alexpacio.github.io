@@ -19,11 +19,11 @@
  </url>
  <url>
   <loc>https://alexpacio.github.io/archive.html</loc>
-  <lastmod>2025-08-04T13:55:00Z</lastmod>
+  <lastmod>2025-08-04T14:57:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/</loc>
-  <lastmod>2025-08-04T13:12:00Z</lastmod>
+  <lastmod>2025-08-04T14:57:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/background-jobs/</loc>
@@ -34,8 +34,16 @@
   <lastmod>2025-08-04T13:12:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/caching/</loc>
+  <lastmod>2025-08-04T14:57:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/categories/cat_boilerplate/</loc>
   <lastmod>2025-08-04T13:12:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/cat_database/</loc>
+  <lastmod>2025-08-04T14:34:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/cat_development/</loc>
@@ -58,6 +66,10 @@
   <lastmod>2025-08-04T13:12:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/database/</loc>
+  <lastmod>2025-08-04T14:34:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/categories/development/</loc>
   <lastmod>2025-08-04T13:12:00Z</lastmod>
  </url>
@@ -72,6 +84,14 @@
  <url>
   <loc>https://alexpacio.github.io/categories/golang/</loc>
   <lastmod>2025-08-04T13:12:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/gtid/</loc>
+  <lastmod>2025-08-04T14:34:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/high-availability/</loc>
+  <lastmod>2025-08-04T14:34:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/homelab/</loc>
@@ -102,6 +122,10 @@
   <lastmod>2025-08-04T13:12:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/mysql/</loc>
+  <lastmod>2025-08-04T14:34:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/categories/nas/</loc>
   <lastmod>2025-08-04T13:12:00Z</lastmod>
  </url>
@@ -118,12 +142,32 @@
   <lastmod>2025-08-04T13:12:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/performance/</loc>
+  <lastmod>2025-08-04T14:34:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/proxysql/</loc>
+  <lastmod>2025-08-04T14:34:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/categories/pulumi/</loc>
   <lastmod>2025-08-04T13:12:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/readyset/</loc>
+  <lastmod>2025-08-04T14:34:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/replication/</loc>
+  <lastmod>2025-08-04T14:57:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/categories/security/</loc>
   <lastmod>2025-08-04T13:12:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/semi-sync/</loc>
+  <lastmod>2025-08-04T14:34:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/static-linking/</loc>
@@ -166,7 +210,19 @@
   <lastmod>2025-08-04T13:12:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/posts/mysql-gtid-and-semi-sync-replication-modern-database-architecture-with-proxysql-and-readyset/</loc>
+  <lastmod>2025-08-04T14:38:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/posts/mysql-gtid-and-semi-sync-replication/</loc>
+  <lastmod>2025-08-04T14:58:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/posts/python-k8s-api/</loc>
   <lastmod>2025-08-04T13:12:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/posts/supercharging-mysql-gtid-semi-sync-proxysql-readyset/</loc>
+  <lastmod>2025-08-04T14:34:00Z</lastmod>
  </url>
 </urlset>
