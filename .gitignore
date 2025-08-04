@@ -33,3 +33,6 @@ cache/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Nikola db
+.doit.db
