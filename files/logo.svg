@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="80" viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Terminal-style gradient -->
+    <linearGradient id="terminalGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ff00;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#00cc00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00aa00;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Subtle glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Text shadow -->
+    <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="1" dy="1" stdDeviation="1" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background terminal window -->
+  <rect x="0" y="0" width="300" height="80" rx="8" ry="8" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+  
+  <!-- Terminal header bar -->
+  <rect x="0" y="0" width="300" height="20" rx="8" ry="8" fill="#333"/>
+  <rect x="0" y="12" width="300" height="8" fill="#333"/>
+  
+  <!-- Terminal buttons -->
+  <circle cx="15" cy="10" r="3" fill="#ff5f56"/>
+  <circle cx="25" cy="10" r="3" fill="#ffbd2e"/>
+  <circle cx="35" cy="10" r="3" fill="#27ca3f"/>
+  
+  <!-- Terminal prompt -->
+  <text x="15" y="38" font-family="'Courier New', monospace" font-size="12" fill="#00ff00" filter="url(#glow)">$</text>
+  
+  <!-- Main logo text -->
+  <text x="30" y="38" font-family="'Courier New', monospace" font-size="14" font-weight="bold" fill="url(#terminalGradient)" filter="url(#textShadow)">Alessandro</text>
+  
+  <!-- Surname with different styling -->
+  <text x="30" y="55" font-family="'Courier New', monospace" font-size="14" font-weight="bold" fill="#ffffff" filter="url(#textShadow)">Bolletta</text>
+  
+  <!-- Cursor blink effect -->
+  <rect x="120" y="45" width="8" height="2" fill="#00ff00">
+    <animate attributeName="opacity" values="0;1;0" dur="1s" repeatCount="indefinite"/>
+  </rect>
+  
+  <!-- Decorative brackets -->
+  <text x="140" y="38" font-family="'Courier New', monospace" font-size="12" fill="#666">{</text>
+  <text x="280" y="38" font-family="'Courier New', monospace" font-size="12" fill="#666">}</text>
+  
+  <!-- DevOps/IT symbols -->
+  <g transform="translate(160, 28)">
+    <!-- Docker-like container icon -->
+    <rect x="0" y="8" width="12" height="8" rx="1" fill="none" stroke="#00ff00" stroke-width="1" opacity="0.7"/>
+    <rect x="2" y="10" width="8" height="4" fill="#00ff00" opacity="0.3"/>
+    <line x1="0" y1="6" x2="12" y2="6" stroke="#00ff00" stroke-width="1" opacity="0.5"/>
+    
+    <!-- Kubernetes-like gear -->
+    <g transform="translate(20, 0)">
+      <circle cx="6" cy="12" r="4" fill="none" stroke="#00ff00" stroke-width="1" opacity="0.7"/>
+      <circle cx="6" cy="12" r="2" fill="#00ff00" opacity="0.3"/>
+      <line x1="6" y1="8" x2="6" y2="4" stroke="#00ff00" stroke-width="1" opacity="0.5"/>
+      <line x1="6" y1="20" x2="6" y2="16" stroke="#00ff00" stroke-width="1" opacity="0.5"/>
+      <line x1="2" y1="12" x2="-2" y2="12" stroke="#00ff00" stroke-width="1" opacity="0.5"/>
+      <line x1="14" y1="12" x2="10" y2="12" stroke="#00ff00" stroke-width="1" opacity="0.5"/>
+    </g>
+    
+    <!-- Network nodes -->
+    <g transform="translate(40, 2)">
+      <circle cx="2" cy="8" r="1.5" fill="#00ff00" opacity="0.7"/>
+      <circle cx="8" cy="4" r="1.5" fill="#00ff00" opacity="0.7"/>
+      <circle cx="8" cy="12" r="1.5" fill="#00ff00" opacity="0.7"/>
+      <line x1="2" y1="8" x2="8" y2="4" stroke="#00ff00" stroke-width="1" opacity="0.5"/>
+      <line x1="2" y1="8" x2="8" y2="12" stroke="#00ff00" stroke-width="1" opacity="0.5"/>
+      <line x1="8" y1="4" x2="8" y2="12" stroke="#00ff00" stroke-width="1" opacity="0.5"/>
+    </g>
+  </g>
+  
+  <!-- Subtle grid pattern in background -->
+  <defs>
+    <pattern id="grid" width="10" height="10" patternUnits="userSpaceUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#333" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+  </defs>
+  <rect x="0" y="20" width="300" height="60" fill="url(#grid)" opacity="0.2"/>
+</svg>

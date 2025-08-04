@@ -11,13 +11,14 @@ Building a Lightweight Node.js Background Job Scheduler
 
 As developers, we often come across situations where a fully-fledged background job system, with all its bells and whistles, might be overkill for our project needs. This was the case for me when I built a custom background job scheduler in **TypeScript** and **Node.js**, designed to handle essential tasks without the overhead of larger, more complex solutions.
 
+.. TEASER_END
 
 The Need for a Simple Solution
 ------------------------------
 
 My project involved a web application that required periodic background tasks, such as **data synchronization**, **cleanup jobs**, and **basic system monitoring**. While there are many mature background job frameworks available, most were too feature-heavy for what I needed. I wanted something small, efficient, and easy to integrate into my Docker-based setup, without introducing unnecessary complexity.
 
-That’s when I decided to write my own scheduler—lean, concise, and perfect for simple backend apps or as a side container to complement larger web applications.
+That's when I decided to write my own scheduler—lean, concise, and perfect for simple backend apps or as a side container to complement larger web applications.
 
 The Custom Scheduler: Small but Effective
 -----------------------------------------

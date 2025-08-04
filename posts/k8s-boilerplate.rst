@@ -10,6 +10,8 @@ Last week, I was contacted for a coding challenge. The project seemed interestin
 
 The project involved creating a simple REST API in Python, which needed to be packaged with Helm, ready for deployment in a Kubernetes (K8s) cluster, and including all the essential tools required.
 
+.. TEASER_END
+
 **Requirements**
 
 - A Python REST API backend program. The choice of framework was up to me

@@ -13,7 +13,9 @@ Statically-linked Programs are the evil
 
 The trend toward static linking represents a fundamental regression in software engineering principles. By bundling every dependency directly into the executable, we're not just bloating our binaries - we're actively dismantling decades of progress in software modularization. Each statically linked program becomes an island, disconnected from the ecosystem of shared improvements and security updates.
 
-Consider what happens when a critical vulnerability is discovered in a commonly used library. In a properly designed system using shared libraries, a single system update would protect all applications simultaneously. Instead, with static linking, we must embark on a complex and error-prone process of identifying every affected program, rebuilding each one individually, and ensuring they all get redeployed. This process isn't just inefficient - it's dangerously irresponsible and prone to oversights that could leave vulnerable versions running indefinitely.
+Consider what happens when a critical vulnerability is discovered in a commonly used library. In a properly designed system using shared libraries, a single system update would protect all applications simultaneously. Instead, with static linking, we must embark on a complex and error-prone process of identifying every affected program, rebuilding each one individually, and ensuring they all get redeployed.
+
+.. TEASER_END
 
 Containerized Programs are the Evil (with an uppercased E at the beginning)
 ---------------------------------------------------------------------------

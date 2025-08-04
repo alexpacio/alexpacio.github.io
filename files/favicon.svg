@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="faviconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00aa00;stop-opacity:1" />
+    </linearGradient>
+    
+    <radialGradient id="faviconBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#2a2a2a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="16" fill="url(#faviconBg)"/>
+  <circle cx="16" cy="16" r="14" fill="none" stroke="#333" stroke-width="1"/>
+  
+  <!-- Monogram letters -->
+  <text x="16" y="14" font-family="'Courier New', monospace" font-size="10" font-weight="bold" 
+        text-anchor="middle" fill="url(#faviconGradient)">A</text>
+  
+  <text x="16" y="23" font-family="'Courier New', monospace" font-size="8" font-weight="bold" 
+        text-anchor="middle" fill="#ffffff" opacity="0.9">B</text>
+  
+  <!-- Corner accents -->
+  <g transform="translate(16, 16)" opacity="0.4">
+    <path d="M -10,-8 L -10,-10 L -8,-10" fill="none" stroke="#00ff00" stroke-width="0.5"/>
+    <path d="M 10,-8 L 10,-10 L 8,-10" fill="none" stroke="#00ff00" stroke-width="0.5"/>
+    <path d="M -10,8 L -10,10 L -8,10" fill="none" stroke="#00ff00" stroke-width="0.5"/>
+    <path d="M 10,8 L 10,10 L 8,10" fill="none" stroke="#00ff00" stroke-width="0.5"/>
+  </g>
+</svg>

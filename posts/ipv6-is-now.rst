@@ -11,6 +11,8 @@ The NAS world is increasingly resembling a homelab rather than just file storage
 
 After setting up the Docker containers, we faced the usual issue that most homelabs encounter these days: his internet connection was behind a CGNAT for IPv4 networking. However, I was pleasantly surprised to find an IPv6 public subnet already configured!
 
+.. TEASER_END
+
 Since his intent was to use the NAS via LAN or his mobile phone (and those of his family/relatives), we investigated and figured out that various Italian 4G/5G carriers were providing IPv6 connectivity. So, we decided to give it a try.
 
 I am surprised that IPv6 is still such an unexplored world, even though it's already here and many of us haven't even noticed. Carriers are starting to support it seriously, and the IPv4 scarcity situation is getting worse as time goes by.
