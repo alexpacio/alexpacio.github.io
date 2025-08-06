@@ -32,7 +32,7 @@ The Foundation: Master-Slave with GTID and Semi-Sync Replication
 
 The bedrock of any scalable MySQL architecture is a reliable replication setup. This setup comes from `Facebook's production experience <https://engineering.fb.com/2014/09/18/core-infra/lessons-from-deploying-mysql-gtid-at-scale/>`_: it has been used in production at scale until they developed a closed source fork of MySQL implementing `Raft as a consensus algorithm to reach an indipendent, in-process and fully automatic replication consistency mechanism <https://engineering.fb.com/2023/05/16/data-infrastructure/mysql-raft-meta/>`_ thus enabling the automated leader (aka writer) promotion process in case of failure.
 
-While this might make sense for a "multi terabyte, sharded and geo-replicated" deployment like Facebook's, which, according to the rumor, seems to be the biggest ever by far, *semi-sync replication* works perfectly for my own case and it will work the same for large majority of scenarios you may think about. And, don't forget, it worked fine for a decade at the Facebook at its peak in terms of popularity.
+While the effort might be worth in case of a "multi terabyte, sharded and geo-replicated" deployment like Facebook's, which, according to the rumor, seems to be the biggest ever by far, *semi-sync replication* works perfectly for my own case and perhaps it also does for the large majority of scenarios out there. And, don't forget, it has been working in production flawlessly for a decade at the Facebook, at the top of its popularity.
 
 Semi-sync replication makes you forget the old, error-prone method of tracking binary log files and positions, at least. Modern MySQL deployments should standardize on semi-sync and Global Transaction Identifiers (GTID).
 
