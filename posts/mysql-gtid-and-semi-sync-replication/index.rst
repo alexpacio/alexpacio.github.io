@@ -30,7 +30,7 @@ This is where the below robust yet simple architecture comes into play. By combi
 The Foundation: Master-Slave with GTID and Semi-Sync Replication
 ================================================================
 
-The bedrock of any scalable MySQL architecture is a reliable replication setup. This setup comes from `Facebook's production experience <https://engineering.fb.com/2014/09/18/core-infra/lessons-from-deploying-mysql-gtid-at-scale/>`_: it has been used in production at scale until they developed a closed source fork of MySQL implementing Raft as a consensus algorithm thus enabling multi-master scenarios.
+The bedrock of any scalable MySQL architecture is a reliable replication setup. This setup comes from `Facebook's production experience <https://engineering.fb.com/2014/09/18/core-infra/lessons-from-deploying-mysql-gtid-at-scale/>`_: it has been used in production at scale until they developed a closed source fork of MySQL implementing `Raft as a consensus algorithm <https://engineering.fb.com/2023/05/16/data-infrastructure/mysql-raft-meta/>`_ thus enabling the automated leader (aka writer) promotion process in case of failure.
 
 Forget the old, error-prone method of tracking binary log files and positions. Modern MySQL deployments should standardize on Global Transaction Identifiers (GTID).
 
