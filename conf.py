@@ -147,7 +147,6 @@ NAVIGATION_LINKS = {
         ('/categories/', 'Topics'),
         ('/archive.html', 'Archive'),
         ('/pages/about/', 'About'),
-        ('/files/cv.pdf', 'CV'),
         ('https://github.com/alexpacio', 'GitHub'),
     ],
 }
