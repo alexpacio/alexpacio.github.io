@@ -9,7 +9,7 @@ Large Language Models have undoubtedly revolutionized how we interact with techn
 
 .. TEASER_END
 
-This limitation becomes particularly evident when examining their application in software development meant to run on the Web, where the divide between frontend and backend development reveals fascinating insights about the nature of LLM capabilities and constraints.
+This limitation becomes particularly evident when examining their application in software development (web software development, precisely), where the divide between frontend and backend development reveals fascinating insights about the nature of LLM capabilities and constraints.
 
 The Frontend Phenomenon
 ------------------------
