@@ -5,8 +5,6 @@
 .. category: technology
 .. description: An analysis of coding agents' capabilities and limitations in software development
 
-On the Phenomenology of Coding Agents
-======================================
 
 Large Language Models have undoubtedly revolutionized how we interact with technology. They are, at their core, supercharged search engines with remarkable encoding and decoding capabilities. You speak to them in natural language, and they respond with perfect written text, flawless speech synthesis, or sophisticated image generation. Their utility is undeniable, yet we must acknowledge a fundamental truth: they cannot think in the human sense of the word.
 
