@@ -6,6 +6,10 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/ai.xml</loc>
+  <lastmod>2025-08-24T18:11:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/categories/background-jobs.xml</loc>
   <lastmod>2025-08-04T13:44:00Z</lastmod>
  </sitemap>
@@ -34,12 +38,20 @@
   <lastmod>2025-08-04T13:44:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/cat_technology.xml</loc>
+  <lastmod>2025-08-24T18:11:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/categories/cgnat.xml</loc>
   <lastmod>2025-08-04T13:44:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cloud-native.xml</loc>
   <lastmod>2025-08-04T13:44:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/coding.xml</loc>
+  <lastmod>2025-08-24T18:11:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/containers.xml</loc>
@@ -51,7 +63,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/development.xml</loc>
-  <lastmod>2025-08-04T13:44:00Z</lastmod>
+  <lastmod>2025-08-24T18:11:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/docker.xml</loc>
@@ -98,6 +110,10 @@
   <lastmod>2025-08-04T13:44:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/llm.xml</loc>
+  <lastmod>2025-08-24T18:11:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/categories/mysql.xml</loc>
   <lastmod>2025-08-06T23:11:00Z</lastmod>
  </sitemap>
@@ -120,6 +136,10 @@
  <sitemap>
   <loc>https://alexpacio.github.io/categories/performance.xml</loc>
   <lastmod>2025-08-06T23:11:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/programming.xml</loc>
+  <lastmod>2025-08-24T18:11:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/proxysql.xml</loc>
@@ -159,10 +179,10 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/rss.xml</loc>
-  <lastmod>2025-08-06T23:11:00Z</lastmod>
+  <lastmod>2025-08-24T18:11:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/sitemap.xml</loc>
-  <lastmod>2025-08-06T23:20:00Z</lastmod>
+  <lastmod>2025-08-24T18:11:00Z</lastmod>
  </sitemap>
 </sitemapindex>
