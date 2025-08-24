@@ -5,7 +5,6 @@
 .. category: technology
 .. description: An analysis of coding agents' capabilities and limitations in software development
 
-
 Large Language Models have undoubtedly revolutionized how we interact with technology. They are, at their core, supercharged search engines with remarkable encoding and decoding capabilities. You speak to them in natural language, and they respond with perfect written text, flawless speech synthesis, or sophisticated image generation. Their utility is undeniable, yet we must acknowledge a fundamental truth: they cannot think in the human sense of the word.
 
 .. TEASER_END
@@ -47,5 +46,7 @@ We must awaken from the dream that equates LLMs with human cognitive abilities a
 LLMs demonstrate remarkable proficiency in linguistic translation tasks and bureaucratic work. I envision significant potential for these systems in government offices handling paperwork, assisting lawyers with document preparation, supporting judges in managing administrative documentation, or helping surveyors and architects with routine technical writing.
 
 In software development, their utility remains constrained to specific scenarios where the problems are well-documented, the solutions follow established patterns, and the creative requirements are minimal. They serve as powerful tools for accelerating development when working within familiar territories and established workflows, but they cannot effectively handle situations that require understanding complex interdependencies or custom wiring of components that they have not previously encountered in their training data.
+
+I have found them particularly useful for building frontend applications, scripting, and Infrastructure as Code (IaC) tasks such as Terraform and other DevOps tools. However, they still struggle when building something that lies outside their training dataset or when the wiring process needed to connect the pieces together is complex enough that they cannot keep up with the challenge.
 
 The phenomenology of coding agents reveals a technology that is simultaneously impressive and limited, capable of remarkable feats within defined boundaries while remaining fundamentally constrained by the scope of human knowledge that has been codified and made accessible during their training. Understanding these boundaries is essential for leveraging their capabilities effectively while avoiding the disappointment that comes from expecting them to transcend their fundamental nature as sophisticated pattern matching systems.
