@@ -23,9 +23,9 @@ The relative rigidity of these patterns actually works in favor of LLMs. When de
 The Backend Complexity
 -----------------------
 
-Backend development presents a markedly different landscape. Here, the need for flexibility and custom solutions becomes paramount in ways that frontend development rarely demands. While you can certainly use services like Supabase or InstantDB for backend functionality, these solutions tie you to their specific Platform-as-a-Service offerings. In contrast, a React frontend generated with Claude Code can run entirely in your local environment without external dependencies.
+Backend development presents a markedly different landscape. Here, the need for flexibility and custom solutions becomes paramount in ways that frontend development rarely demands. While you can certainly use services like Lovable, Replit or Supabase and InstantDB for backend functionality, these solutions tie you to their specific Platform-as-a-Service offerings. In contrast, a React frontend generated with Claude Code can run entirely in your local environment without external dependencies.
 
-Backend systems require an elasticity that frontend applications, in perhaps ninety-five percent of cases, simply do not need. The business logic, data processing, system integrations, and performance optimizations that characterize backend work often involve unique combinations of requirements that cannot be easily templated or standardized.
+Backend systems, when created from scratch, require an elasticity that frontend applications, in perhaps ninety-five percent of cases, simply do not need. The business logic, data processing, system integrations, and performance optimizations that characterize backend work often involve unique combinations of requirements that cannot be easily templated or standardized.
 
 Of course, there are exceptions to this frontend simplicity. When you need to create sophisticated applications that perform real-time graphics rendering, decode video streams using WebCodec APIs, or implement complex WebRTC communications, the frontend becomes just as challenging as any backend system. In such cases, LLMs prove equally inadequate at providing meaningful assistance.
 
