@@ -38,9 +38,29 @@ Semi-sync replication and GTID-mode make you forget the old, error-prone method 
 
 A GTID (Global Transaction Identifier) is a unique ID assigned to every transaction committed on the primary server. This identifier simplifies replication management and failover activities. With GTID-based replication, you no longer need to manually manage complex binary log positions; servers can automatically identify which transactions have been applied. This is enabled by setting MASTER_AUTO_POSITION=1 on the replica, which allows it to find the correct starting point in the primary's transaction stream automatically. This dramatically simplifies failover and makes promoting a new primary a faster and less error-prone process.
 
-By default, MySQL replication is asynchronous, meaning the primary commits a transaction without waiting for any replicas to receive it. This creates a risk of data loss if the primary crashes before the transaction is transmitted. Semi-synchronous replication mitigates this risk by requiring the primary to wait for an acknowledgment from at least one replica before confirming the commit to the client. 
+Asynchronous Replication
+-------------------------
 
-It's a balance: you gain significant data durability without the high latency penalty of a fully synchronous system. This setup is ideal for ensuring that any transaction reported as successful to an application has been safely recorded on the commit log (and not in the transaction log) of one other server at least, since the number of voters is configurable via a system variable. And you may also choose to setup a timeout that allows you to automatically turn off the semi-sync transaction's remote ack enforcement whenever the quorum is missed for a certain amount of time.
+By default, MySQL replication is asynchronous, meaning the primary commits a transaction without waiting for any replicas to receive it. This creates a risk of data loss if the primary crashes before the transaction is transmitted.
+
+.. image:: /files/mysql/async-replication-diagram.png
+   :alt: Asynchronous Replication Diagram
+   :align: center
+
+Semi-Synchronous Replication
+-----------------------------
+
+Semi-synchronous replication mitigates this risk by requiring the primary to wait for an acknowledgment from at least one replica before confirming the commit to the client.
+
+It's a balance: you gain significant data durability without the high latency penalty of a fully synchronous system. This setup is ideal for ensuring that any transaction reported as successful to an application has been safely recorded on the "relay log" (which is ahead of the replica's binlog) of one other server at least, since the number of voters is configurable via a system variable. And you may also choose to setup a timeout that allows you to automatically turn off the semi-sync transaction's remote ack enforcement whenever the quorum is missed for a certain amount of time.
+
+An important benefit of semi-sync replication is that it acknowledges transactions based on relay log persistence, not on the application of changes. Even if a replica's SQL thread is lagging behind in applying transactions to its database, the semi-sync acknowledgment still occurs as soon as the transaction is written and flushed to the relay log. This means that data durability is guaranteed regardless of apply lag, which can occur due to long-running transactions, heavy workloads, or replica resource constraints. That's the main difference when compared to a multi-master and synchronous replication.
+
+.. image:: /files/mysql/semisync-replication-diagram.png
+   :alt: Semi-Sync Replication Diagram
+   :align: center
+
+
 
 The Traffic Cop: ProxySQL with its Binlog Reader
 ================================================
