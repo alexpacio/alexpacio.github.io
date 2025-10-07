@@ -9,7 +9,7 @@
 
 For various reasons, I have often been involved in resolving infrastructural issues and performance gaps in MySQL deployments. I never envisioned my career focusing on database systems, yet it seems there is still a high demand for OLTP technologies in the Italian market, so here I am.
 
-When you deal with a large dataset (over 500GB) with huge tables (more than 100 million rows), it's not hard to face performance issues. While many solutions exist for running analytical queries (OLAP) on large datasets by leveraging distributed systems, they are not typically "real-time" systems and often operate on stale data. When you have numerous, complex analytical queries — or expensive operations like *COUNT(DISTINCT)* — hat must be submitted against a fresh, real-time system, you have no choice: you need to run them on your OLTP engine.
+When you deal with a large dataset (over 500GB) with huge tables (more than 100 million rows), it's not hard to face performance issues. While many solutions exist for running analytical queries (OLAP) on large datasets by leveraging distributed systems, they are not typically "real-time" systems and often operate on stale data. When you have numerous, complex analytical queries — or expensive operations like *COUNT(DISTINCT)* — that must be submitted against a fresh, real-time system, you have no choice: you need to run them on your OLTP engine.
 
 .. TEASER_END
 
