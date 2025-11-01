@@ -10,10 +10,6 @@
   <lastmod>2025-08-24T19:00:00Z</lastmod>
  </sitemap>
  <sitemap>
-  <loc>https://alexpacio.github.io/categories/background-jobs.xml</loc>
-  <lastmod>2025-08-04T13:44:00Z</lastmod>
- </sitemap>
- <sitemap>
   <loc>https://alexpacio.github.io/categories/c.xml</loc>
   <lastmod>2025-08-04T13:44:00Z</lastmod>
  </sitemap>
@@ -31,7 +27,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_development.xml</loc>
-  <lastmod>2025-11-01T17:15:00Z</lastmod>
+  <lastmod>2025-11-01T17:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_networking.xml</loc>
@@ -55,7 +51,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/containers.xml</loc>
-  <lastmod>2025-11-01T17:15:00Z</lastmod>
+  <lastmod>2025-11-01T17:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/database.xml</loc>
@@ -71,11 +67,11 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/devops.xml</loc>
-  <lastmod>2025-11-01T17:15:00Z</lastmod>
+  <lastmod>2025-11-01T17:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/docker.xml</loc>
-  <lastmod>2025-11-01T17:15:00Z</lastmod>
+  <lastmod>2025-11-01T17:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/fastapi.xml</loc>
@@ -103,7 +99,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/infrastructure.xml</loc>
-  <lastmod>2025-11-01T17:15:00Z</lastmod>
+  <lastmod>2025-11-01T17:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/internet.xml</loc>
@@ -163,7 +159,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/production.xml</loc>
-  <lastmod>2025-11-01T17:15:00Z</lastmod>
+  <lastmod>2025-11-01T17:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/programming.xml</loc>
@@ -207,10 +203,10 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/rss.xml</loc>
-  <lastmod>2025-11-01T17:15:00Z</lastmod>
+  <lastmod>2025-11-01T17:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/sitemap.xml</loc>
-  <lastmod>2025-11-01T17:15:00Z</lastmod>
+  <lastmod>2025-11-01T17:24:00Z</lastmod>
  </sitemap>
 </sitemapindex>
