@@ -13,7 +13,7 @@ Containerization has become ubiquitous in modern software development, often pre
 Understanding my statement requires a deep knowledge of how linux containers actually work
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This is a good document to read: https://www.redhat.com/en/topics/containers/whats-a-linux-container
+This is a good document to read: `What's a Linux container? <https://www.redhat.com/en/topics/containers/whats-a-linux-container>`_
 
 Docker's Sweet Spot: Prototyping and Development
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
