@@ -1,7 +1,7 @@
 .. title: Embracing the IPv6 Revolution: A Homelab Story
 .. slug: embracing-the-ipv6-revolution-a-homelab-story
 .. date: 2025-05-30 10:00:00 UTC+00:00
-.. tags: ipv6, homelab, nas, networking, cgnat, Docker, openmediavault, internet
+.. tags: ipv6, homelab, nas, networking, cgnat, docker, openmediavault, internet
 .. category: Networking
 .. description: A personal experience setting up a home NAS and discovering the readiness of IPv6, even behind CGNAT, and its implications for a more democratic internet.
 

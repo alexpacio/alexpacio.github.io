@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html prefix="" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Containerization to run apps in production is about to die | Alessandro's View</title>
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/dark.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#00ff00">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="https://alexpacio.github.io/posts/docker-production-concerns/">
+<link rel="icon" href="../../files/favicon.svg" sizes="any">
+<link rel="icon" href="../../files/favicon.ico" sizes="16x16">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Alessandro Bolletta">
+<link rel="prev" href="../why-linux-desktop-keeps-missing-the-mark/" title="Why Linux Desktop Keeps Missing the Mark" type="text/html">
+<meta property="og:site_name" content="Alessandro's View">
+<meta property="og:title" content="Containerization to run apps in production is about to die">
+<meta property="og:url" content="https://alexpacio.github.io/posts/docker-production-concerns/">
+<meta property="og:description" content="Containerization has become ubiquitous in modern software development, often presented as the default choice for deploying applications. However, after years of working with containerized systems in p">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-11-01T12:00:00Z">
+<meta property="article:tag" content="containers">
+<meta property="article:tag" content="devops">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="infrastructure">
+<meta property="article:tag" content="production">
+</head>
+<body class="hack dark">
+
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="container">
+         
+    <header id="header"><h1 id="brand"><a href="../../" title="Alessandro's View" rel="home">
+        <img src="../../files/logo.svg" alt="Alessandro's View" id="logo"></a></h1>
+        <p id="blog-slogan">Sharing my views about computing. Debunking hype. Promoting what's worth.</p>
+
+        
+
+        
+    <nav id="menu"><ul>
+<li><a href="../../">Home</a></li>
+                <li><a href="../../categories/">Topics</a></li>
+                <li><a href="../../archive.html">Archive</a></li>
+                <li><a href="../../pages/about/">About</a></li>
+                <li><a href="https://github.com/alexpacio">GitHub</a></li>
+
+    
+
+    
+    
+    </ul></nav></header><main id="content"><article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Containerization to run apps in production is about to die</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
+                    Alessandro Bolletta
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2025-11-01T12:00:00Z" itemprop="datePublished" title="2025-11-01 12:00">2025-11-01 12:00</time></a>
+            </p>
+            
+        <p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p>Containerization has become ubiquitous in modern software development, often presented as the default choice for deploying applications. However, after years of working with containerized systems in production, I've come to question whether <strong>containers are truly the right solution</strong> for production environments—or if we've collectively adopted a technology that excels at prototyping but introduces unnecessary complexity when it comes to running reliable, production-grade systems.</p>
+<!-- TEASER_END -->
+<section id="understanding-my-statement-requires-a-deep-knowledge-of-how-linux-containers-actually-work"><h2>Understanding my statement requires a deep knowledge of how linux containers actually work</h2>
+<p>This is a good document to read: <a class="reference external" href="https://www.redhat.com/en/topics/containers/whats-a-linux-container">https://www.redhat.com/en/topics/containers/whats-a-linux-container</a></p>
+</section><section id="docker-s-sweet-spot-prototyping-and-development"><h2>Docker's Sweet Spot: Prototyping and Development</h2>
+<p>Let me be clear: Docker is <strong>excellent</strong> for certain use cases. When you need to quickly spin up an isolated environment, reproduce a bug, or share a development setup across a team, Docker shines. The ability to package dependencies, create reproducible environments, and isolate processes makes it invaluable for <strong>prototyping</strong> and <strong>development workflows</strong>.</p>
+<p>Need to test a new database version? Spin up a container. Want to ensure your application works across different environments? Docker provides that consistency. For these scenarios, containerization offers genuine value with minimal overhead.</p>
+<p>The problem begins when we assume that what works well for development automatically translates to production.</p>
+</section><section id="the-hidden-complexity-of-production-containers"><h2>The Hidden Complexity of Production Containers</h2>
+<p>Running Docker in production introduces layers of complexity that are often underestimated. You're not just running your application anymore—you're managing an <strong>entire orchestration layer</strong>. Whether it's Docker Swarm, Kubernetes, or another container orchestration platform, you've added significant infrastructure overhead.</p>
+<p>This complexity manifests in several ways: <strong>networking becomes abstracted</strong> through overlay networks, <strong>storage requires volume management</strong> and persistence strategies, <strong>monitoring needs container-specific tooling</strong>, and <strong>debugging becomes harder</strong> when you can't simply SSH into a traditional server and inspect processes directly.</p>
+<p>Each layer of abstraction adds potential failure points. What was once a straightforward deployment becomes a complex dance of images, registries, orchestrators, and networking policies.</p>
+</section><section id="wrapping-a-process-into-a-virtual-network-host-is-a-really-bad-idea"><h2>Wrapping a process into a virtual network host is a really BAD idea</h2>
+<p>This is one of the single greatest sources of complexity in containerized systems. On a traditional server, networking is simple: one host, one IP, one routing table. When you wrap your application in a container, you are giving it its own private network stack.</p>
+<p>This abstraction creates a labyrinth. Instead of simple, predictable server-to-server communication, we now deal with <strong>overlay networks</strong>, <strong>service meshes</strong>, and <strong>complex routing rules</strong> just to get two services to talk. Debugging a connection issue is no longer a simple <cite>netstat</cite> or <cite>tcpdump</cite>; it's a deep investigation across multiple, virtualized layers.</p>
+<p>Furthermore, this encapsulation is <strong>inherently inefficient</strong>. We are adding network hops and processing overhead for every single packet, slowing down communication for the sake of an isolation boundary that is often unnecessary.</p>
+</section><section id="having-foreign-applications-running-into-the-same-os-is-also-a-really-bad-insecure-idea"><h2>Having foreign applications running into the same OS is also a really BAD, insecure idea</h2>
+<p>Let's be blunt: <strong>containers are not VMs</strong>. They all share the same host kernel.</p>
+<p>While namespaces and cgroups provide a degree of isolation, they are not a true security boundary. A single kernel-level vulnerability can (and has) led to container escapes, allowing a process in one "isolated" container to break out and gain control of the host—and by extension, <em>all other containers</em> running on it.</p>
+<p>Running multiple "foreign" applications, potentially from different teams or with different security requirements, on the same OS kernel is a ticking time bomb. We are trading robust, hardware-enforced isolation (like that from virtual machines) for a flimsy, software-based partition.</p>
+</section><section id="having-your-own-applications-running-into-the-machines-of-your-cloud-provider-where-the-provider-can-actually-access-your-data-is-a-really-bad-and-dramatically-insecure-idea"><h2>Having your own applications running into the machines of your cloud provider, where the provider can actually access your data, is a really BAD and DRAMATICALLY insecure idea</h2>
+<p>This problem is magnified in the cloud. When you use a managed Kubernetes service (like EKS, GKE, or AKS), you are running your applications on a host OS that you don't control, managed by a provider whose main business is multi-tenancy.</p>
+<p>You are placing implicit trust in the cloud provider's ability to patch the kernel, secure the container runtime, and prevent noisy (or malicious) neighbors from impacting your workload. This adds another layer of security risk that is often glossed over in the rush to adopt "cloud-native" solutions.</p>
+</section><section id="containerization-encouraged-very-bad-patterns-like-microservices-because-containerization-itself-is-a-bad-pattern"><h2>Containerization encouraged very bad patterns like microservices because containerization itself IS a bad pattern</h2>
+<p>The microservices craze is inextricably linked to the rise of containerization. Containers made it <em>easy</em> to chop up applications into dozens of tiny, independently deployable pieces.</p>
+<p>But "easy" does not mean "good."</p>
+<p>This pattern traded the manageable, internal complexity of a monolith for the distributed systems nightmare of microservices. We now have to deal with service discovery, network latency, distributed tracing, and eventual consistency, all because containers made it convenient to run 100 processes instead of one.</p>
+<p>Containerization didn't solve an architectural problem; it <strong>enabled</strong> an architectural problem by making a bad pattern deceptively simple to implement.</p>
+</section><section id="the-docker-flavour-of-containerization-pretends-to-be-a-transient-os-while-transient-oses-don-t-exist"><h2>The docker flavour of containerization pretends to be a transient OS, while transient OSes don't exist</h2>
+<p>Docker images act like mini-operating systems, bundling their own file systems and libraries. The community promotes the "cattle, not pets" mantra, suggesting these are transient, ephemeral entities.</p>
+<p>But <strong>production applications are not transient</strong>. They have state. They generate logs. They need stable storage.</p>
+<p>This "transient OS" concept is a lie. It creates a fundamental conflict: we have stateful applications running inside a system designed to be stateless, leading to complex "solutions" like persistent volume claims and external log shippers, which are just hacks to work around a flawed premise.</p>
+</section><section id="docker-s-layered-fs-is-an-inefficient-monstrosity-of-useless-and-unpredictable-data-that-s-going-to-fill-up-your-storage-with-junk-sooner-or-later"><h2>Docker's layered fs is an inefficient monstrosity of useless and unpredictable data that's going to fill up your storage with junk sooner or later</h2>
+<p>Docker's layered file system (like OverlayFS) is a clever solution for development, saving disk space during the <em>build</em> phase.</p>
+<p>In production, it's an inefficient monstrosity. Every write to a container triggers a <strong>copy-on-write operation</strong>, which adds I/O overhead. Worse, it's a storage management nightmare. Unused layers, dangling images, and build caches pile up, <strong>filling your host's storage with gigabytes of unpredictable and useless junk</strong>. Cleaning it up (<cite>docker system prune</cite>) becomes a mandatory, and often risky, maintenance chore.</p>
+</section><section id="one-of-the-recent-trends-to-address-these-kinds-of-issues-is-using-minimal-base-images-like-alpine-and-others-but-hey-it-does-defeat-the-purpose-of-docker-don-t-you-think"><h2>One of the recent trends to address these kinds of issues is using minimal base images like Alpine and others. But hey, it does defeat the purpose of Docker, don't you think?</h2>
+<p>This is the ultimate irony. The initial promise was "it works on my machine" because <em>all</em> dependencies were bundled in a fat, OS-like image (e.g., <cite>ubuntu:latest</cite>).</p>
+<p>When we realized these images were bloated and insecure, the community pivoted to minimal base images like Alpine Linux. But this admission of a problem defeats the original purpose!</p>
+<p>Now, we use Alpine, which uses <cite>musl libc</cite> instead of the standard <cite>glibc</cite>, introducing <strong>subtle and maddening incompatibilities</strong>. Worse, these minimal images strip out all the essential debugging tools (<cite>bash</cite>, <cite>ps</cite>, <cite>curl</cite>, <cite>netstat</cite>). When a problem occurs in production, you can't even <cite>exec</cite> into the container to find out why. You're left flying blind, all in the name of solving a problem (bloat) that containers themselves created.</p>
+</section><section id="containers-are-not-spawning-a-real-init-system-but-they-are-supposed-to-run-just-one-process-isn-t-it-too-much-for-just-running-a-process"><h2>Containers are not spawning a real init system but they are supposed to run just one process: isn't it too much for just running a process?</h2>
+<p>This is the "One Process" fallacy.</p>
+<p>A container doesn't boot a real init system; it just launches your application as PID 1 (which brings its own set of problems, like handling zombie processes).</p>
+<p>Think about the overhead: an entire OS userspace, a virtual network stack, and a layered filesystem... all just to run a <strong>single process</strong>. It's an enormous amount of abstraction for a very simple goal. This design choice is also what makes debugging a nightmare.</p>
+</section><section id="isn-t-it-hard-to-debug-why-sidecar-containers-are-even-a-reality"><h2>Isn't it hard to debug? Why sidecar containers are even a reality?</h2>
+<p>Yes, it's incredibly hard to debug. And the "solution" is the <strong>sidecar container</strong>, which is the final proof of this model's failure.</p>
+<p>Need to run a logging agent? A monitoring agent? A service mesh proxy? You can't run it in the <em>same</em> container (that would violate the "one process" dogma).</p>
+<p>So, we have to launch and manage an <strong>entirely separate container</strong>—with its own filesystem and process space—just to run a helper process that, on a normal server, would have been a simple, lightweight agent. The very existence of the sidecar pattern is the ultimate admission that the container model is fundamentally broken for production workloads.</p>
+</section><section id="where-containers-still-make-sense-in-prod"><h2>Where Containers still make sense in Prod</h2>
+<ol class="arabic simple">
+<li><p>Any use cases that are still uncovered by other isolation techniques (eg. GPU in AI workload): but it is still a matter of time, other isolation techniques will cover new use cases</p></li>
+<li><p>When you can't just refactor a legacy app and you need to move it in a clustered/distributed system</p></li>
+</ol>
+<p>In any other case I believe we are going to see apps moved away from containers.</p>
+<section id="it-s-time-to-rethink-production"><h3>It's Time to Rethink Production</h3>
+<p>We've been sold a narrative that containerization is the only path to modern infrastructure. It's not.</p>
+<p>It's a fantastic development tool that we've forced into a production role, and we are paying the price in complexity, insecurity, and inefficiency.</p>
+</section></section>
+</div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/containers/" rel="tag">containers</a></li>
+            <li><a class="tag p-category" href="../../categories/devops/" rel="tag">devops</a></li>
+            <li><a class="tag p-category" href="../../categories/docker/" rel="tag">docker</a></li>
+            <li><a class="tag p-category" href="../../categories/infrastructure/" rel="tag">infrastructure</a></li>
+            <li><a class="tag p-category" href="../../categories/production/" rel="tag">production</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../why-linux-desktop-keeps-missing-the-mark/" rel="prev" title="Why Linux Desktop Keeps Missing the Mark">Previous post</a>
+            </li>
+        </ul></nav></aside></article></main><footer id="footer"><p>Contents © 2025         <a href="mailto:alexpacio91%20at%20gmail%20dot%20com">Alessandro Bolletta</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+    
+    
+
+    
+    
+    
+</body>
+</html>
