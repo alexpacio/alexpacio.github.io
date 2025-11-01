@@ -1,7 +1,7 @@
 .. title: Building a Lightweight Node.js Background Job Scheduler: A Practical Solution for Simple Web Applications
 .. slug: lightweight-nodejs-background-job-scheduler
 .. date: 2024-10-10 12:00:00 UTC
-.. tags: Node.js, TypeScript, Docker, Background Jobs, Telegram
+.. tags: nodejs, typescript, docker, telegram
 .. category: Development
 .. author: Alessandro Bolletta
 .. summary: A look at building a minimal Node.js background job scheduler, designed for small-scale apps and easy Docker integration.
