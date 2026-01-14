@@ -27,7 +27,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_development.xml</loc>
-  <lastmod>2025-11-01T17:22:00Z</lastmod>
+  <lastmod>2025-11-01T18:31:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_networking.xml</loc>
@@ -35,7 +35,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_technology.xml</loc>
-  <lastmod>2025-10-07T12:16:00Z</lastmod>
+  <lastmod>2026-01-14T04:36:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cgnat.xml</loc>
@@ -51,7 +51,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/containers.xml</loc>
-  <lastmod>2025-11-01T17:22:00Z</lastmod>
+  <lastmod>2025-11-01T18:31:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/database.xml</loc>
@@ -59,7 +59,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/desktop.xml</loc>
-  <lastmod>2025-10-07T12:16:00Z</lastmod>
+  <lastmod>2026-01-14T04:36:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/development.xml</loc>
@@ -67,11 +67,11 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/devops.xml</loc>
-  <lastmod>2025-11-01T17:22:00Z</lastmod>
+  <lastmod>2025-11-01T18:31:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/docker.xml</loc>
-  <lastmod>2025-11-01T17:22:00Z</lastmod>
+  <lastmod>2025-11-01T18:31:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/fastapi.xml</loc>
@@ -83,7 +83,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/gnulinux.xml</loc>
-  <lastmod>2025-10-07T12:16:00Z</lastmod>
+  <lastmod>2026-01-14T04:36:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/golang.xml</loc>
@@ -98,8 +98,12 @@
   <lastmod>2025-11-01T17:15:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/influencers.xml</loc>
+  <lastmod>2026-01-14T04:36:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/categories/infrastructure.xml</loc>
-  <lastmod>2025-11-01T17:22:00Z</lastmod>
+  <lastmod>2025-11-01T18:31:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/internet.xml</loc>
@@ -118,12 +122,16 @@
   <lastmod>2025-08-04T13:44:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/kde.xml</loc>
+  <lastmod>2026-01-14T04:36:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/categories/kubernetes.xml</loc>
   <lastmod>2025-08-04T13:44:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/linux.xml</loc>
-  <lastmod>2025-10-07T12:16:00Z</lastmod>
+  <lastmod>2026-01-14T04:36:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/llm.xml</loc>
@@ -151,7 +159,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/opensource.xml</loc>
-  <lastmod>2025-10-07T12:16:00Z</lastmod>
+  <lastmod>2026-01-14T04:36:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/performance.xml</loc>
@@ -159,7 +167,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/production.xml</loc>
-  <lastmod>2025-11-01T17:22:00Z</lastmod>
+  <lastmod>2025-11-01T18:31:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/programming.xml</loc>
@@ -203,10 +211,10 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/rss.xml</loc>
-  <lastmod>2025-11-01T17:22:00Z</lastmod>
+  <lastmod>2026-01-14T04:36:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/sitemap.xml</loc>
-  <lastmod>2025-11-01T17:24:00Z</lastmod>
+  <lastmod>2026-01-14T04:36:00Z</lastmod>
  </sitemap>
 </sitemapindex>
