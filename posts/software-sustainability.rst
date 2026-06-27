@@ -1,56 +1,38 @@
-.. title: Software Sustainability for Indie Developers
+.. title: Software Sustainability for Small Developers
 .. slug: software-sustainability
 .. date: 2026-06-27 14:20:00 UTC+02:00
 .. tags: sustainability, licensing, open-source, indiedevelopers, ai
 .. category: sustainability
-.. description: A licensing model for indie developers that provides software autonomy without sinking into debt or selling out.
+.. description: A licensing model for small developer teams that provides software autonomy without sinking into debt or selling out.
 .. type: text
 
-For a long time, I’ve dreamed about a practical, sustainable model that would allow indie developers and small teams to monetize their software without sacrificing autonomy or burning out. It’s time to explore a licensing framework that gives you control over your intellectual property while providing your customers with the tools they actually need.
+I’m getting ready to ship some software, which means I’m currently staring down the barrel of the ultimate independent developer problem: sustainability.
 
-Why Most Open Source Models Fail
+Let’s face it, open source has largely become a luxury game. It works beautifully for mega-corporations with deep pockets, or the lucky few smaller companies that managed to build massive, hyper-engaged user bases years ago. For the rest of us—the solo creators and small teams actually pushing technology forward—giving away the recipe just isn't a viable business model anymore.
 
-Let’s be honest: open source has often become a luxury item. Large tech companies can sustain teams of developers by selling consulting, extra features, and professional support around free software. Meanwhile, the indie developers who are actually pushing technology forward struggle to make ends meet.
+But I also refuse to buy into the cynical narrative that because code is easily replicated, what we produce is "just an asset" and fundamentally worthless. Small-scale innovation is essential, but we need a licensing model that actually lets us survive.
 
-The expectation that developers should work for free because "code is cheap" is a dangerous one. Small teams spend months building useful tools and then watch them be distributed freely across the globe. Eventually, burn-off hits, and the few remaining maintainers either abandon their projects or compromise quality to stay afloat.
+For a long time, I’ve wanted to use a specific model: the customer pays a premium, and in return, they get access to both the executable binaries and the underlying source code.
 
-When I think about a sustainable software ecosystem, I reject both the corporate dream of extracting value through services and the cynic’s view that "code is just an asset." Small-scale innovation is essential, and developers need practical ways to monetize their work without feeling like they’re betraying the community.
+From a security and long-term maintainability standpoint, it’s the ultimate insurance policy for a buyer. If they are deploying my software onto a critical platform, they need to know they won't be left stranded if my business goes under or if I decide to change careers. They have the code; they can keep the lights on.
 
-The Promise of Full Disclosure
+But in the past, pitching this always hit a brick wall. Customers would look at the source code and shrug. *“That’s great,”* they’d say, *“but we don't have the engineering skillset to maintain this anyway. If you stop supporting it, the raw code is useless to us.”* And they weren't entirely wrong. Digging into someone else’s codebase, auditing it for security, or trying to recompile it against a newer platform used to require a lot of expensive, specialized engineering time.
 
-For years, I’ve been convinced that the solution lies in a one-time pricing model that delivers a premium product: you get both the executable binaries AND the complete, un-obfuscated source code. It’s an insurance policy for your customers that ensures they won’t be left stranded if you stop developing.
+But modern LLMs completely change this dynamic. The "we don't have the skills" excuse is officially dead.
 
-For a while, I tried to pitch this model, but hit a critical obstacle: customers would look at the source code and shrug. *"Great,"* they’d say, *"but we don’t have the engineering expertise to maintain this. If you stop supporting it, the raw code is useless to us."*
+Today, a company can buy software from a completely unknown indie developer and bridge the technical gap using AI. They don't need a dedicated team on standby to gain peace of mind. With a frontier LLM, they can:
 
-And they weren’t entirely wrong. In the past, auditing codebases, fixing security issues, or recompiling software for new platforms typically required expensive, specialized engineering time.
+* **Audit the code:** Drop the source into an LLM to scan for security vulnerabilities or backdoors before deploying it.
+* **Maintain it long-term:** If the software needs to be recompiled against a newer OS version five years from now, an LLM can guide a junior IT admin through the refactoring and compilation process step-by-step.
 
-Then came the AI revolution. The "we don’t have the skills" excuse has officially become obsolete. Today, a company can buy software from a completely unknown indie developer and bridge the technical gap using AI. With modern LLMs, they can:
+AI turns raw source code from a useless, intimidating liability into a genuine insurance policy for the buyer.
 
-- **Audit the code:** Drop the source into an LLM to scan for vulnerabilities and identify potential backdoors before deploying it
-- **Maintain it long-term:** If the software needs to be recompiled on a newer platform in five years, an LLM can guide junior IT admins through refactoring and compilation step-by-step
+This paradigm shift opens the door for a practical, modern licensing framework for independent software—one that protects the developer while de-risking the purchase for the customer:
 
-LLMs turn raw source code from a useless, intimidating liability into a genuine insurance policy for the buyer.
+1. **The Deliverables:** The customer gets full access to the production binaries and the complete, un-obfuscated source code.
+2. **The Rights:** They are granted an indefinite right to use and modify both the binaries and the code internally for their own operational needs.
+3. **The Boundary:** Zero redistribution rights. They cannot share, resell, or open-source the code without explicit authorization.
 
-A Modern Licensing Framework
+This model moves us away from the unsustainable expectation of "free" open source, without forcing enterprise clients to rely on a fragile proprietary black box. It respects the customer's need for autonomy and the developer's need to get paid.
 
-This paradigm shift creates a practical pathway for independent developers to sell software with a modern approach that balances both parties’ needs:
-
-1. **The Deliverables:** The customer gets full access to production binaries and the complete, un-obfuscated source code
-2. **The Rights:** They are granted an indefinite, internal-use-only license for both the executables and the source code
-3. **The Boundary:** Zero redistribution - no sharing, selling, or open-sourcing of the code without explicit permission
-
-This removes the unsustainable expectation of giving away your work for free, without forcing clients to rely on a fragile proprietary black box. It gives customers the autonomy they need while respecting the developer’s right to compensation.
-
-The Future is Here
-
-LLMs aren’t just changing how we write code; they’re fundamentally reshaping how we sell it. For indie developers, this model represents a new path forward that makes financial sense while still giving customers the tools to solve their own problems if needed.
-
-This isn’t about burning cash on marketing or paying massive teams to offer SaaS alternatives. It’s about giving customers a fair deal: pay once, get full access, have confidence they can maintain it long-term using AI tools.
-
-The tools exist. The roadmap is clear. The time to implement this model has arrived.
-
-.. TEASER_END
-
-This is more than just a licensing strategy—it’s about redefining what it means to sell software in the age of AI. The economics of software development are changing, and indie developers need to embrace new models that reflect this reality.
-
-What do you think? Is this the model that indie developers have been waiting for? Or does it miss the mark entirely? Share your thoughts in the comments!
+LLMs aren't just changing how we write code; they’re changing the economics of how we sell it. And for independent developers, this feels like the path forward.
