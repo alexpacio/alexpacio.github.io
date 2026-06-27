@@ -5,7 +5,6 @@
 .. category: sustainability
 .. description: A licensing model for small developer teams that provides software autonomy without sinking into debt or selling out.
 .. type: text
-
 I’m getting ready to ship some software, which means I’m currently staring down the barrel of the ultimate independent developer problem: sustainability.
 
 Let’s face it, open source has largely become a luxury game. It works beautifully for mega-corporations with deep pockets, or the lucky few smaller companies that managed to build massive, hyper-engaged user bases years ago. For the rest of us—the solo creators and small teams actually pushing technology forward—giving away the recipe just isn't a viable business model anymore.
@@ -27,12 +26,14 @@ Today, a company can buy software from a completely unknown indie developer and 
 
 AI turns raw source code from a useless, intimidating liability into a genuine insurance policy for the buyer.
 
-This paradigm shift opens the door for a practical, modern licensing framework for independent software—one that protects the developer while de-risking the purchase for the customer:
+Looks like a standardized legal framework already exists that perfectly fits this model: the **PolyForm Internal Use License**.
 
-1. **The Deliverables:** The customer gets full access to the production binaries and the complete, un-obfuscated source code.
-2. **The Rights:** They are granted an indefinite right to use and modify both the binaries and the code internally for their own operational needs.
-3. **The Boundary:** Zero redistribution rights. They cannot share, resell, or open-source the code without explicit authorization.
+PolyForm is a family of source-available licenses written by legal experts, and their "Internal Use" variant aligns exactly with how independent developers need to monetize right now:
 
-This model moves us away from the unsustainable expectation of "free" open source, without forcing enterprise clients to rely on a fragile proprietary black box. It respects the customer's need for autonomy and the developer's need to get paid.
+* **What's allowed:** The customer pays once and gets full access to the production binaries and un-obfuscated source code. They get an indefinite right to run the software, make internal copies, and modify the code freely for their own internal business operations.
+* **The strict boundary:** Zero redistribution rights. The customer cannot distribute the software (modified or not) to third parties, sublicense it, or use it to host a competing SaaS product. The code stays strictly within their own walls.
 
+Using a standardized option like PolyForm would be a great idea because it gives both sides instant clarity. The developer gets a rock-solid copyright defense to protect their revenue stream, while the enterprise buyer gets a recognized legal framework that permits their engineers (and their LLMs) to handle internal maintenance without legal ambiguity.
+
+This model moves us away from the unsustainable expectation of "free" open source, without forcing clients to rely on a fragile proprietary black box. It respects the customer's need for autonomy and the developer's need to get paid.
 LLMs aren't just changing how we write code; they’re changing the economics of how we sell it. And for independent developers, this feels like the path forward.
