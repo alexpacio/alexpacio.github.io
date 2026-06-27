@@ -18,7 +18,7 @@
 <link rel="icon" href="files/favicon.svg" sizes="any">
 <link rel="icon" href="files/favicon.ico" sizes="16x16">
 <link rel="next" href="index-1.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/linux-desktop-influencers-and-the-standard-problem/" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/software-sustainability/" type="text/html">
 </head>
 <body class="hack dark">
 
@@ -44,7 +44,40 @@
     
     
     </ul></nav></header><main id="content"><div class="postindex">
-    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/linux-desktop-influencers-and-the-standard-problem/" class="u-url">Linux Desktop Influencers and the Standard Problem</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/software-sustainability/" class="u-url">Software Sustainability for Small Developers</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Alessandro Bolletta
+            </span></p>
+            <p class="dateline">
+            <a href="posts/software-sustainability/" rel="bookmark">
+            <time class="published dt-published" datetime="2026-06-27T14:20:00+02:00" itemprop="datePublished" title="2026-06-27 14:20">2026-06-27 14:20</time></a>
+            </p>
+        </div>
+    </header><div class="p-summary entry-summary">
+    <p>I’m getting ready to ship some software, which means I’m currently staring down the barrel of the ultimate independent developer problem: sustainability.</p>
+<p>Let’s face it, open source has largely become a luxury game. It works beautifully for mega-corporations with deep pockets, or the lucky few smaller companies that managed to build massive, hyper-engaged user bases years ago. For the rest of us—the solo creators and small teams actually pushing technology forward—giving away the recipe just isn't a viable business model anymore.</p>
+<p>But I also refuse to buy into the cynical narrative that because code is easily replicated, what we produce is "just an asset" and fundamentally worthless. Small-scale innovation is essential, but we need a licensing model that actually lets us survive.</p>
+<p>For a long time, I’ve wanted to use a specific model: the customer pays a premium, and in return, they get access to both the executable binaries and the underlying source code.</p>
+<p>From a security and long-term maintainability standpoint, it’s the ultimate insurance policy for a buyer. If they are deploying my software onto a critical platform, they need to know they won't be left stranded if my business goes under or if I decide to change careers. They have the code; they can keep the lights on.</p>
+<p>But in the past, pitching this always hit a brick wall. Customers would look at the source code and shrug. <em>“That’s great,”</em> they’d say, <em>“but we don't have the engineering skillset to maintain this anyway. If you stop supporting it, the raw code is useless to us.”</em> And they weren't entirely wrong. Digging into someone else’s codebase, auditing it for security, or trying to recompile it against a newer platform used to require a lot of expensive, specialized engineering time.</p>
+<p>But modern LLMs completely change this dynamic. The "we don't have the skills" excuse is officially dead.</p>
+<p>Today, a company can buy software from a completely unknown indie developer and bridge the technical gap using AI. They don't need a dedicated team on standby to gain peace of mind. With a frontier LLM, they can:</p>
+<ul class="simple">
+<li><p><strong>Audit the code:</strong> Drop the source into an LLM to scan for security vulnerabilities or backdoors before deploying it.</p></li>
+<li><p><strong>Maintain it long-term:</strong> If the software needs to be recompiled against a newer OS version five years from now, an LLM can guide a junior IT admin through the refactoring and compilation process step-by-step.</p></li>
+</ul>
+<p>AI turns raw source code from a useless, intimidating liability into a genuine insurance policy for the buyer.</p>
+<p>This paradigm shift opens the door for a practical, modern licensing framework for independent software—one that protects the developer while de-risking the purchase for the customer:</p>
+<ol class="arabic simple">
+<li><p><strong>The Deliverables:</strong> The customer gets full access to the production binaries and the complete, un-obfuscated source code.</p></li>
+<li><p><strong>The Rights:</strong> They are granted an indefinite right to use and modify both the binaries and the code internally for their own operational needs.</p></li>
+<li><p><strong>The Boundary:</strong> Zero redistribution rights. They cannot share, resell, or open-source the code without explicit authorization.</p></li>
+</ol>
+<p>This model moves us away from the unsustainable expectation of "free" open source, without forcing enterprise clients to rely on a fragile proprietary black box. It respects the customer's need for autonomy and the developer's need to get paid.</p>
+<p>LLMs aren't just changing how we write code; they’re changing the economics of how we sell it. And for independent developers, this feels like the path forward.</p>
+    </div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/linux-desktop-influencers-and-the-standard-problem/" class="u-url">Linux Desktop Influencers and the Standard Problem</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Alessandro Bolletta
@@ -193,23 +226,6 @@ However, recently my posts have been mostly criticisms rather than constructive 
 <p>As developers, we often come across situations where a fully-fledged background job system, with all its bells and whistles, might be overkill for our project needs. This was the case for me when I built a custom background job scheduler in <strong>TypeScript</strong> and <strong>Node.js</strong>, designed to handle essential tasks without the overhead of larger, more complex solutions.</p>
 <p class="more"><a href="posts/lightweight-nodejs-background-job-scheduler/">Read more…</a></p></section>
 </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/python-k8s-api/" class="u-url">Full-fledged API + e2e tests + benchmark + IaC + Helm charts + more as an (interesting) exercise!</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Alessandro Bolletta
-            </span></p>
-            <p class="dateline">
-            <a href="posts/python-k8s-api/" rel="bookmark">
-            <time class="published dt-published" datetime="2024-09-22T14:19:03+02:00" itemprop="datePublished" title="2024-09-22 14:19">2024-09-22 14:19</time></a>
-            </p>
-        </div>
-    </header><div class="p-summary entry-summary">
-    <div>
-<p>Last week, I was contacted for a coding challenge. The project seemed interesting, so I decided to take it on. At the very least, I would learn something new, which I was eager to explore: Pulumi, k6, FastAPI and some fancy modern things that make you look like a cool dev!</p>
-<p>The project involved creating a simple REST API in Python, which needed to be packaged with Helm, ready for deployment in a Kubernetes (K8s) cluster, and including all the essential tools required.</p>
-<p class="more"><a href="posts/python-k8s-api/">Read more…</a></p>
-</div>
-    </div>
     </article>
 </div>
 

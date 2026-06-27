@@ -23,11 +23,11 @@
  </url>
  <url>
   <loc>https://alexpacio.github.io/archive.html</loc>
-  <lastmod>2026-01-14T04:36:00Z</lastmod>
+  <lastmod>2026-06-27T12:29:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/</loc>
-  <lastmod>2026-01-14T04:36:00Z</lastmod>
+  <lastmod>2026-06-27T12:29:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/ai/</loc>
@@ -56,6 +56,10 @@
  <url>
   <loc>https://alexpacio.github.io/categories/cat_networking/</loc>
   <lastmod>2025-08-04T13:12:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/cat_sustainability/</loc>
+  <lastmod>2026-06-27T12:29:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/cat_technology/</loc>
@@ -122,6 +126,10 @@
   <lastmod>2025-08-04T13:12:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/indiedevelopers/</loc>
+  <lastmod>2026-06-27T12:29:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/categories/influencers/</loc>
   <lastmod>2026-01-14T04:36:00Z</lastmod>
  </url>
@@ -154,6 +162,10 @@
   <lastmod>2025-08-04T13:12:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/licensing/</loc>
+  <lastmod>2026-06-27T12:29:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/categories/linux/</loc>
   <lastmod>2025-10-07T12:01:00Z</lastmod>
  </url>
@@ -176,6 +188,10 @@
  <url>
   <loc>https://alexpacio.github.io/categories/nodejs/</loc>
   <lastmod>2025-08-04T13:12:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/categories/open-source/</loc>
+  <lastmod>2026-06-27T12:29:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/categories/openmediavault/</loc>
@@ -222,6 +238,10 @@
   <lastmod>2025-08-04T13:12:00Z</lastmod>
  </url>
  <url>
+  <loc>https://alexpacio.github.io/categories/sustainability/</loc>
+  <lastmod>2026-06-27T12:29:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://alexpacio.github.io/categories/telegram/</loc>
   <lastmod>2025-08-04T13:12:00Z</lastmod>
  </url>
@@ -235,7 +255,7 @@
  </url>
  <url>
   <loc>https://alexpacio.github.io/index-1.html</loc>
-  <lastmod>2026-01-14T04:36:00Z</lastmod>
+  <lastmod>2026-06-27T12:29:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/pages/about/</loc>
@@ -280,6 +300,10 @@
  <url>
   <loc>https://alexpacio.github.io/posts/python-k8s-api/</loc>
   <lastmod>2025-08-04T13:12:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://alexpacio.github.io/posts/software-sustainability/</loc>
+  <lastmod>2026-06-27T12:29:00Z</lastmod>
  </url>
  <url>
   <loc>https://alexpacio.github.io/posts/why-linux-desktop-keeps-missing-the-mark/</loc>
