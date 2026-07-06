@@ -1,6 +1,6 @@
 .. title: I still see articles about Extreme Programming here and there. Yuck.
 .. slug: extreme-programming-llms-and-rust
-.. date: 2026-07-06 12:00:00 UTC+02:00
+.. date: 2026-07-05 12:00:00 UTC+02:00
 .. tags: extreme-programming, rust, golang, llms, programming-languages, ai
 .. category: programming
 .. description: LLMs will enable low level programming languages for web backends and the choice is pretty obvious.
