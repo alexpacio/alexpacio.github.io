@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://alexpacio.github.io/categories/ai.xml</loc>
-  <lastmod>2026-06-27T12:29:00Z</lastmod>
+  <lastmod>2026-07-06T06:01:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/c.xml</loc>
@@ -34,8 +34,12 @@
   <lastmod>2025-11-01T17:15:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/cat_programming.xml</loc>
+  <lastmod>2026-07-06T06:01:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_sustainability.xml</loc>
-  <lastmod>2026-06-27T12:29:00Z</lastmod>
+  <lastmod>2026-06-27T13:01:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/cat_technology.xml</loc>
@@ -78,6 +82,10 @@
   <lastmod>2025-11-01T18:31:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/extreme-programming.xml</loc>
+  <lastmod>2026-07-06T06:01:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/categories/fastapi.xml</loc>
   <lastmod>2025-08-04T13:44:00Z</lastmod>
  </sitemap>
@@ -91,7 +99,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/golang.xml</loc>
-  <lastmod>2026-06-27T12:29:00Z</lastmod>
+  <lastmod>2026-07-06T06:01:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/gtid.xml</loc>
@@ -103,7 +111,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/indiedevelopers.xml</loc>
-  <lastmod>2026-06-27T12:29:00Z</lastmod>
+  <lastmod>2026-06-27T13:01:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/influencers.xml</loc>
@@ -139,7 +147,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/licensing.xml</loc>
-  <lastmod>2026-06-27T12:29:00Z</lastmod>
+  <lastmod>2026-06-27T13:01:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/linux.xml</loc>
@@ -148,6 +156,10 @@
  <sitemap>
   <loc>https://alexpacio.github.io/categories/llm.xml</loc>
   <lastmod>2025-08-24T19:00:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/llms.xml</loc>
+  <lastmod>2026-07-06T06:01:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/mysql.xml</loc>
@@ -167,7 +179,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/open-source.xml</loc>
-  <lastmod>2026-06-27T12:29:00Z</lastmod>
+  <lastmod>2026-06-27T13:01:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/openmediavault.xml</loc>
@@ -184,6 +196,10 @@
  <sitemap>
   <loc>https://alexpacio.github.io/categories/production.xml</loc>
   <lastmod>2025-11-01T18:31:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://alexpacio.github.io/categories/programming-languages.xml</loc>
+  <lastmod>2026-07-06T06:01:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/programming.xml</loc>
@@ -206,6 +222,10 @@
   <lastmod>2025-10-07T22:48:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://alexpacio.github.io/categories/rust.xml</loc>
+  <lastmod>2026-07-06T06:01:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://alexpacio.github.io/categories/security.xml</loc>
   <lastmod>2025-08-04T13:44:00Z</lastmod>
  </sitemap>
@@ -215,7 +235,7 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/sustainability.xml</loc>
-  <lastmod>2026-06-27T12:29:00Z</lastmod>
+  <lastmod>2026-06-27T13:01:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/categories/telegram.xml</loc>
@@ -231,10 +251,10 @@
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/rss.xml</loc>
-  <lastmod>2026-06-27T12:29:00Z</lastmod>
+  <lastmod>2026-07-06T06:01:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://alexpacio.github.io/sitemap.xml</loc>
-  <lastmod>2026-06-27T12:29:00Z</lastmod>
+  <lastmod>2026-07-06T06:01:00Z</lastmod>
  </sitemap>
 </sitemapindex>
