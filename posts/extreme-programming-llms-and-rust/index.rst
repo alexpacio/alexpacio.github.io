@@ -1,4 +1,4 @@
-.. title: I still see articles about Extreme Programming here and there. Yuck.
+.. title: Extreme Programming sucks and other priorities in the (backend) engineering life
 .. slug: extreme-programming-llms-and-rust
 .. date: 2026-07-05 12:00:00 UTC+02:00
 .. tags: extreme-programming, rust, golang, llms, programming-languages, ai
