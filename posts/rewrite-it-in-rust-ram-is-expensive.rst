@@ -194,13 +194,25 @@ Let me be honest about where this doesn't apply:
 
 But look at that list: it's all *operational and technical* reasons. The old reasons, "it's too hard", "nobody knows it", "the tooling isn't there", are gone.
 
+I'm still against "everything in Rust"
+=======================================
+
+Let me be very clear, because this post can be read as a crusade and it isn't one. I don't believe in the "rewrite it all in Rust" philosophy, and in most cases rewriting working software makes no sense at all.
+
+* **Don't rewrite what has years behind it.** Code that has been running in production for years and is battle tested carries something a rewrite can't: every bug already found, every edge case already handled, every weird client already accommodated. That knowledge lives in the code, not in the spec. A rewrite throws it away and makes you pay for it again, in production, with your users. A new, clean, fast codebase is not better than an old one that has stopped surprising you.
+* **Don't rewrite C or C++ in Rust just to do it.** The argument of this post is about escaping the cost of a *managed runtime*: the VM, the JIT, the garbage collector, the interpreter. A service already written in C or C++ is already on the other side of that line. It has no runtime to pay for, and its memory footprint is already in the same ballpark as Rust's. (Drogon, the C++ framework, sits at 7.2 MB in the same Sharkbench table above, next to Axum's 5.7 MB.) Rewriting it saves you nothing on the bill you came here to reduce. Memory safety is a legitimate reason to choose Rust for *new* code, and a good reason to be careful around untrusted input, but it's not by itself a reason to burn years replacing something that works.
+* **Don't pick Rust where another low-level language fits the job better.** Go is excellent for networking tools and small services, C remains the natural language of kernels, drivers and embedded targets, and C++ has ecosystems (game engines, high-performance numerical and graphics code, decades of existing libraries) where Rust is not the obvious choice. Pick the tool for the purpose, not the one with the best slogan.
+* **A language is not a goal.** Nobody's customers care what the binary was written in. They care that it's fast, stable and cheap to run, and Rust is just one very good way to get there for a specific kind of problem: a backend that today runs on a heavy managed runtime and is going to be written or substantially rewritten anyway.
+
+So the claim is a narrow one, and I'm happy to defend that narrow version: **when you are writing a new backend, or already have a good reason to rewrite one, and the alternative is a high-level managed runtime, there is much less reason than there used to be to avoid Rust.** That's all. It's not a mandate to touch anything else.
+
 So what's the excuse now?
 =========================
 
-Every megabyte you waste is a megabyte somebody has to buy, power and cool, and at current prices you're now paying a premium for it. Choosing a heavyweight stack by default, when a leaner one is within reach of any competent backend engineer with an assistant, isn't neutral. It's burning someone's money and electricity to save yourself a little discomfort. Those who don't move, absent a real constraint, are contributing to the waste.
+Every megabyte you waste is a megabyte somebody has to buy, power and cool, and at current prices you're now paying a premium for it. Choosing a heavyweight stack by default for new work, when a leaner one is within reach of any competent backend engineer with an assistant, isn't neutral. It's burning someone's money and electricity to save yourself a little discomfort. Those who keep doing it, absent a real constraint, are contributing to the waste.
 
 I've written before about why I think `LLMs will push backend engineering toward low-level languages <link://slug/extreme-programming-llms-and-rust>`_ and about `what sustainable software looks like for small developers <link://slug/software-sustainability>`_. This is the same argument, with a price tag on it.
 
-Pick one service. The one with the biggest memory footprint, or the one that costs the most to keep alive. Rewrite it in Rust with Tokio and Axum, with an assistant next to you and the old test suite as the spec. Look at the memory graph afterwards.
+If you have a service that was already due for a rewrite, pick the one with the biggest memory footprint, or the one that costs the most to keep alive. Rewrite it in Rust with Tokio and Axum, with an assistant next to you and the old test suite as the spec. Look at the memory graph afterwards. If it's stable, battle tested and already lean, leave it alone.
 
 Then decide whether you still need that excuse.
