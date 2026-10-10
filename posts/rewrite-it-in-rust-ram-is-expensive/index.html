@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html prefix="" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="With RAM and storage getting pricier, efficiency is no longer a nice-to-have. AI-assisted Rust makes low-level backends accessible, and slop is the thing we should rewrite first.">
+<meta name="viewport" content="width=device-width">
+<title>RAM is expensive now: rewrite your backend in Rust | Alessandro's View</title>
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/dark.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#00ff00">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="https://alexpacio.github.io/posts/rewrite-it-in-rust-ram-is-expensive/">
+<link rel="icon" href="../../files/favicon.svg" sizes="any">
+<link rel="icon" href="../../files/favicon.ico" sizes="16x16">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Alessandro Bolletta">
+<link rel="prev" href="../extreme-programming-llms-and-rust/" title="Extreme Programming sucks and the other priorities in the backend engineering life" type="text/html">
+<meta property="og:site_name" content="Alessandro's View">
+<meta property="og:title" content="RAM is expensive now: rewrite your backend in Rust">
+<meta property="og:url" content="https://alexpacio.github.io/posts/rewrite-it-in-rust-ram-is-expensive/">
+<meta property="og:description" content="With RAM and storage getting pricier, efficiency is no longer a nice-to-have. AI-assisted Rust makes low-level backends accessible, and slop is the thing we should rewrite first.">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-10T12:00:00+02:00">
+<meta property="article:tag" content="ai">
+<meta property="article:tag" content="axum">
+<meta property="article:tag" content="backend">
+<meta property="article:tag" content="llms">
+<meta property="article:tag" content="nodejs">
+<meta property="article:tag" content="performance">
+<meta property="article:tag" content="rust">
+<meta property="article:tag" content="sustainability">
+<meta property="article:tag" content="tokio">
+</head>
+<body class="hack dark">
+
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="container">
+         
+    <header id="header"><h1 id="brand"><a href="../../" title="Alessandro's View" rel="home">
+        <img src="../../files/logo.svg" alt="Alessandro's View" id="logo"></a></h1>
+        <p id="blog-slogan">Sharing my views about computing. Debunking hype. Promoting what's worth.</p>
+
+        
+
+        
+    <nav id="menu"><ul>
+<li><a href="../../">Home</a></li>
+                <li><a href="../../categories/">Topics</a></li>
+                <li><a href="../../archive.html">Archive</a></li>
+                <li><a href="../../pages/about/">About</a></li>
+                <li><a href="https://github.com/alexpacio">GitHub</a></li>
+
+    
+
+    
+    
+    </ul></nav></header><main id="content"><article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">RAM is expensive now: rewrite your backend in Rust</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
+                    Alessandro Bolletta
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2026-10-10T12:00:00+02:00" itemprop="datePublished" title="2026-10-10 12:00">2026-10-10 12:00</time></a>
+            </p>
+            
+        <p class="sourceline"><a href="index.rst" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p>For about fifteen years we told ourselves a comfortable story: hardware is cheap, developers are expensive, so write the slowest thing that ships and scale it horizontally. Node, Python, Ruby, PHP, a sprinkle of JVM. Add another replica. Bump the instance size. Move on.</p>
+<p>That story had a hidden assumption: that RAM and storage would keep getting cheaper, forever, so nobody would ever have to look at the bill. That assumption is now broken. DRAM and NAND prices have been climbing hard as AI datacenters absorb a huge share of the supply, and nobody serious expects the cost of memory-hungry infrastructure to go back to "who cares" any time soon.</p>
+<p>When memory is the expensive resource, the language you pick for your backend stops being a matter of taste. It becomes a line item.</p>
+<section id="the-cost-you-were-not-looking-at"><h2>The cost you were not looking at</h2>
+<p>A managed-runtime backend carries its runtime with it: the VM, the JIT, the garbage collector and its headroom, the framework, the ORM, the validation library and a few hundred transitive dependencies. Multiply that by replicas, by environments (prod, staging, preview), by regions, and by the sidecars and node overhead that come with the container orchestration you wrapped it in.</p>
+<p>A service written with Axum on Tokio is a single native binary with no runtime to pay for. Let's look at what that means in numbers, for the stacks people actually run in production: Java with Spring Boot, C# with ASP.NET Core, and Rust with Axum.</p>
+</section><section id="numbers-not-vibes"><h2>Numbers, not vibes</h2>
+<p><strong>Memory.</strong> The most useful public data I found is <a class="reference external" href="https://sharkbench.dev/web">Sharkbench</a>, an open-source (Apache-2.0) benchmark that runs the same web workload against every framework: concurrent HTTP requests, I/O and JSON (de)serialization, on Linux with an Intel Core Ultra 5 325, each app in a Docker container limited to one core-equivalent (see the <a class="reference external" href="https://github.com/sharkbench/sharkbench">repository README</a>). These are the figures as of 2026-10-05:</p>
+<table>
+<colgroup>
+<col style="width: 34.0%">
+<col style="width: 16.0%">
+<col style="width: 14.0%">
+<col style="width: 16.0%">
+<col style="width: 20.0%">
+</colgroup>
+<thead><tr>
+<th class="head"><p>Stack</p></th>
+<th class="head"><p>Req/s</p></th>
+<th class="head"><p>Latency</p></th>
+<th class="head"><p>Memory</p></th>
+<th class="head"><p>vs Axum</p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p>Rust, Axum 0.8.9</p></td>
+<td><p>26,909</p></td>
+<td><p>1.2 ms</p></td>
+<td><p><strong>5.7 MB</strong></p></td>
+<td><p>1x</p></td>
+</tr>
+<tr>
+<td><p>C#, ASP.NET Core (.NET 10)</p></td>
+<td><p>17,561</p></td>
+<td><p>1.5 ms</p></td>
+<td><p>46.6 MB</p></td>
+<td><p>~8x memory</p></td>
+</tr>
+<tr>
+<td><p>JavaScript, Express 5 (Node.js)</p></td>
+<td><p>7,670</p></td>
+<td><p>3.7 ms</p></td>
+<td><p>84.8 MB</p></td>
+<td><p>~15x memory</p></td>
+</tr>
+<tr>
+<td><p>Java, Spring Boot 4.1 WebFlux (Temurin 25)</p></td>
+<td><p>4,519</p></td>
+<td><p>1.7 ms</p></td>
+<td><p>237.0 MB</p></td>
+<td><p>~42x memory</p></td>
+</tr>
+<tr>
+<td><p>Java, Spring Boot 4.1 MVC (Temurin 25)</p></td>
+<td><p>3,316</p></td>
+<td><p>1.6 ms</p></td>
+<td><p>244.5 MB</p></td>
+<td><p>~43x memory</p></td>
+</tr>
+</tbody>
+</table>
+<p>(Sources: the <a class="reference external" href="https://sharkbench.dev/web/rust-axum">Axum</a>, <a class="reference external" href="https://sharkbench.dev/web/csharp-aspnetcore">ASP.NET Core</a> and <a class="reference external" href="https://sharkbench.dev/web/java-springboot">Spring Boot</a> result pages.)</p>
+<p>Read it fairly, because it's not a pure win for one side:</p>
+<ul class="simple">
+<li><p>The benchmark doesn't document whether memory is peak or average, or whether the container had a memory cap. Without a cap the JVM sizes its heap from the machine's RAM, so a good chunk of those 240 MB is the JVM taking what it's offered. The same Spring Boot on the IBM Semeru runtime lands around 130 MB in the same benchmark, and a tuned heap can go lower still. That is exactly the point, though: with Rust, you don't have to tune the problem away.</p></li>
+<li><p>Java can be extremely fast: Vert.x on Temurin tops the throughput chart at 34,188 req/s, ahead of Axum, but at 268.8 MB of memory. Raw speed isn't the issue; the bill for the memory you need to get it is.</p></li>
+<li><p>It's a single benchmark with a simple workload, run with a one-core limit. A real service with a database driver, an ORM and a cache will weigh more on every stack.</p></li>
+</ul>
+<p><strong>I also measured one end of this myself.</strong> I built the minimal service from this post (Axum 0.8.9 + Tokio + serde, one JSON endpoint, Rust 1.98.1, release build with LTO and <code class="docutils literal">strip</code>) and ran it on my machine. It uses <strong>3.7 MB RSS idle</strong>, and the peak was <strong>6.5 MB after 320,000 requests</strong> over 64 keep-alive connections. That agrees with the 5.7 MB Sharkbench reports, even though the load generator was a throwaway Python script, so treat it as indicative, not as a benchmark.</p>
+<p><strong>Disk.</strong> I couldn't find an authoritative, apples-to-apples public comparison for storage, so I went to the primary source and asked the registries directly (compressed sizes of the linux/amd64 images, queried on 2026-10-10):</p>
+<table>
+<colgroup>
+<col style="width: 60.0%">
+<col style="width: 40.0%">
+</colgroup>
+<thead><tr>
+<th class="head"><p>What you ship</p></th>
+<th class="head"><p>Size</p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p><code class="docutils literal"><span class="pre">eclipse-temurin:25-jre</span></code> (Java base image, before your fat JAR)</p></td>
+<td><p>120.1 MB</p></td>
+</tr>
+<tr>
+<td><p><code class="docutils literal">mcr.microsoft.com/dotnet/aspnet:10.0</code> (before your app)</p></td>
+<td><p>95.9 MB</p></td>
+</tr>
+<tr>
+<td><p><code class="docutils literal"><span class="pre">mcr.microsoft.com/dotnet/aspnet:10.0-alpine</span></code> (before your app)</p></td>
+<td><p>54.3 MB</p></td>
+</tr>
+<tr>
+<td><p>The Axum service above: the whole stripped binary</p></td>
+<td><p>0.8 MB</p></td>
+</tr>
+</tbody>
+</table>
+<p>The Axum service is the <em>application</em>; the other rows are just the platform it would run on. To be fair about that last row: the binary I built links dynamically against glibc, so to run it from <code class="docutils literal">scratch</code> you'd build for the <code class="docutils literal">musl</code> target (a little larger) or ship it on a small distroless base. Either way you land one to two orders of magnitude below a JRE or .NET runtime image before the first line of your own code, and in practice you pay that in registry storage, pull time on every deploy and cold start.</p>
+<p>At small scale you can shrug this off. At any scale where the infrastructure invoice is a conversation in your company, you can't.</p>
+</section><section id="why-we-didn-t-do-it-before"><h2>Why we didn't do it before</h2>
+<p>Honestly? Because it was hard, and the hardness was mostly <em>ergonomics</em>, not performance:</p>
+<ul class="simple">
+<li><p>the borrow checker felt like a hazing ritual,</p></li>
+<li><p>the async story was fragmented and the ecosystem was young,</p></li>
+<li><p>writing a CRUD endpoint took three times as long as in Express,</p></li>
+<li><p>finding people who knew the language was difficult.</p></li>
+</ul>
+<p>Every one of those objections has aged badly.</p>
+</section><section id="the-ecosystem-is-mature"><h2>The ecosystem is mature</h2>
+<p>You can build everything you build with Node today, with abstractions that are just as comfortable:</p>
+<ul class="simple">
+<li><p><strong>Tokio</strong> is the async runtime. <code class="docutils literal">async</code>/<code class="docutils literal">await</code> works the way you expect, with a work-stealing scheduler and no event loop you can block by accident with one synchronous call.</p></li>
+<li><p><strong>Axum</strong> gives you routing, extractors and middleware on top of Tower. It's what Express wanted to be if it had types.</p></li>
+<li><p><strong>serde</strong> replaces the hand-written validation and (de)serialization glue; the type <em>is</em> the schema.</p></li>
+<li><p><strong>sqlx</strong> gives you async database access with queries checked against your real schema at compile time.</p></li>
+<li><p><strong>tracing</strong>, <strong>reqwest</strong>, <strong>tower-http</strong>, <strong>clap</strong>, <strong>tokio-postgres</strong>, and so on cover logging, HTTP clients, CORS, compression, CLIs...</p></li>
+</ul>
+<p>An endpoint looks like this:</p>
+<div class="code"><pre class="code rust"><a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-1" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-1" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-1"></a><span class="k">use</span><span class="w"> </span><span class="n">axum</span><span class="p">::{</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-2" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-2" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-2"></a><span class="w">    </span><span class="n">extract</span><span class="p">::{</span><span class="n">Path</span><span class="p">,</span><span class="w"> </span><span class="n">State</span><span class="p">},</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-3" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-3" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-3"></a><span class="w">    </span><span class="n">http</span><span class="p">::</span><span class="n">StatusCode</span><span class="p">,</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-4" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-4" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-4"></a><span class="w">    </span><span class="n">routing</span><span class="p">::</span><span class="n">get</span><span class="p">,</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-5" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-5" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-5"></a><span class="w">    </span><span class="n">Json</span><span class="p">,</span><span class="w"> </span><span class="n">Router</span><span class="p">,</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-6" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-6" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-6"></a><span class="p">};</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-7" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-7" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-7"></a><span class="k">use</span><span class="w"> </span><span class="n">serde</span><span class="p">::</span><span class="n">Serialize</span><span class="p">;</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-8" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-8" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-8"></a><span class="k">use</span><span class="w"> </span><span class="n">sqlx</span><span class="p">::</span><span class="n">PgPool</span><span class="p">;</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-9" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-9" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-9"></a>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-10" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-10" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-10"></a><span class="cp">#[derive(Serialize, sqlx::FromRow)]</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-11" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-11" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-11"></a><span class="k">struct</span><span class="w"> </span><span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-12" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-12" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-12"></a><span class="w">    </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kt">i64</span><span class="p">,</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-13" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-13" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-13"></a><span class="w">    </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-14" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-14" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-14"></a><span class="p">}</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-15" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-15" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-15"></a>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-16" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-16" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-16"></a><span class="k">async</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">get_user</span><span class="p">(</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-17" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-17" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-17"></a><span class="w">    </span><span class="n">State</span><span class="p">(</span><span class="n">pool</span><span class="p">):</span><span class="w"> </span><span class="nc">State</span><span class="o">&lt;</span><span class="n">PgPool</span><span class="o">&gt;</span><span class="p">,</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-18" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-18" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-18"></a><span class="w">    </span><span class="n">Path</span><span class="p">(</span><span class="n">id</span><span class="p">):</span><span class="w"> </span><span class="nc">Path</span><span class="o">&lt;</span><span class="kt">i64</span><span class="o">&gt;</span><span class="p">,</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-19" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-19" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-19"></a><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="n">Json</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">StatusCode</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-20" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-20" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-20"></a><span class="w">    </span><span class="n">sqlx</span><span class="p">::</span><span class="n">query_as</span><span class="p">::</span><span class="o">&lt;</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">User</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"SELECT id, name FROM users WHERE id = $1"</span><span class="p">)</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-21" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-21" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-21"></a><span class="w">        </span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-22" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-22" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-22"></a><span class="w">        </span><span class="p">.</span><span class="n">fetch_optional</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pool</span><span class="p">)</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-23" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-23" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-23"></a><span class="w">        </span><span class="p">.</span><span class="k">await</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-24" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-24" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-24"></a><span class="w">        </span><span class="p">.</span><span class="n">map_err</span><span class="p">(</span><span class="o">|</span><span class="n">_</span><span class="o">|</span><span class="w"> </span><span class="n">StatusCode</span><span class="p">::</span><span class="n">INTERNAL_SERVER_ERROR</span><span class="p">)</span><span class="o">?</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-25" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-25" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-25"></a><span class="w">        </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">Json</span><span class="p">)</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-26" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-26" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-26"></a><span class="w">        </span><span class="p">.</span><span class="n">ok_or</span><span class="p">(</span><span class="n">StatusCode</span><span class="p">::</span><span class="n">NOT_FOUND</span><span class="p">)</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-27" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-27" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-27"></a><span class="p">}</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-28" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-28" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-28"></a>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-29" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-29" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-29"></a><span class="cp">#[tokio::main]</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-30" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-30" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-30"></a><span class="k">async</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-31" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-31" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-31"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">pool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PgPool</span><span class="p">::</span><span class="n">connect</span><span class="p">(</span><span class="o">&amp;</span><span class="n">std</span><span class="p">::</span><span class="n">env</span><span class="p">::</span><span class="n">var</span><span class="p">(</span><span class="s">"DATABASE_URL"</span><span class="p">).</span><span class="n">unwrap</span><span class="p">())</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-32" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-32" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-32"></a><span class="w">        </span><span class="p">.</span><span class="k">await</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-33" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-33" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-33"></a><span class="w">        </span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-34" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-34" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-34"></a>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-35" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-35" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-35"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Router</span><span class="p">::</span><span class="n">new</span><span class="p">()</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-36" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-36" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-36"></a><span class="w">        </span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/users/{id}"</span><span class="p">,</span><span class="w"> </span><span class="n">get</span><span class="p">(</span><span class="n">get_user</span><span class="p">))</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-37" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-37" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-37"></a><span class="w">        </span><span class="p">.</span><span class="n">with_state</span><span class="p">(</span><span class="n">pool</span><span class="p">);</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-38" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-38" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-38"></a>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-39" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-39" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-39"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">listener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tokio</span><span class="p">::</span><span class="n">net</span><span class="p">::</span><span class="n">TcpListener</span><span class="p">::</span><span class="n">bind</span><span class="p">(</span><span class="s">"0.0.0.0:3000"</span><span class="p">).</span><span class="k">await</span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-40" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-40" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-40"></a><span class="w">    </span><span class="n">axum</span><span class="p">::</span><span class="n">serve</span><span class="p">(</span><span class="n">listener</span><span class="p">,</span><span class="w"> </span><span class="n">app</span><span class="p">).</span><span class="k">await</span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span>
+<a id="rest_code_bd1fcd04ce5c4636b46131bd5729f055-41" name="rest_code_bd1fcd04ce5c4636b46131bd5729f055-41" href="#rest_code_bd1fcd04ce5c4636b46131bd5729f055-41"></a><span class="p">}</span>
+</pre></div>
+<p>(Trimmed for the blog: in production you'd map errors properly and handle startup failures without <code class="docutils literal">unwrap()</code>.)</p>
+<p>That's not much more ceremony than the Express version, and you get a typed, compiled, memory-safe binary out of it.</p>
+</section><section id="the-real-shift-ai-removed-the-learning-cliff"><h2>The real shift: AI removed the learning cliff</h2>
+<p>The remaining barrier was <em>you</em>: the time it takes to become fluent enough in a stricter language to stop fighting it. That's exactly the kind of barrier an LLM flattens.</p>
+<p>A coding assistant is excellent at the parts of Rust that used to be the wall: lifetime errors, trait bounds, <code class="docutils literal">Send</code>/<code class="docutils literal">Sync</code> complaints on a future, choosing between <code class="docutils literal">Arc&lt;Mutex&lt;_&gt;&gt;</code> and a channel. The compiler, which is strict and verbose, gives the model a precise feedback loop; you get a conversation with a tutor and a ruthless reviewer at the same time. And because Rust's errors are explicit, the model's mistakes tend to fail <em>at compile time</em>, not at 3 a.m. in production.</p>
+<p>I'm not talking about vibe coding. I'm talking about the compiler and the model keeping each other honest while you stay the person who understands the design.</p>
+</section><section id="the-paradox-ai-can-kill-slop"><h2>The paradox: AI can kill slop</h2>
+<p>The usual complaint is that AI floods the world with slop: huge, plausible, redundant JavaScript nobody reads. That's real. But the same tool can go the other way.</p>
+<p>Ask an assistant to take that 40-file Node service, with its dependency pyramid, its three competing date libraries and its "temporary" helpers, and re-express its <em>behavior</em> in Rust. A rewrite used to be the classic managerial nightmare, months of work for zero features. Now the translation cost collapses, tests pin the behavior, and the output has to survive a compiler that rejects whole categories of sloppiness: no null surprises, no forgotten error paths, no data races, no <code class="docutils literal">undefined is not a function</code>.</p>
+<p>Slop is cheap to produce in a language that tolerates it. It's much harder to produce in one that doesn't. If AI is going to write a lot of our code anyway, make it write in the language that pushes back.</p>
+</section><section id="not-a-crusade-conditions-apply"><h2>Not a crusade (conditions apply)</h2>
+<p>Let me be honest about where this doesn't apply:</p>
+<ul class="simple">
+<li><p><strong>Prototypes and throwaway scripts.</strong> If it lives for a week, write it in whatever is fastest. Just be honest about when "temporary" expires.</p></li>
+<li><p><strong>Real technical constraints.</strong> A library you depend on only exists in another ecosystem, a platform without a viable target, a team that can't take on the operational risk right now. These are legitimate. "I'd rather not learn it" isn't.</p></li>
+<li><p><strong>Workloads that aren't about your code.</strong> If you're a thin layer over an ML runtime or a database doing the heavy lifting, your language isn't the bottleneck.</p></li>
+<li><p><strong>Compile times and iteration speed.</strong> Rust builds are slower than <code class="docutils literal">node index.js</code>. Caching, workspaces and incremental builds help, but it's a real cost.</p></li>
+<li><p><strong>You still have to review.</strong> Models invent crates and APIs that don't exist, and they'll happily reach for <code class="docutils literal">clone()</code> everywhere to silence the borrow checker. A passing build is not the same as a good design.</p></li>
+</ul>
+<p>But look at that list: it's all <em>operational and technical</em> reasons. The old reasons, "it's too hard", "nobody knows it", "the tooling isn't there", are gone.</p>
+</section><section id="so-what-s-the-excuse-now"><h2>So what's the excuse now?</h2>
+<p>Every megabyte you waste is a megabyte somebody has to buy, power and cool, and at current prices you're now paying a premium for it. Choosing a heavyweight stack by default, when a leaner one is within reach of any competent backend engineer with an assistant, isn't neutral. It's burning someone's money and electricity to save yourself a little discomfort. Those who don't move, absent a real constraint, are contributing to the waste.</p>
+<p>I've written before about why I think <a class="reference external" href="../extreme-programming-llms-and-rust/">LLMs will push backend engineering toward low-level languages</a> and about <a class="reference external" href="../software-sustainability/">what sustainable software looks like for small developers</a>. This is the same argument, with a price tag on it.</p>
+<p>Pick one service. The one with the biggest memory footprint, or the one that costs the most to keep alive. Rewrite it in Rust with Tokio and Axum, with an assistant next to you and the old test suite as the spec. Look at the memory graph afterwards.</p>
+<p>Then decide whether you still need that excuse.</p>
+</section>
+</div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/ai/" rel="tag">ai</a></li>
+            <li><a class="tag p-category" href="../../categories/axum/" rel="tag">axum</a></li>
+            <li><a class="tag p-category" href="../../categories/backend/" rel="tag">backend</a></li>
+            <li><a class="tag p-category" href="../../categories/llms/" rel="tag">llms</a></li>
+            <li><a class="tag p-category" href="../../categories/nodejs/" rel="tag">nodejs</a></li>
+            <li><a class="tag p-category" href="../../categories/performance/" rel="tag">performance</a></li>
+            <li><a class="tag p-category" href="../../categories/rust/" rel="tag">rust</a></li>
+            <li><a class="tag p-category" href="../../categories/sustainability/" rel="tag">sustainability</a></li>
+            <li><a class="tag p-category" href="../../categories/tokio/" rel="tag">tokio</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../extreme-programming-llms-and-rust/" rel="prev" title="Extreme Programming sucks and the other priorities in the backend engineering life">Previous post</a>
+            </li>
+        </ul></nav></aside></article></main><footer id="footer"><p>Contents © 2026         <a href="mailto:alexpacio91%20at%20gmail%20dot%20com">Alessandro Bolletta</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+        </footer>
+</div>
+    
+    
+
+    
+    
+    
+</body>
+</html>

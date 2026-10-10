@@ -44,7 +44,24 @@
     
     
     </ul></nav></header><main id="content"><div class="postindex">
-    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/lightweight-nodejs-background-job-scheduler/" class="u-url">Building a Lightweight Node.js Background Job Scheduler: A Practical Solution for Simple Web Applications</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/message-exchanges-using-zeromq/" class="u-url">Exchanging messages between processes (or even threads within the same program) using ZeroMQ</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Alessandro Bolletta
+            </span></p>
+            <p class="dateline">
+            <a href="posts/message-exchanges-using-zeromq/" rel="bookmark">
+            <time class="published dt-published" datetime="2025-01-27T18:00:00Z" itemprop="datePublished" title="2025-01-27 18:00">2025-01-27 18:00</time></a>
+            </p>
+        </div>
+    </header><div class="p-summary entry-summary">
+    <section id="inter-process-communication-with-zeromq-and-protocol-buffers"><h2>Inter-Process Communication with ZeroMQ (and Protocol Buffers)</h2>
+<section id="introduction"><h3>Introduction</h3>
+<p>Some may certainly say that, when you are writing so called "daemons" under Linux/Unix OSes or "services" under Windows, you might want to use OS primitives/reuse existing libraries to make your programs communicate each other. And I strongly agree with the point: it is always a good idea to use a well-tested and solid library to implement such fundamental features such as message queues.</p>
+<p>For example, under Linux you can use D-Bus, which allows IPC at scale within the OS scope. Or, in the microservices space, you can leverage on message brokers like RabbitMQ or Kafka to stream your messages through sophisticated routing logic. However, at times you are just looking for something trivial and simple to send and queue messages where at the same time you look for brokerless setup but still you are willing to leverage on some of the features that message queuing systems offer for free with ease. That's where ZeroMQ comes in.</p>
+<p class="more"><a href="posts/message-exchanges-using-zeromq/">Read more…</a></p></section></section>
+</div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/lightweight-nodejs-background-job-scheduler/" class="u-url">Building a Lightweight Node.js Background Job Scheduler: A Practical Solution for Simple Web Applications</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Alessandro Bolletta
