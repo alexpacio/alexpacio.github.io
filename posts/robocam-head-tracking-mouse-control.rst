@@ -17,6 +17,11 @@ robocam
 
 An example of something useful is `robocam <https://github.com/alexpacio/robocam>`__, an application that lets you control the mouse with a webcam, simply by moving your head in front of it.
 
+.. image:: /files/robocam/live_session_video.webp
+   :alt: robocam live session: controlling the mouse by moving the head in front of the webcam
+   :width: 400px
+   :align: center
+
 robocam is an app I developed for a close relative of mine, and I hope it can also be useful in other cases, such as for people suffering from conditions or trauma that prevent limb movement. Applications like this enable people with disabilities to use a computer at a low cost, even extensively: in fact, the application is optimized to efficiently use SketchUp.
 
 How it works
