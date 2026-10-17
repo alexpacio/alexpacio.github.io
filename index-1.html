@@ -44,7 +44,23 @@
     
     
     </ul></nav></header><main id="content"><div class="postindex">
-    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/message-exchanges-using-zeromq/" class="u-url">Exchanging messages between processes (or even threads within the same program) using ZeroMQ</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/hidden-costs-static-linking-containerization/" class="u-url">The Hidden Costs of Static Linking and Containerization: A Critical Analysis</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Alessandro Bolletta
+            </span></p>
+            <p class="dateline">
+            <a href="posts/hidden-costs-static-linking-containerization/" rel="bookmark">
+            <time class="published dt-published" datetime="2025-02-02T07:00:00Z" itemprop="datePublished" title="2025-02-02 07:00">2025-02-02 07:00</time></a>
+            </p>
+        </div>
+    </header><div class="p-summary entry-summary">
+    <section id="statically-linked-programs-are-the-evil"><h2>Statically-linked Programs are the evil</h2>
+<p>The trend toward static linking represents a fundamental regression in software engineering principles. By bundling every dependency directly into the executable, we're not just bloating our binaries - we're actively dismantling decades of progress in software modularization. Each statically linked program becomes an island, disconnected from the ecosystem of shared improvements and security updates.</p>
+<p>Consider what happens when a critical vulnerability is discovered in a commonly used library. In a properly designed system using shared libraries, a single system update would protect all applications simultaneously. Instead, with static linking, we must embark on a complex and error-prone process of identifying every affected program, rebuilding each one individually, and ensuring they all get redeployed.</p>
+<p class="more"><a href="posts/hidden-costs-static-linking-containerization/">Read more…</a></p></section>
+</div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/message-exchanges-using-zeromq/" class="u-url">Exchanging messages between processes (or even threads within the same program) using ZeroMQ</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Alessandro Bolletta

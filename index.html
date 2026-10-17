@@ -18,7 +18,7 @@
 <link rel="icon" href="files/favicon.svg" sizes="any">
 <link rel="icon" href="files/favicon.ico" sizes="16x16">
 <link rel="next" href="index-1.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/rewrite-it-in-rust-ram-is-expensive/" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/robocam-head-tracking-mouse-control/" type="text/html">
 </head>
 <body class="hack dark">
 
@@ -44,7 +44,32 @@
     
     
     </ul></nav></header><main id="content"><div class="postindex">
-    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/rewrite-it-in-rust-ram-is-expensive/" class="u-url">RAM is expensive now: rewrite your backend in Rust</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/robocam-head-tracking-mouse-control/" class="u-url">Stop hyping crap: AI can build genuinely useful things, like robocam</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Alessandro Bolletta
+            </span></p>
+            <p class="dateline">
+            <a href="posts/robocam-head-tracking-mouse-control/" rel="bookmark">
+            <time class="published dt-published" datetime="2026-10-17T12:00:00+02:00" itemprop="datePublished" title="2026-10-17 12:00">2026-10-17 12:00</time></a>
+            </p>
+        </div>
+    </header><div class="p-summary entry-summary">
+    <p>Most people love talking and hyping sh*t nowadays. We know this.</p>
+<p>Artcraft and the Adobe clones are crap, but for some reason the press keeps talking about them. It would have been enough to look at the <code class="docutils literal">Cargo.toml</code> file in the root of the projects to see that an application this complex, using egui as its framework, could not possibly be sophisticated or even remotely credible as a solution. It took 5 seconds to realize that, but no. We prefer to talk about and hype up crap instead, when with AI you can actually build genuinely useful and well-made things.</p>
+<p>You just need to know that you can't replicate Photoshop with egui, and why!</p>
+<section id="robocam"><h2>robocam</h2>
+<p>An example of something useful is <a class="reference external" href="https://github.com/alexpacio/robocam">robocam</a>, an application that lets you control the mouse with a webcam, simply by moving your head in front of it.</p>
+<p>robocam is an app I developed for a close relative of mine, and I hope it can also be useful in other cases, such as for people suffering from conditions or trauma that prevent limb movement. Applications like this enable people with disabilities to use a computer at a low cost, even extensively: in fact, the application is optimized to efficiently use SketchUp.</p>
+</section><section id="how-it-works"><h2>How it works</h2>
+<p>robocam supports Windows 11 and uses (unsafe) Rust, OpenCV and Windows primitives to generate a bar at the top of your screen where you can change the mouse behavior: single click, double click, dragging, and much more.</p>
+<p>Nothing exotic here: a webcam, a computer vision library to track the head, and the native Windows APIs to move the cursor and synthesize the clicks. This is the kind of job where a native, statically compiled application makes sense, and where AI-assisted development lets one person ship something solid for a very specific need.</p>
+</section><section id="get-it"><h2>Get it</h2>
+<p>The source code is on GitHub: <a class="reference external" href="https://github.com/alexpacio/robocam">https://github.com/alexpacio/robocam</a></p>
+<p>I remain available to support, time permitting, any GitHub issues that may come up.</p>
+</section>
+</div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/rewrite-it-in-rust-ram-is-expensive/" class="u-url">RAM is expensive now: rewrite your backend in Rust</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Alessandro Bolletta
@@ -405,22 +430,6 @@ However, recently my posts have been mostly criticisms rather than constructive 
 <p class="more"><a href="posts/embracing-the-ipv6-revolution-a-homelab-story/">Read more…</a></p>
 </div>
     </div>
-    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/hidden-costs-static-linking-containerization/" class="u-url">The Hidden Costs of Static Linking and Containerization: A Critical Analysis</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                Alessandro Bolletta
-            </span></p>
-            <p class="dateline">
-            <a href="posts/hidden-costs-static-linking-containerization/" rel="bookmark">
-            <time class="published dt-published" datetime="2025-02-02T07:00:00Z" itemprop="datePublished" title="2025-02-02 07:00">2025-02-02 07:00</time></a>
-            </p>
-        </div>
-    </header><div class="p-summary entry-summary">
-    <section id="statically-linked-programs-are-the-evil"><h2>Statically-linked Programs are the evil</h2>
-<p>The trend toward static linking represents a fundamental regression in software engineering principles. By bundling every dependency directly into the executable, we're not just bloating our binaries - we're actively dismantling decades of progress in software modularization. Each statically linked program becomes an island, disconnected from the ecosystem of shared improvements and security updates.</p>
-<p>Consider what happens when a critical vulnerability is discovered in a commonly used library. In a properly designed system using shared libraries, a single system update would protect all applications simultaneously. Instead, with static linking, we must embark on a complex and error-prone process of identifying every affected program, rebuilding each one individually, and ensuring they all get redeployed.</p>
-<p class="more"><a href="posts/hidden-costs-static-linking-containerization/">Read more…</a></p></section>
-</div>
     </article>
 </div>
 
